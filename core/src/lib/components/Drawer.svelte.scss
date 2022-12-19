@@ -1,0 +1,143 @@
+.mdc-drawer {
+
+	color: var(--on-secondary);
+	background-color: var(--surface) !important;
+
+}
+
+.mdc-drawer-scrim {
+	display: none !important;
+}
+
+
+section {
+	#drawer-container {
+		user-select: none;
+		height: 100%;
+		display: block;
+		margin-top: var(--header-height);
+	}
+}
+
+#drawer-container {
+	position: relative;
+	overflow: hidden;
+	z-index: 3;
+	margin-left: -9px;
+	height: 100%;
+	padding-bottom: 4vh;
+	border: 1px solid rgba(0, 0, 0, .1);
+	pointer-events: none;
+	//background-color: var(--surface);
+
+
+	>aside {
+
+		margin-top: -1px;
+		pointer-events: all;
+
+		&.right {
+			left: initial !important;
+			right: -532px !important;
+			top: 0px;
+			opacity: 0;
+
+			&.mdc-drawer--open {
+
+				opacity: 1;
+				left: initial !important;
+				right: 0px !important;
+
+			}
+
+			&.mdc-drawer--closing {
+
+				transform: translateX(200%) !important;
+				transition-duration: 200ms !important;
+			}
+
+			//z-index:3;
+			//
+			//position: fixed !important;
+			//top: 0px !important;
+			//right: 0px !important;
+			//left: initial !important;
+			//left: 10000px !important;
+			//width:32px !important;
+			//
+			//&.mdc-drawer--open {
+			//  display:block;
+			//  position: fixed !important;
+			//  top: 0px !important;
+			//  right: 0px !important;
+			//  left: inherit !important;
+			//  width: initial !important;
+			//}
+			#drawer-resize-control {
+				display: none !important;
+			}
+		}
+
+		& .drag {
+
+			* {
+				pointer-events: none;
+			}
+
+		}
+
+	}
+
+}
+
+#drawer-resize-control {
+	user-select: none;
+	position: absolute;
+	right: 0;
+	width: 6px;
+	z-index: 4;
+	height: 100%;
+	cursor: w-resize;
+
+	&.__debug {
+		background: rgba(255, 255, 255, 0.15);
+	}
+
+	&:hover {
+		transition: all 200ms;
+		background: rgba(255, 255, 255, 0.05);
+	}
+}
+
+.drawer-extend-0 {
+	min-width: 58px !important;
+	max-width: 58px !important;
+
+}
+
+.drawer-extend-2 {
+	width: 50% !important;
+	max-width: 50% !important;
+}
+
+
+svelte-virtual-list-contents {
+
+	margin-top: var(--header-height);
+
+}
+
+
+* :global(.mdc-drawer--modal, .mdc-drawer-scrim) {
+	/* This is not needed for a page-wide modal. */
+	position: absolute;
+}
+
+* :global(.app-content) {
+	flex: auto;
+	overflow: auto;
+	position: relative;
+	flex-grow: 1;
+
+
+}
