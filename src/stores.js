@@ -11,6 +11,7 @@ export const place = writable(0);
 
 
 
+const tenantId = import.meta.env.VITE_TENANT_ID;
 
 
 export const _WEBSITE_QUOTE_ = writable(0);
@@ -58,7 +59,7 @@ const getAccountDataFromLocalStorage = () => {
 
 const postJsonToTenant = async (json, file) => {
 	var formdata = new FormData();
-	formdata.append("tenant", "3988fc5a-af7d-4ffb-8ce4-06132bd037a2");
+	formdata.append("tenant", tenantId);
 	formdata.append("filename", file);
 	formdata.append("json", encodeURIComponent(JSON.stringify(json)));
 

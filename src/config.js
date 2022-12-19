@@ -1,6 +1,7 @@
 
 // build redirect url from environment variables
 const redirectUrl = import.meta.env.VITE_REDIRECT_URL;
+const authClientID = import.meta.env.VITE_API_MS_AUTH_CLIENT_ID;
 // scopes 
 const scopes = ["https://graph.microsoft.com/User.Read.All", "https://graph.microsoft.com/AppRoleAssignment.ReadWrite.All", "https://graph.microsoft.com/AppRoleAssignment.ReadWrite.All", "openid", "email", "offline_access", "profile"];
 const tenantName = `tracercanada`;
@@ -17,7 +18,7 @@ const msalConfig = {
 	auth: {
 		//tenant:'common',
 		azureAD: `${tenantName}.onmicrosoft.com`,
-		clientId: `5ac16849-77f9-4b75-ad57-90c114601daf`,
+		clientId: authClientID,
 		response_type: "id_token code token",
 		responseType: "id_token code token",
 		responseMode: "query",
@@ -33,7 +34,6 @@ const msalConfig = {
 		extraQueryParameters: { domain_hint: 'organizations' },
 		"claims":
 		{
-
 			"userinfo":
 			{
 				"given_name": { "essential": true },

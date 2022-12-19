@@ -1,6 +1,9 @@
 
 
 <script>
+
+const analyticsClientID = import.meta.env.VITE_API_G_ANALYTICS_ID;
+
 (function(w,d,s,g,js,fjs){
   g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(cb){this.q.push(cb)}};
   js=d.createElement(s);fjs=d.getElementsByTagName(s)[0];
@@ -12,7 +15,7 @@ gapi.analytics.ready(function() {
 
   // Step 3: Authorize the user.
 
-  var CLIENT_ID = 'G-PVD26KBEQR';
+  var CLIENT_ID = analyticsClientID;
 
   gapi.analytics.auth.authorize({
     container: 'auth-button',
