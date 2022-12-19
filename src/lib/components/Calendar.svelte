@@ -1,6 +1,6 @@
 <script>
   let url, iframe;
-  import { _CALENDAR_URL_, _CALENDAR_IFRAME_ } from '../stores.js';
+  import { _CALENDAR_URL_, _CALENDAR_IFRAME_ } from '../../stores.js';
   _CALENDAR_URL_.subscribe(value => {
     url = value;
   });

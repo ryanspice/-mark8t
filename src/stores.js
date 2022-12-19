@@ -12,13 +12,15 @@ export const place = writable(0);
 
 
 const tenantId = import.meta.env.VITE_TENANT_ID;
+const mapsId = import.meta.env.VITE_API_G_MAPS_ID;
 
 
-export const _WEBSITE_QUOTE_ = writable(0);
+
+export const _WEBSITE_QUOTE_ = writable('');
 _WEBSITE_QUOTE_.set("You never know when it's not time for a Jager.");
 
-export const _GOOGLE_MAP_API_URL_ = writable(0);
-_GOOGLE_MAP_API_URL_.set('https://maps.googleapis.com/maps/api/js?key=AIzaSyC0kOfDvde7Opm7lox40LGhPst31sRCRys&libraries=places&callback=initMap');
+export const _GOOGLE_MAP_API_URL_ = writable('');
+_GOOGLE_MAP_API_URL_.set("https://maps.googleapis.com/maps/api/js?key=" + mapsId + "&libraries=places&callback=initMap");
 
 export const _NEWSLETTER_URL_ = writable("");
 _NEWSLETTER_URL_.set("https://cdn.forms-content.sg-form.com/747312ce-2554-11ed-87ec-fe032ff37937");

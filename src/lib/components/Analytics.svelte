@@ -17,6 +17,8 @@ gapi.analytics.ready(function() {
 
   var CLIENT_ID = analyticsClientID;
 
+  console.log('gAnalytics -CLIENT_ID', CLIENT_ID)
+
   gapi.analytics.auth.authorize({
     container: 'auth-button',
     clientid: CLIENT_ID,

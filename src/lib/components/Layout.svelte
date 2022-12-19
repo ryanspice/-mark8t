@@ -16,7 +16,7 @@
 
 	$: account = {};
 	$: website = {};
-	import { _API_STORE_ACCOUNT_, _API_STORE_WEBSITE_, _API_STORE_PRODUCTS_, _API_STORE_GOOGLE_ } from '../stores.js';
+	import { _API_STORE_ACCOUNT_, _API_STORE_WEBSITE_, _API_STORE_PRODUCTS_, _API_STORE_GOOGLE_ } from '../../stores.js';
 	_API_STORE_ACCOUNT_.subscribe(value => {
 		account = value || [];
 	});

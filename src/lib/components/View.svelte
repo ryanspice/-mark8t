@@ -29,9 +29,9 @@
 
   import Modules from "./modules/index.js";
 
-  import { _NEW_PRODUCT_ } from '../schema.js';
+  import { _NEW_PRODUCT_ } from '../../schema.js';
 
-  import { postJsonToTenant } from '../stores';
+  import { postJsonToTenant } from '../../stores';
 
   let productContainer;
   let layoutContainer;
@@ -84,8 +84,8 @@
     }
   ];
 
-  import { fetchAdmin, getAccountDataFromLocalStorage } from '../stores.js';
-  import { _API_STORE_ACCOUNT_, _API_STORE_WEBSITE_, _API_STORE_PRODUCTS_, _API_STORE_GOOGLE_ } from '../stores.js';
+  import { fetchAdmin, getAccountDataFromLocalStorage,
+     _API_STORE_ACCOUNT_, _API_STORE_WEBSITE_, _API_STORE_PRODUCTS_, _API_STORE_GOOGLE_ } from '../../stores.js';
   _API_STORE_ACCOUNT_.subscribe(value => {
     account = value || {};
   });

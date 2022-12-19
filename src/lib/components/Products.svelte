@@ -3,13 +3,13 @@
 	import { onMount } from "svelte";
 
 	import ItemSection from "../../src/components/ItemSection.svelte";
-	import { fetchProducts } from '../stores.js';
+	import { fetchProducts } from '../../stores.js';
 
 	let frame;
 
 	//
 	$: products = [];
-	import { _API_STORE_PRODUCTS_ } from '../stores.js';
+	import { _API_STORE_PRODUCTS_ } from '../../stores.js';
 	_API_STORE_PRODUCTS_.subscribe(value => {
 		products = value;
 	});

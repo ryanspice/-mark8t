@@ -6,7 +6,7 @@
 	let panelWebsite = false;
 	panelWebsite = localStorage.getItem('--panel--panelWebsite') === 'true' || false;
 	$: website = {};
-	import { _API_STORE_WEBSITE_ } from '../../stores.js';
+	import { _API_STORE_WEBSITE_ } from '../../../stores.js';
 	_API_STORE_WEBSITE_.subscribe(value => {
 		website = value || {};
 	});

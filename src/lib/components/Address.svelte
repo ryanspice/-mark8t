@@ -4,7 +4,7 @@
 	}
 </style>
 <script>
-	import { place } from '../stores.js';
+	import { place } from '../../stores.js';
 	let address;
 	place.subscribe(value => {
 		address = value?.formatted_address;

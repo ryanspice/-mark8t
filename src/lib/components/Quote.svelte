@@ -1,6 +1,6 @@
 <script>
 
-	import { _API_STORE_WEBSITE_, _WEBSITE_QUOTE_ } from '../stores.js';
+	import { _API_STORE_WEBSITE_, _WEBSITE_QUOTE_ } from '../../stores.js';
 	let v;
 	_WEBSITE_QUOTE_.subscribe(value => {
 		v = value;

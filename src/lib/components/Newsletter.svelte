@@ -1,6 +1,6 @@
 <script>
 	let url;
-	import { _NEWSLETTER_URL_ } from '../stores.js';
+	import { _NEWSLETTER_URL_ } from '../../stores.js';
 	_NEWSLETTER_URL_.subscribe(value => {
 		url = value;
 	});

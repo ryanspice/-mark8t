@@ -2,7 +2,7 @@
 	import { base } from '$app/paths';
 	import { onMount } from "svelte";
 	let products = [];
-	import { _API_STORE_PRODUCTS_ } from '../stores.js';
+	import { _API_STORE_PRODUCTS_ } from '../../stores.js';
 	_API_STORE_PRODUCTS_.subscribe(value => {
 
 		products = value || [];

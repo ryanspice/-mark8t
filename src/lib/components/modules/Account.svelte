@@ -9,7 +9,7 @@
 	panelContactInfo = localStorage.getItem('--panel--panelContactInfo') === 'true' || false;
 	$: account = {};
 	$: website = {};
-	import { _API_STORE_ACCOUNT_, _API_STORE_WEBSITE_ } from '../../stores.js';
+	import { _API_STORE_ACCOUNT_, _API_STORE_WEBSITE_ } from '../../../stores.js';
 	_API_STORE_ACCOUNT_.subscribe(value => {
 		account = value || {};
 	});
