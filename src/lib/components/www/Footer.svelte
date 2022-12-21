@@ -1,10 +1,26 @@
 <script>
-	import SocialMediaIcons from "../../src/components/SocialMediaIcons.svelte";
-	export let lblUrl = "https://dundasandsons.ca/";
-	export let lblEmail = "rob@dundasandsons.com";
-	export let lblBID = "12444313 Canada Inc.";
-	export let lblOwner = "tracercanada.ca"
+	$: website = {};
+	import { _API_STORE_WEBSITE_ } from "../../../stores.js";
+	_API_STORE_WEBSITE_.subscribe((value) => {
+		website = value;
+	});
 </script>
+
+<copy id="ax-c4ca4238a0b923820dcc509a6f75849b">
+	<p>
+		Thanks - Merci - Grazi - Obrigado - Danken - Spasybi - 谢谢 - 감사
+		<br />
+		<br />
+		<img
+			alt="Canadian Flag"
+			src="https://ryanspice.com/images/1920px-Flag_of_Canada_(Pantone).svg.png"
+		/>
+		<br />
+		<br />
+		Copyrights © 2022 All Rights Reserved.
+		<a style="opacity:0.5;" href={website.siteUrl}>{website.siteName}</a>
+	</p>
+</copy>
 
 <style>
 	a {
@@ -17,7 +33,6 @@
 	}
 
 	@media print {
-
 		*,
 		:after,
 		:before {
@@ -53,7 +68,7 @@
 
 	a:focus,
 	a:hover {
-		color: #FE0100;
+		color: #fe0100;
 		cursor: pointer;
 		opacity: 0.5;
 		-webkit-transform: scale(1.1) 0.2s ease;
@@ -110,7 +125,7 @@
 	}
 
 	main a {
-		color: #FE0100;
+		color: #fe0100;
 	}
 
 	copy {
@@ -156,7 +171,6 @@
 	copy img {
 		width: 40px;
 	}
-
 
 	/*! CSS Used keyframes */
 	@keyframes fade-top-down {
@@ -219,16 +233,3 @@
 		}
 	}
 </style>
-
-<copy id="ax-c4ca4238a0b923820dcc509a6f75849b">
-	<p>
-		Thanks - Merci - Grazi - Obrigado - Danken - Spasybi - 谢谢 - 감사
-		<br />
-		<br />
-		<img src="https://ryanspice.com/images/1920px-Flag_of_Canada_(Pantone).svg.png" />
-		<br />
-		<br />
-		Copyrights © 2022 All Rights Reserved.
-		<a style="opacity:0.5;" href={lblUrl}>{lblBID}</a>
-	</p>
-</copy>

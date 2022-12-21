@@ -9,6 +9,7 @@ export const isOpen = writable(0);
 export const opening_hours = writable(0);
 export const place = writable(0);
 
+const baseUrl = import.meta.env.VITE_BASE_URL;
 const tenantId = import.meta.env.VITE_TENANT_ID;
 const mapsId = import.meta.env.VITE_API_G_MAPS_ID;
 const mapsUrl = 'https://maps.googleapis.com/maps/api/js?key=' + mapsId + '&libraries=places&callback=initMap';
@@ -105,7 +106,6 @@ function fetchProductsInfoFromJson() {
 	});
 }
 
-
 //
 function fetchGoogleInfoFromJson() {
 	fetchJsonFromUrl(_API_GOOGLE_, (data) => {
@@ -144,7 +144,7 @@ const fetchProducts = async (filter) => {
 //
 const timeStampStillValid = (key) => {
 	let now = new Date().getTime();
-	let then = (localStorage.getItem(key));
+	let then = Number(localStorage.getItem(key));
 	let diff = now > then;
 
 	return diff;

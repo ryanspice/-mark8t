@@ -26,6 +26,7 @@
     "@smui/paper": "7.0.0-beta.0",
     "@smui/textfield": "^7.0.0-beta.0",
     "@smui/top-app-bar": "^7.0.0-beta.0",
+    "@smui/touch-target": "^7.0.0-beta.0",
     "@storybook/addon-essentials": "7.0.0-beta.8",
     "@storybook/addon-interactions": "7.0.0-beta.8",
     "@storybook/addon-links": "7.0.0-beta.8",
@@ -35,7 +36,6 @@
     "@storybook/testing-library": "0.0.13",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
-    "@smui/touch-target": "^7.0.0-beta.0",
     "@sveltejs/package": "next",
     "eslint": "^8.28.0",
     "eslint-plugin-storybook": "^0.6.8",
@@ -53,6 +53,7 @@
   "module": "src/lib/index.js",
   "license": "MIT",
   "dependencies": {
-    "sass": "^1.56.2"
+    "sass": "^1.56.2",
+    "svelte-media-queries": "^1.5.1"
   }
 }

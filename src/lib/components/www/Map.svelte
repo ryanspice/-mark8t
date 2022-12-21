@@ -2,7 +2,7 @@
 	import { onMount } from "svelte";
 
 	import { opening_hours, place, isOpen } from "../../../stores.js";
-	import Hours from "../Hours.svelte";
+	import Hours from "./Hours.svelte";
 	import Address from "../Address.svelte";
 	const fetchJSONP = (url) => {
 		return new Promise((resolve, reject) => {

@@ -1,16 +1,62 @@
 <script>
-  import { base } from '$app/paths';
-  import MediaQuery from 'svelte-media-queries'
-  import { isOpen } from '../../stores.js';
-  import Hours from './Hours.svelte';
+  import { base } from "$app/paths";
+  import MediaQuery from "svelte-media-queries";
+  import { isOpen } from "../../stores.js";
+  import Hours from "./www/Hours.svelte";
   let open;
-  isOpen.subscribe(value => {
+  isOpen.subscribe((value) => {
     open = value;
   });
 </script>
+
+<section>
+  {#if open}
+    <div
+      on:click={() => {
+        window.location = base + "/admin";
+      }}
+    >
+      <p>
+        <span>O</span>
+        <span>P</span>
+        <span>E</span>
+        <span>N</span>
+      </p>
+    </div>
+  {:else}
+    <div
+      class="closed"
+      on:click={() => {
+        window.location = "/events";
+      }}
+    >
+      <p>
+        <span>C</span>
+        <span>L</span>
+        <span>O</span>
+        <span>S</span>
+        <span>E</span>
+        <span>D</span>
+      </p>
+    </div>
+  {/if}
+  <MediaQuery
+    query={[
+      "(max-width: 768px)",
+      "(min-width: 768px) and (max-width: 1280px)",
+      "(min-width: 1280px)",
+    ]}
+    let:matches
+  >
+    {@const [mobile, tablet, desktop] = matches}
+    {#if desktop}
+      <Hours />
+    {/if}
+  </MediaQuery>
+</section>
+
 <style>
   section {
-
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -44,8 +90,9 @@
       0 0 20px var(--text-color), 0 0 30px var(--text-color),
       0 0 40px var(--text-color), 0 0 55px var(--text-color),
       0 0 75px var(--text-color);
-    --box-shadow: inset 0 0 50px var(--border-color), 0 0 10px var(--border-color),
-      0 0 20px var(--border-color), 0 0 30px var(--border-color);
+    --box-shadow: inset 0 0 50px var(--border-color),
+      0 0 10px var(--border-color), 0 0 20px var(--border-color),
+      0 0 30px var(--border-color);
   }
 
   div:not(.closed) {
@@ -142,46 +189,11 @@
     width: 400px;
     transform: scale(0.4);
     text-shadow: none !important;
-
   }
 
-  .closed>p,
-  .closed>span {
+  .closed > p,
+  .closed > span {
     color: black !important;
     text-shadow: none !important;
   }
 </style>
-<section>
-  {#if open}
-  <div on:click={()=>{
-    window.location = base+"/admin";
-    }}>
-    <p>
-      <span>O</span>
-      <span>P</span>
-      <span>E</span>
-      <span>N</span>
-    </p>
-  </div>
-  {:else}
-  <div class="closed" on:click={()=>{
-    window.location = "/events";
-    }}>
-    <p>
-      <span>C</span>
-      <span>L</span>
-      <span>O</span>
-      <span>S</span>
-      <span>E</span>
-      <span>D</span>
-    </p>
-  </div>
-  {/if}
-  <MediaQuery query={['(max-width: 768px)', '(min-width: 768px) and (max-width: 1280px)' , '(min-width: 1280px)' ]}
-    let:matches>
-    {@const [mobile, tablet, desktop] = matches}
-    {#if (desktop)}
-    <Hours />
-    {/if}
-  </MediaQuery>
-</section>

@@ -1,10 +1,19 @@
 <script>
-	let url;
-	import { _NEWSLETTER_URL_ } from '../../stores.js';
-	_NEWSLETTER_URL_.subscribe(value => {
+	import { _NEWSLETTER_URL_ } from "../../../stores.js";
+	let url = "";
+	let h2Text = "keep in touch";
+	let h1Text = "NEWSLETTER";
+	_NEWSLETTER_URL_.subscribe((value) => {
 		url = value;
 	});
 </script>
+
+<section>
+	<h2>{h2Text}</h2>
+	<h1>{h1Text}</h1>
+	<iframe title="newsletter" src={url} />
+</section>
+
 <style>
 	iframe {
 		outline: 0;
@@ -48,9 +57,3 @@
 		overflow: hidden !important;
 	}
 </style>
-<section>
-	<h2>keep in touch</h2>
-	<h1>NEWSLETTER</h1>
-	<iframe title="newsletter" src={url}>
-	</iframe>
-</section>
