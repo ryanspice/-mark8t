@@ -23,7 +23,7 @@ import Admin from "./pages/Admin.svelte";
 import { _API_STORE_WEBSITE_ } from '../stores.js';
 
 import { base } from "$app/paths";
-const logout = () => {
+const Logout = () => {
 	_API_STORE_WEBSITE_.set({});
 	localStorage.removeItem('--store-website');
 
@@ -53,6 +53,7 @@ export {
 	Layout,
 
 	Admin,
+	Logout,
 
 	_API_STORE_WEBSITE_
 }

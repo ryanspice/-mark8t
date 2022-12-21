@@ -55,5 +55,14 @@
   "dependencies": {
     "sass": "^1.56.2",
     "svelte-media-queries": "^1.5.1"
+  },
+  "keywords": [
+    "svelte",
+    "sveltekit",
+    "sidebar"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryanspice/-mark8t"
   }
 }
