@@ -1,5 +1,5 @@
 <script>
-	import { _NEWSLETTER_URL_ } from "../../../stores.js";
+	import { _NEWSLETTER_URL_ } from "../../stores.js";
 	let url = "";
 	let h2Text = "keep in touch";
 	let h1Text = "NEWSLETTER";

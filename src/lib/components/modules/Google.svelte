@@ -6,7 +6,7 @@
 	let panel3Open = false;
 	panel3Open = localStorage.getItem('--panel--panel3Open') === 'true' || false;
 	$: google = {};
-	import { _API_STORE_GOOGLE_ } from '../../../stores.js';
+	import { _API_STORE_GOOGLE_ } from '../../stores.js';
 	_API_STORE_GOOGLE_.subscribe(value => {
 		google = value || {};
 	});

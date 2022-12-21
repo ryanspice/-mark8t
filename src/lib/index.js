@@ -20,7 +20,7 @@ import Layout from "./components/Layout.svelte";
 
 import Admin from "./pages/Admin.svelte";
 
-import { _API_STORE_WEBSITE_ } from '../stores.js';
+import { _API_STORE_WEBSITE_ } from './stores.js';
 
 import { base } from "$app/paths";
 const Logout = () => {

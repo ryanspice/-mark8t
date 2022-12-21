@@ -1,7 +1,7 @@
 <script defer>
 	import { onMount } from "svelte";
 
-	import { opening_hours, place, isOpen } from "../../../stores.js";
+	import { opening_hours, place, isOpen } from "../../stores.js";
 	import Hours from "./Hours.svelte";
 	import Address from "../Address.svelte";
 	const fetchJSONP = (url) => {
@@ -65,7 +65,7 @@
 		);
 	};
 
-	import { _GOOGLE_MAP_API_URL_ } from "../../../stores.js";
+	import { _GOOGLE_MAP_API_URL_ } from "../../stores.js";
 	//
 	onMount(() => {
 		window.initMap = initMap;

@@ -1,14 +1,13 @@
 <script>
+	//import validate from 'validate.js';
 
-	import validate from 'validate.js';
-
-	import Field from './Field.svelte';	// used to build our form fields
-	import Box from './Box.svelte';	// just for show
-	import { storeFE } from './store.js';	// store our form state
-	let objForm;	// @testing - used to listen for changes in our form state
+	import Field from "./Field.svelte"; // used to build our form fields
+	import Box from "./Box.svelte"; // just for show
+	import { storeFE } from "./store.js"; // store our form state
+	let objForm; // @testing - used to listen for changes in our form state
 
 	// @testing - keep up to date on the form object
-	const unsubscribe = storeFE.subscribe(value => {
+	const unsubscribe = storeFE.subscribe((value) => {
 		objForm = value;
 	});
 
@@ -36,22 +35,22 @@
 }`);
 	// @testing: let us know when the form values have changed (the storeFE object has updated)
 	$: {
-		console.log('objForm:');
+		console.log("objForm:");
 		console.log(objForm);
 		formValidate();
 	}
-	$storeFE = objFormConfig;	// save the initial form configuration to the store
+	$storeFE = objFormConfig; // save the initial form configuration to the store
 
 	// validation-------------------
 	// These are the constraints used to validate the form
 	const constraints = {
-		"ct1": {
+		ct1: {
 			// And it must be between 3 and 20 characters long
 			length: {
 				minimum: 3,
-				maximum: 20
-			}
-		}
+				maximum: 20,
+			},
+		},
 	};
 
 	let validationArray = [];
@@ -62,18 +61,19 @@
 		// 		if (validationArray) console.log(validationArray);
 	}
 </script>
-<div>
 
-</div>
+<div />
 <div class="p-4">
 	<div class="mb-3">
-		<a href="#about" class="anchor" aria-hidden="">About this app. (instructions below)</a>
+		<a href="#about" class="anchor" aria-hidden=""
+			>About this app. (instructions below)</a
+		>
 	</div>
 	<form id="main" novalidate>
 		{#each objFormConfig.formElements as item}
-		<Box>
-			<Field objAttributes={item}></Field>
-		</Box>
+			<Box>
+				<Field objAttributes={item} />
+			</Box>
 		{/each}
 	</form>
 </div>

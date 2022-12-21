@@ -1,7 +1,7 @@
 <script>
   import { base } from "$app/paths";
   import MediaQuery from "svelte-media-queries";
-  import { isOpen } from "../../stores.js";
+  import { isOpen } from "../stores.js";
   import Hours from "./www/Hours.svelte";
   let open;
   isOpen.subscribe((value) => {

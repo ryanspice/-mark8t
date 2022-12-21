@@ -13,7 +13,7 @@
 	import Navigation from "../Navigation.svelte";
 
 	$: website = {};
-	import { _API_STORE_WEBSITE_ } from "../../../stores.js";
+	import { _API_STORE_WEBSITE_ } from "../../stores.js";
 	_API_STORE_WEBSITE_.subscribe((value) => {
 		website = value;
 	});

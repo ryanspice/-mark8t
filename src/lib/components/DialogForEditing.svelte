@@ -44,7 +44,7 @@
 	export let onSave = () => {};
 	export let onClose = () => {};
 
-	import { _API_TENANT_, _API_URL_ } from "../../stores.js";
+	import { _API_TENANT_, _API_URL_ } from "../stores.js";
 	//
 	function closeHandler(e) {
 		switch (e.detail.action) {

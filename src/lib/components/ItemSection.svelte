@@ -1,13 +1,40 @@
 <script>
-	import { base } from '$app/paths';
+	import { base } from "$app/paths";
 	import { onMount } from "svelte";
 	let products = [];
-	import { _API_STORE_PRODUCTS_ } from '../../stores.js';
-	_API_STORE_PRODUCTS_.subscribe(value => {
-
+	import { _API_STORE_PRODUCTS_ } from "../stores.js";
+	_API_STORE_PRODUCTS_.subscribe((value) => {
 		products = value || [];
 	});
 </script>
+
+{#each products as item}
+	<section>
+		<div class="col center image">
+			<img width="325" src={item.thumb} />
+		</div>
+		<div class="content">
+			<h2>{item.name}</h2>
+			<img
+				class="thumb"
+				width="325"
+				src={base + ("/" + item.image.replace("/", ""))}
+			/>
+			<br />
+			{#if item.ibu}
+				<span class="left">IBU: {item.ibu}</span>
+			{/if}
+			{#if item.abv}
+				<span class="right"
+					>ABV:
+					{item.abv}</span
+				><br />
+			{/if}
+			<br />
+		</div>
+	</section>
+{/each}
+
 <style>
 	.content {
 		margin: 0px auto;
@@ -38,7 +65,7 @@
 		transform: scale(1.2);
 		left: 0;
 		top: -38px;
-		z-index: -1
+		z-index: -1;
 	}
 
 	.left {
@@ -56,24 +83,3 @@
 		font-size: 1.5rem;
 	}
 </style>
-
-{#each products as item}
-<section>
-	<div class="col center image">
-		<img width="325" src="{item.thumb}" />
-	</div>
-	<div class="content">
-		<h2>{item.name}</h2>
-		<img class="thumb" width="325" src={base + ("/"+item.image.replace("/",""))} />
-		<br />
-		{#if item.ibu}
-		<span class="left">IBU: {item.ibu}</span>
-		{/if}
-		{#if item.abv}
-		<span class="right">ABV:
-			{item.abv}</span><br />
-		{/if}
-		<br />
-	</div>
-</section>
-{/each}
