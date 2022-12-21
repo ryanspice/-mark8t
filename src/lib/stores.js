@@ -1,7 +1,7 @@
 import { base } from '$app/paths';
 import { writable } from 'svelte/store';
 
-import "../utils/storage/storage.encode.js";
+import "./utils/storage/storage.encode.js";
 import "../utils/storage/storage.getobject.js";
 import "../utils/storage/storage.setobject.js";
 
