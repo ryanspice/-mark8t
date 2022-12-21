@@ -8,7 +8,7 @@
   import styles from "./Contact.svelte.scss";
 
   $: website = {};
-  import { _API_STORE_WEBSITE_, fetchWebsiteInfoFromJson } from '../../stores.js';
+  import { _API_STORE_WEBSITE_, fetchWebsiteInfoFromJson } from '../../../stores.js';
   _API_STORE_WEBSITE_.subscribe(value => {
     website = value;
   });
