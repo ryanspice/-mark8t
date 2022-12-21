@@ -30,7 +30,6 @@
 	//
 	const updatePlace = (value) => {
 		place.update((h) => value);
-		console.log(value);
 		isOpen.update((h) => value.opening_hours.open_now);
 	};
 
