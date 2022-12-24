@@ -5,7 +5,7 @@
 	import Input from "../Input.svelte";
 	let panelWebsite = false;
 	panelWebsite =
-		localStorage.getItem("--panel--panelWebsite") === "true" || false;
+		localStorage.getObject("--panel--panelWebsite") === "true" || false;
 	$: website = {};
 	import { _API_STORE_WEBSITE_ } from "../../stores.js";
 	_API_STORE_WEBSITE_.subscribe((value) => {

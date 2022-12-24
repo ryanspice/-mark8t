@@ -3,7 +3,7 @@
 	import { onMount } from "svelte";
 	let ageGate;
 	onMount(() => {
-		ageGate = localStorage.getItem("ageGate");
+		ageGate = localStorage.getObject("ageGate");
 	});
 </script>
 

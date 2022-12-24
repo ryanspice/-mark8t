@@ -5,9 +5,10 @@
 	import Input from "../Input.svelte";
 	let panelInfo = false;
 	let panelContactInfo = false;
-	panelInfo = localStorage.getItem("--panel--panelInfo") === "true" || false;
+	panelInfo =
+		localStorage.getObject("--panel--panelInfo") === "true" || false;
 	panelContactInfo =
-		localStorage.getItem("--panel--panelContactInfo") === "true" || false;
+		localStorage.getObject("--panel--panelContactInfo") === "true" || false;
 	$: account = {};
 	$: website = {};
 	import { _API_STORE_ACCOUNT_, _API_STORE_WEBSITE_ } from "../../stores.js";

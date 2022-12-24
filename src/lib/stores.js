@@ -154,25 +154,26 @@ const timeStampStillValid = (key) => {
 let a = async (filter) => {
 	_API_STORE_PRODUCTS_.set((localStorage.getObject('--store-products', () => { fetchProducts(filter) })));
 	return;
-	if (timeStampStillValid('--store-products-timestamp')) {
-		_API_STORE_PRODUCTS_.set((localStorage.getObject('--store-products')));
-	} else {
-		fetchProducts(filter);
-	}
 
-	return;
+	// if (timeStampStillValid('--store-products-timestamp')) {
+	// 	_API_STORE_PRODUCTS_.set((localStorage.getObject('--store-products')));
+	// } else {
+	// 	fetchProducts(filter);
+	// }
 
-	if (timeStampStillValid('--app-products-timestamp') &&
-		(localStorage.getItem('products'))) {
-		try {
-			products.set(JSON.parse(localStorage.getItem('products')));
-		} catch (e) {
-			console.log(e);
-			fetchProducts(filter);
-		}
-	} else {
-		fetchProducts(filter);
-	}
+	// return;
+
+	// if (timeStampStillValid('--app-products-timestamp') &&
+	// 	(localStorage.getItem('products'))) {
+	// 	try {
+	// 		products.set(JSON.parse(localStorage.getItem('products')));
+	// 	} catch (e) {
+	// 		console.log(e);
+	// 		fetchProducts(filter);
+	// 	}
+	// } else {
+	// 	fetchProducts(filter);
+	// }
 };
 
 a('in stock');

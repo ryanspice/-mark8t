@@ -1,12 +1,21 @@
+import { dev } from "$app/environment";
+
 Storage.prototype.getObject = function (key, callback) {
+
+  let keyName = key;
+
+  if (dev) {
+    keyName = "" + key;
+  }
+
   try {
-    const value = this.getItem(key);
-    const ttl = this.getItem(key + "~ttl");
+    const value = this.getItem(keyName);
+    const ttl = this.getItem(keyName + "~ttl");
 
     if (ttl) {
       if (ttl < new Date().getTime()) {
-        this.removeItem(key);
-        this.removeItem(key + "~ttl");
+        this.removeItem(keyName);
+        this.removeItem(keyName + "~ttl");
         callback();
         return false;
       }

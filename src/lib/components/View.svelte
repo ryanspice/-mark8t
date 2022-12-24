@@ -127,7 +127,7 @@
     // google = JSON.parse(localStorage.getItem('--store-google'));
 
     layoutSelected =
-      JSON.parse(localStorage.getItem("--data-layoutSelected")) || layouts[0];
+      JSON.parse(localStorage.getObject("--data-layoutSelected")) || layouts[0];
   }
 
   // //
@@ -139,21 +139,22 @@
 
   //
   function getPanelInfo() {
-    panelInfo = localStorage.getItem("--panel--panelInfo") === "true" || false;
+    panelInfo =
+      localStorage.getObject("--panel--panelInfo") === "true" || false;
     panelProducts =
-      localStorage.getItem("--panel--panelProducts") === "true" || false;
+      localStorage.getObject("--panel--panelProducts") === "true" || false;
     panel1Open =
-      localStorage.getItem("--panel--panel1Open") === "true" || false;
+      localStorage.getObject("--panel--panel1Open") === "true" || false;
     panelContactInfo =
-      localStorage.getItem("--panel--panelContactInfo") === "true" || false;
+      localStorage.getObject("--panel--panelContactInfo") === "true" || false;
     panel3Open =
-      localStorage.getItem("--panel--panel3Open") === "true" || false;
+      localStorage.getObject("--panel--panel3Open") === "true" || false;
     panel4Open =
-      localStorage.getItem("--panel--panel4Open") === "true" || false;
+      localStorage.getObject("--panel--panel4Open") === "true" || false;
     panelLayouts =
-      localStorage.getItem("--panel--panelLayouts") === "true" || false;
+      localStorage.getObject("--panel--panelLayouts") === "true" || false;
     panelWebsite =
-      localStorage.getItem("--panel--panelWebsite") === "true" || false;
+      localStorage.getObject("--panel--panelWebsite") === "true" || false;
   }
 
   //
