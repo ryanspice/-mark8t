@@ -21,7 +21,7 @@
 
   import Account from "./modules/Account.svelte";
 
-  import styles from "./View.svelte.scss";
+  import "./View.svelte.scss?inline";
   import Drawer from "./Drawer.svelte";
   import ContactList from "./ContactList.svelte";
   import DialogForEditing from "./DialogForEditing.svelte";
@@ -289,9 +289,7 @@
     </Label>
   </Banner>
 </div>
-<!-- <Drawer>
-  yrdy
-</Drawer> -->
+<!-- <Drawer>yrdy</Drawer> -->
 <section class="container">
   <Paper elevation={0}>
     <!--<Title>Dundas & Sons</Title>-->
