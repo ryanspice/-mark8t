@@ -32,6 +32,7 @@
 		// @testing - below we are simply hard-coding the form value saved to the store
 		// NOTE: we must wrap the form element fId value in brackets
 		//var objVal = validate({ "ct1":$storeFE.formElements[fIndex].fValue}, constraints);
+
 		var objVal = validate(
 			{
 				[$storeFE.formElements[fIndex].fId]:

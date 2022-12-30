@@ -9,7 +9,7 @@ export const isOpen = writable(0);
 export const opening_hours = writable(0);
 export const place = writable(0);
 
-const baseUrl = import.meta.env.VITE_BASE_URL;
+const baseUrl = import.meta.env.VITE_BASE;
 const tenantId = import.meta.env.VITE_TENANT_ID;
 const mapsId = import.meta.env.VITE_API_G_MAPS_ID;
 const mapsUrl = 'https://maps.googleapis.com/maps/api/js?key=' + mapsId + '&libraries=places&callback=initMap';
@@ -21,24 +21,35 @@ export const _GOOGLE_MAP_API_URL_ = writable('');
 _GOOGLE_MAP_API_URL_.set(mapsUrl);
 
 export const _NEWSLETTER_URL_ = writable("");
-_NEWSLETTER_URL_.set("https://cdn.forms-content.sg-form.com/747312ce-2554-11ed-87ec-fe032ff37937");
-
 export const _CALENDAR_URL_ = writable("");
+
 export const _CALENDAR_IFRAME_ = writable("");
-_CALENDAR_URL_.set("https://calendar.google.com/calendar/ical/pnap24kf15uktd97i1a9m2ardc%40group.calendar.google.com/public/basic.ics");
-_CALENDAR_IFRAME_.set("https://calendar.google.com/calendar/embed?src=pnap24kf15uktd97i1a9m2ardc%40group.calendar.google.com&ctz=America%2FToronto");
 
-const URL = "https://dundasandsons.ca/" + base + "/_api";
 
-const _API_TENANT_ = (import.meta.env.VITE_TENANT_ID).replaceAll("-", "_");
-const _API_WEBSITE_ = URL + '/' + _API_TENANT_ + '/website.json?r=' + Math.random() * 999999;
-const _API_PRODUCTS_ = URL + '/' + _API_TENANT_ + '/products.json?r=' + Math.random() * 999999;
-const _API_GOOGLE_ = URL + '/' + _API_TENANT_ + '/google.json?r=' + Math.random() * 999999;
-const API = URL + "/" + _API_TENANT_ + "/products.json?r=" + Math.random() * 999999;
+/* URLS 
+	dev/
+	api/
+	storage/
+	storage/{tenant}/
+	https://{_API}.ca/{_API_URL}
+	https://{_DOMAIN}.ca/{_BASE}{_STORAGE}{_API_TENANT_}/
+*/
+const _NAME = (import.meta.env.VITE_NAME);
+const _DOMAIN = (import.meta.env.VITE_DOMAIN);
+const _BASE = (import.meta.env.VITE_BASE);
+const _TENANT = (import.meta.env.VITE_TENANT).replaceAll("-", "_");
 
-const _API_URL_ = URL;
-const _API_POST_TO_TENANT_ = URL + "/posttobid.php?r=" + Math.random() * 999999;
-const _API_POST_IMAGE_TO_TENANT_ = URL + "/postimagetobid.php?r=" + Math.random() * 999999;
+const _API = (import.meta.env.VITE_API_DOMAIN) + _BASE + (import.meta.env.VITE_API_URL);
+const _STORAGE = (import.meta.env.VITE_API_DOMAIN) + _BASE + (import.meta.env.VITE_STORAGE_URL) + _TENANT;
+
+const _WEBSITE = _STORAGE + '/website.json?r=' + Math.random() * 999998;
+const _PRODUCTS = _STORAGE + '/products.json?r=' + Math.random() * 999997;
+const _GOOGLE = _STORAGE + '/google.json?r=' + Math.random() * 999996;
+
+
+const _POST_TO_TENANT = _API + _BASE + "/posttobid.php?r=" + Math.random() * 999995;
+const _POST_IMAGE_TO_TENANT = _API + _BASE + "/postimagetobid.php?r=" + Math.random() * 999994;
+
 
 const CACHE_DELAY = 1000;
 
@@ -90,16 +101,17 @@ const fetchJsonFromUrl = async (url, callback) => {
 
 //
 function fetchWebsiteInfoFromJson() {
-	fetchJsonFromUrl(_API_WEBSITE_, (data) => {
+	fetchJsonFromUrl(_WEBSITE, (data) => {
 		_API_STORE_WEBSITE_.set(data);
 		localStorage.setObject('--store-website', data || JSON.stringify(''), 1);
 		//getLatestDataFromLocalStorage();
+		_NEWSLETTER_URL_.set(data.siteUrlNewsletter);
 	});
 }
 
 //
 function fetchProductsInfoFromJson() {
-	fetchJsonFromUrl(_API_PRODUCTS_, (data) => {
+	fetchJsonFromUrl(_PRODUCTS, (data) => {
 		_API_STORE_PRODUCTS_.set(data);
 		localStorage.setObject('--store-products', data || (''), 1);
 		//getLatestDataFromLocalStorage();
@@ -108,10 +120,13 @@ function fetchProductsInfoFromJson() {
 
 //
 function fetchGoogleInfoFromJson() {
-	fetchJsonFromUrl(_API_GOOGLE_, (data) => {
+	fetchJsonFromUrl(_GOOGLE, (data) => {
 		_API_STORE_GOOGLE_.set(data);
 		localStorage.setObject('--store-google', data || JSON.stringify(''), 24 * 60);
 		//getLatestDataFromLocalStorage();
+		//data?.calendarRedirect
+		_CALENDAR_URL_.set(data?.calendarUrl);
+		_CALENDAR_IFRAME_.set(data?.calendarIframe);
 	});
 }
 
@@ -127,7 +142,7 @@ function fetchAdmin() {
 
 //
 const fetchProducts = async (filter) => {
-	const response = await fetch(API);
+	const response = await fetch(_PRODUCTS);
 	let items;
 	items = (await response.json());
 	if (filter) {
@@ -152,6 +167,7 @@ const timeStampStillValid = (key) => {
 
 //
 let a = async (filter) => {
+	fetchGoogleInfoFromJson();
 	_API_STORE_PRODUCTS_.set((localStorage.getObject('--store-products', () => { fetchProducts(filter) })));
 	return;
 
@@ -184,8 +200,14 @@ export {
 	fetchProducts,
 	getAccountDataFromLocalStorage,
 	fetchWebsiteInfoFromJson,
+	fetchGoogleInfoFromJson,
 	postJsonToTenant,
-	URL,
-	_API_URL_,
-	_API_TENANT_
+	_API,
+	_TENANT,
+	_STORAGE,
+	_WEBSITE,
+	_PRODUCTS,
+	_GOOGLE,
+	_POST_TO_TENANT,
+	_POST_IMAGE_TO_TENANT
 }

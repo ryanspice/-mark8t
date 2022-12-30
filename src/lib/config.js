@@ -1,7 +1,7 @@
 
 // build redirect url from environment variables
 const redirectUrl = import.meta.env.VITE_REDIRECT_URL;
-const baseUrl = import.meta.env.VITE_BASE_URL;
+const baseUrl = import.meta.env.VITE_BASE;
 const authClientID = import.meta.env.VITE_API_MS_AUTH_CLIENT_ID;
 // scopes 
 const scopes = ["https://graph.microsoft.com/User.Read.All", "https://graph.microsoft.com/AppRoleAssignment.ReadWrite.All", "https://graph.microsoft.com/AppRoleAssignment.ReadWrite.All", "openid", "email", "offline_access", "profile"];

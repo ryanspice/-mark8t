@@ -12,7 +12,6 @@
 	$: account = {};
 	$: website = {};
 	import { _API_STORE_ACCOUNT_, _API_STORE_WEBSITE_ } from "../../stores.js";
-	import { onMount } from "svelte";
 	_API_STORE_ACCOUNT_.subscribe((value) => {
 		account = value || {};
 	});
@@ -29,39 +28,50 @@
 	};
 
 	export let unsavedChanges;
-	export let overrideOpenState = false;
-
-	onMount(() => {
-		if (overrideOpenState) panelInfo = true;
-	});
 </script>
 
+<!-- CONTACT INFO -->
 <Panel
-	bind:open={panelInfo}
+	bind:open={panelContactInfo}
 	on:click={(e) => {
-		localStorage.setItem("--panel--panelInfo", panelInfo);
+		localStorage.setItem("--panel--panelContactInfo", panelContactInfo);
 	}}
 >
-	<Header style="cursor:pointer;">
-		<strong class="mdc-typography--headline6">Acccount</strong>
-		<IconButton
-			slot="icon"
-			toggle
-			pressed={panelInfo}
-			hidden={overrideOpenState}
-		>
+	<Header>
+		<strong class="mdc-typography--headline6">Contact & Social</strong>
+		<span slot="description" />
+		<IconButton slot="icon" toggle pressed={panelContactInfo}>
 			<Icon class="material-icons" on>expand_less</Icon>
 			<Icon class="material-icons">expand_more</Icon>
 		</IconButton>
 	</Header>
 	<Content>
-		<Input label="Name" bind:value={account.name} disabled={true} />
-		<Input label="Username" bind:value={account.username} disabled={true} />
-		<Input label="Tenant" bind:value={website.siteName} disabled={true} />
 		<Input
-			label="Tenant ID"
-			bind:value={account.localAccountId}
-			disabled={true}
+			label="Phone"
+			class="w-100"
+			type="tel"
+			pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+			maxlength="17"
+			bind:value={website.siteContactPhone}
+			input={unsavedChanges}
+		/>
+		<Input
+			label="Email"
+			class="w-100"
+			bind:value={website.siteContactEmail}
+			input={unsavedChanges}
+		/>
+		<Input
+			label="Facebook"
+			class="w-100"
+			bind:value={website.siteContactFacebook}
+			input={unsavedChanges}
+		/>
+		<Input
+			label="Instagram"
+			class="w-100"
+			bind:value={website.siteContactInstagram}
+			input={unsavedChanges}
 		/>
 	</Content>
 </Panel>

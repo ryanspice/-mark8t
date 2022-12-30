@@ -64,6 +64,7 @@
 			console.log("user has admin permissions");
 		}
 	});
+	export let override = false;
 </script>
 
 <svelte:head>
@@ -74,7 +75,9 @@
 <Analytics />
 {#if localAccountId}
 	{#if localAccountHasAdminPermissions}
-		<Layout account={localAccount} />
+		<Layout {override} account={localAccount}>
+			<slot />
+		</Layout>
 	{:else if reconnectionAttempts < 2}
 		<Spinner message={"checking permissions"} />
 	{:else}

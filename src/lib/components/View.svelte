@@ -1,6 +1,8 @@
 <script>
   import { onMount } from "svelte";
 
+  import { base } from "$app/paths";
+
   import Card, {
     PrimaryAction,
     Actions,
@@ -20,6 +22,7 @@
   import List, { Item, Text, Graphic, Separator, Subheader } from "@smui/list";
 
   import Account from "./modules/Account.svelte";
+  import Contact from "./modules/Contact.svelte";
 
   import "./View.svelte.scss?inline";
   import Drawer from "./Drawer.svelte";
@@ -270,6 +273,7 @@
       "saved-changes"
     ).style = `position:absolute;top: ${scrollPosition}px;`;
   };
+  export let override = false;
 </script>
 
 <svelte:window bind:scrollY={scrollPosition} />
@@ -290,56 +294,79 @@
   </Banner>
 </div>
 <!-- <Drawer>yrdy</Drawer> -->
-<section class="container">
-  <Paper elevation={0}>
-    <!--<Title>Dundas & Sons</Title>-->
-    <!-- <Subtitle>Dundas & Sons Admin.</Subtitle> -->
-    <!-- <p>use this Page to configure your plugins</p> -->
-    <br />
-    <Modules.Account {unsavedChanges} />
-    <br />
-    <!-- WEBSITTE -->
-    <Modules.Website {unsavedChanges} />
-    <!-- PRODUCTS -->
-    <Accordion>
-      <Panel
-        bind:open={panelProducts}
-        on:click={(e) => {
-          localStorage.setItem("--panel--panelProducts", panelProducts);
+<div><a href={base + "/admin"}>Home \ Admin</a></div>
+<br />
+{#if override}
+  <section class="container">
+    <Paper elevation={0}>
+      <Accordion>
+        <slot {unsavedChanges} />
+      </Accordion>
+    </Paper>
+  </section>
+{/if}
+{#if override === false}
+  <section class="container">
+    <Paper elevation={0}>
+      <!--<Title>Dundas & Sons</Title>-->
+      <!-- <Subtitle>Dundas & Sons Admin.</Subtitle> -->
+      <!-- <p>use this Page to configure your plugins</p> -->
+      <br />
+      <Accordion
+        on:click={() => {
+          window.location = "./admin/account";
         }}
       >
-        <Header>
-          <strong class="mdc-typography--headline6">Products</strong>
-          <IconButton slot="icon" toggle pressed={panelProducts}>
-            <Icon class="material-icons" on>expand_less</Icon>
-            <Icon class="material-icons">expand_more</Icon>
-          </IconButton>
-
-          <Button
-            raised
-            disabled={!panelProducts}
-            on:click={(e) => {
-              onAddProduct();
-              e.preventDefault();
-              e.stopPropagation();
-            }}>Add New</Button
-          >
-          <Button
-            raised
-            disabled
-            on:click={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}>View All</Button
-          >
-          <!-- <Button raised on:click={onAddProduct}>View All</Button> -->
-        </Header>
-        <Content
-          bind:this={productContainer}
-          style="display:flex;overflow:auto;"
-          on:wheel={handleWheel}
+        <Modules.Account {unsavedChanges} />
+      </Accordion>
+      <Accordion>
+        <Modules.Contact {unsavedChanges} />
+      </Accordion>
+      <br />
+      <!-- WEBSITTE -->
+      <Accordion>
+        <Modules.Website {unsavedChanges} />
+      </Accordion>
+      <!-- PRODUCTS -->
+      <Accordion>
+        <Panel
+          bind:open={panelProducts}
+          on:click={(e) => {
+            localStorage.setItem("--panel--panelProducts", panelProducts);
+          }}
         >
-          <!-- <Card on:click={onAddProduct}>
+          <Header>
+            <strong class="mdc-typography--headline6">Products</strong>
+            <IconButton slot="icon" toggle pressed={panelProducts}>
+              <Icon class="material-icons" on>expand_less</Icon>
+              <Icon class="material-icons">expand_more</Icon>
+            </IconButton>
+
+            <Button
+              raised
+              disabled={!panelProducts}
+              on:click={(e) => {
+                onAddProduct();
+                e.preventDefault();
+                e.stopPropagation();
+              }}>Add New</Button
+            >
+            <Button
+              raised
+              disabled
+              on:click={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}>View All</Button
+            >
+            <!-- <Button raised on:click={onAddProduct}>View All</Button> -->
+          </Header>
+          <Content
+            bind:this={productContainer}
+            style="display:flex;overflow:auto;"
+            on:wheel={handleWheel}
+          >
+            <!-- <Card on:click={onAddProduct}>
             <span style='content: "\003F";opacity:0.1;left:32%;top:40%;font-size:166px;position:absolute;'>+</span>
             <Content>{""}</Content>
             <Actions style="opacity:0; user-events:none;">
@@ -353,57 +380,57 @@
               </ActionButtons>
             </Actions>
           </Card> -->
-          {#each products as product, i}
-            <Card
-              on:click={(e) => {
-                data = product;
-                console.log(data);
-                openDialogForEditing = true;
-                e.stopPropagation();
-              }}
-            >
-              <span
-                style="content: '\003F';opacity:0.01;left:37%;top:40%;font-size:166px;position:absolute;"
+            {#each products as product, i}
+              <Card
+                on:click={(e) => {
+                  data = product;
+                  console.log(data);
+                  openDialogForEditing = true;
+                  e.stopPropagation();
+                }}
               >
-                &#63;</span
-              >
-              <img
-                src={product.thumb}
-                style="width:100%;height:100%;object-fit:cover;max-width:275px;"
-              />
-              <Content>{product.name}</Content>
-              <Actions>
-                <ActionButtons>
-                  <Button
-                    on:click={(e) => {
-                      data = product;
-                      console.log(data);
-                      openDialogForEditing = true;
-                      e.stopPropagation();
-                    }}
-                  >
-                    <Label>Edit</Label>
-                  </Button>
-                  <Button
-                    style="color:red;"
-                    on:click={(e) => {
-                      if (
-                        confirm(
-                          "Are you sure you want to delete " +
-                            product.name +
-                            "?"
-                        )
-                      ) {
-                        removeProduct(product.id);
-                      }
-                      e.stopPropagation();
-                    }}
-                  >
-                    <Label>Delete</Label>
-                  </Button>
-                </ActionButtons>
-                <ActionIcons>
-                  <!-- <IconButton on:click={()=> clicked++}
+                <span
+                  style="content: '\003F';opacity:0.01;left:37%;top:40%;font-size:166px;position:absolute;"
+                >
+                  &#63;</span
+                >
+                <img
+                  src={product.thumb}
+                  style="width:100%;height:100%;object-fit:cover;max-width:275px;"
+                />
+                <Content>{product.name}</Content>
+                <Actions>
+                  <ActionButtons>
+                    <Button
+                      on:click={(e) => {
+                        data = product;
+                        console.log(data);
+                        openDialogForEditing = true;
+                        e.stopPropagation();
+                      }}
+                    >
+                      <Label>Edit</Label>
+                    </Button>
+                    <Button
+                      style="color:red;"
+                      on:click={(e) => {
+                        if (
+                          confirm(
+                            "Are you sure you want to delete " +
+                              product.name +
+                              "?"
+                          )
+                        ) {
+                          removeProduct(product.id);
+                        }
+                        e.stopPropagation();
+                      }}
+                    >
+                      <Label>Delete</Label>
+                    </Button>
+                  </ActionButtons>
+                  <ActionIcons>
+                    <!-- <IconButton on:click={()=> clicked++}
                   toggle
                   disabled
                   aria-label="Add to featured"
@@ -414,102 +441,105 @@
                 </IconButton>
                 <IconButton disabled class="material-icons" on:click={()=> clicked++}
                   title="Share">share</IconButton> -->
-                  <!-- <IconButton
+                    <!-- <IconButton
             class="material-icons"
             on:click={() => clicked++}
             title="More options">more_vert</IconButton
           > -->
-                </ActionIcons>
-              </Actions>
-            </Card>
-          {/each}
-        </Content>
-      </Panel>
-    </Accordion>
-    <!-- LAYOUDS -->
-    <Accordion>
-      <Panel
-        bind:open={panelLayouts}
-        on:click={(e) => {
-          localStorage.setItem("--panel--panelLayouts", panelLayouts);
-        }}
-        disabled
-      >
-        <Header>
-          <strong>Layouts</strong>
-          <IconButton slot="icon" toggle pressed={panelProducts}>
-            <Icon class="material-icons" on>expand_less</Icon>
-            <Icon class="material-icons">expand_more</Icon>
-          </IconButton>
-        </Header>
-        <Content style="display:flex;overflow:scroll;" on:wheel={handleWheel}>
-          {#each layouts as layout, i}
-            <Card
-              on:click={(e) => {
-                data = layout;
-                layoutSelected = layout;
-                e.stopPropagation();
-              }}
-            >
-              <span
-                style="content: '\003F';opacity:0.1;left:37%;top:40%;font-size:166px;position:absolute;"
+                  </ActionIcons>
+                </Actions>
+              </Card>
+            {/each}
+          </Content>
+        </Panel>
+      </Accordion>
+      <!-- LAYOUDS -->
+      <Accordion>
+        <Panel
+          bind:open={panelLayouts}
+          on:click={(e) => {
+            localStorage.setItem("--panel--panelLayouts", panelLayouts);
+          }}
+          disabled
+        >
+          <Header>
+            <strong>Layouts</strong>
+            <IconButton slot="icon" toggle pressed={panelProducts}>
+              <Icon class="material-icons" on>expand_less</Icon>
+              <Icon class="material-icons">expand_more</Icon>
+            </IconButton>
+          </Header>
+          <Content style="display:flex;overflow:scroll;" on:wheel={handleWheel}>
+            {#each layouts as layout, i}
+              <Card
+                on:click={(e) => {
+                  data = layout;
+                  layoutSelected = layout;
+                  e.stopPropagation();
+                }}
               >
-                &#63;</span
-              >
-              <img
-                src={layout.image}
-                style="width:100%;height:100%;object-fit:cover;max-width:275px;"
-              />
-              <Content>{layout.name}</Content>
-              <Actions>
-                <ActionButtons>
-                  <Button
-                    on:click={(e) => {
-                      data = layout;
-                      layoutSelected = layout;
-                      e.stopPropagation();
-                    }}
-                  >
-                    <Label
-                      >{layout === layoutSelected
-                        ? "Selected"
-                        : "Select"}</Label
+                <span
+                  style="content: '\003F';opacity:0.1;left:37%;top:40%;font-size:166px;position:absolute;"
+                >
+                  &#63;</span
+                >
+                <img
+                  src={layout.image}
+                  style="width:100%;height:100%;object-fit:cover;max-width:275px;"
+                />
+                <Content>{layout.name}</Content>
+                <Actions>
+                  <ActionButtons>
+                    <Button
+                      on:click={(e) => {
+                        data = layout;
+                        layoutSelected = layout;
+                        e.stopPropagation();
+                      }}
                     >
-                  </Button>
-                </ActionButtons>
-                <ActionIcons>
-                  <IconButton
-                    on:click={() => clicked++}
-                    toggle
-                    disabled
-                    aria-label="Add to featured"
-                    title="Add to featured"
-                  >
-                    <Icon disabled class="material-icons" on>favorite</Icon>
-                    <Icon disabled class="material-icons">favorite_border</Icon>
-                  </IconButton>
-                  <IconButton
-                    disabled
-                    class="material-icons"
-                    on:click={() => clicked++}
-                    title="Share">share</IconButton
-                  >
-                  <!-- <IconButton
+                      <Label
+                        >{layout === layoutSelected
+                          ? "Selected"
+                          : "Select"}</Label
+                      >
+                    </Button>
+                  </ActionButtons>
+                  <ActionIcons>
+                    <IconButton
+                      on:click={() => clicked++}
+                      toggle
+                      disabled
+                      aria-label="Add to featured"
+                      title="Add to featured"
+                    >
+                      <Icon disabled class="material-icons" on>favorite</Icon>
+                      <Icon disabled class="material-icons"
+                        >favorite_border</Icon
+                      >
+                    </IconButton>
+                    <IconButton
+                      disabled
+                      class="material-icons"
+                      on:click={() => clicked++}
+                      title="Share">share</IconButton
+                    >
+                    <!-- <IconButton
                 class="material-icons"
                 on:click={() => clicked++}
                 title="More options">more_vert</IconButton
               > -->
-                </ActionIcons>
-              </Actions>
-            </Card>
-          {/each}
-        </Content>
-      </Panel>
-    </Accordion>
-    <br />
-    <Modules.Google {unsavedChanges} />
-  </Paper>
-</section>
+                  </ActionIcons>
+                </Actions>
+              </Card>
+            {/each}
+          </Content>
+        </Panel>
+      </Accordion>
+      <br />
+      <Modules.Google {unsavedChanges} />
+    </Paper>
+  </section>
+{/if}
 <DialogForEditing
   {data}
   open={openDialogForEditing}
