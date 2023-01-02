@@ -44,7 +44,7 @@
 	export let onSave = () => {};
 	export let onClose = () => {};
 
-	import { _API_TENANT_, _API_URL_ } from "../stores.js";
+	import { _TENANT, _API } from "../stores.js";
 	//
 	function closeHandler(e) {
 		switch (e.detail.action) {
@@ -155,7 +155,7 @@
 			<Actions>
 				<ActionButtons>
 					<form
-						action={_API_URL_ + "/postimagetobid.php"}
+						action={_API + "/postimagetobid.php"}
 						method="post"
 						enctype="multipart/form-data"
 						target="dummyframe"
@@ -173,7 +173,7 @@
 						<input
 							id="tenant"
 							name="tenant"
-							value={_API_TENANT_}
+							value={_TENANT}
 							style="display:none"
 						/>
 						<input
@@ -185,11 +185,11 @@
 								document
 									.getElementById("fileToUploadSubmit")
 									.click();
-								console.log(_API_TENANT_);
+								console.log(_TENANT);
 								data.thumb =
-									_API_URL_ +
+									_API +
 									"/" +
-									_API_TENANT_ +
+									_TENANT +
 									"/images/" +
 									e.target.files[0].name;
 								setTimeout(() => {

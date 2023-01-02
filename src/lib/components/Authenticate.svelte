@@ -10,6 +10,7 @@
 
 	let username = "";
 	let myMSALObj = null;
+	let currentAccounts = [];
 	export let localAccountHasAdminPermissions = false;
 
 	//
@@ -19,18 +20,31 @@
 
 	/**/
 	onMount(() => {
-		if (localAccountHasAdminPermissions != false) return;
+		if (localAccountHasAdminPermissions != false) {
+			console.log(
+				"Authenticate - localAccountHasAdminPermissions - " +
+					localAccountHasAdminPermissions
+			);
+			return;
+		}
+
+		console.log(
+			"Authenticate - localAccountHasAdminPermissions - " +
+				localAccountHasAdminPermissions
+		);
 
 		try {
 			myMSALObj = new msal.PublicClientApplication(msalConfig);
+			console.log("Authenticate - myMSALObj - success");
 		} catch (err) {
+			console.warn("Authenticate - myMSALObj - ", err);
 			localStorage.setItem("msal auth", JSON.stringify(err));
 
 			if (myMSALObj === null) {
-				console.error("myMSALObj is null", myMSALObj);
+				console.warn("Authenticate - myMSALObj - is null", myMSALObj);
 				return;
 			} else {
-				console.log("myMSALObj is not null");
+				console.warn("Authenticate - myMSALObj - is not null");
 			}
 		}
 
@@ -53,27 +67,39 @@
 		 * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-common/docs/Accounts.md
 		 */
 		async function selectAccount() {
-			const currentAccounts = await myMSALObj.getAllAccounts();
+			currentAccounts = await myMSALObj.getAllAccounts();
+			let msg = "";
+			console.log(
+				"Authenticate - selectAccount - ",
+				currentAccounts.length
+			);
 
-			if (!currentAccounts || currentAccounts.length < 1) {
-				localStorage.setItem(
-					"msal signIn",
-					JSON.stringify(
-						"!currentAccounts || currentAccounts.length < 1"
-					)
-				);
-				signIn();
+			if (currentAccounts.length === 0) {
+				msg = "currentAccounts.length===0";
+				localStorage.setItem("msal signIn", JSON.stringify(msg));
+				console.log("Authenticate - selectAccount - " + msg);
+				//signIn();
+			}
+
+			if (currentAccounts.length < 1) {
+				msg = "!currentAccounts || currentAccounts.length < 1";
+				localStorage.setItem("msal signIn", JSON.stringify(msg));
+
+				console.log("Authenticate - selectAccount - " + msg);
+
 				return;
 			} else if (currentAccounts.length > 1) {
 				// Add your account choosing logic here
-				console.warn("msal multiple accounts detected.");
-				localStorage.setItem(
-					"msal signIn",
-					JSON.stringify("msal multiple accounts detected.")
-				);
+				msg = "msal multiple accounts detected.";
+				localStorage.setItem("msal signIn", JSON.stringify(msg));
+
+				console.log("Authenticate - selectAccount - " + msg);
+
 				onSuccess(querySiteSpecificData);
 			} else if (currentAccounts.length === 1) {
-				localStorage.setItem("msal signIn", JSON.stringify("success"));
+				msg = "success";
+				localStorage.setItem("msal signIn", JSON.stringify(msg));
+				console.log("Authenticate - selectAccount - " + msg);
 				onSuccess(querySiteSpecificData);
 			}
 		}
@@ -131,10 +157,57 @@
 		 * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/request-response-object.md#request
 		 */
 		function signIn() {
+			let account = localStorage.getObject("accounts");
+			console.log(account);
+
+			if (account) {
+				// verify account data
+				if (
+					account.homeAccountId &&
+					account.localAccountId &&
+					account.username
+				) {
+					// account is valid
+					console.log("Authenticate - signIn - account is valid");
+					const timeToLive =
+						new Date(
+							Number(String(account.idTokenClaims.exp) + "000")
+						) - new Date().getTime();
+
+					if (
+						timeToLive > 0 &&
+						timeToLive < 1000 * 60 * 60 * 24 * 30
+					) {
+						console.log(
+							"Authenticate - signIn - account is valid - token is valid"
+						);
+						console.log(
+							"Authenticate - signIn - time to live",
+							timeToLive
+						);
+						return;
+					}
+				}
+			}
+
+			console.log("Authenticate - signIn - ", currentAccounts);
+			if (currentAccounts.length > 0) {
+				localStorage.setObject(
+					"--accountId",
+					currentAccounts[0],
+					24 * 60
+				);
+				console.log("Authenticate - signIn - currentAccounts.length>0");
+				return;
+			}
+			// myMSALObj
+			// 	.loginPopup(loginRequest)
+			// 	.then(handleResponse)
+			// 	.catch((error) => {
+			// 		console.error(error);
+			// 	});
 			myMSALObj.loginRedirect(loginRequest);
 		}
-
-		window.signIn = signIn;
 
 		/**
 		 * You can pass a custom request object below. This will override the initial configuration. For more information, visit:
@@ -148,6 +221,7 @@
 			myMSALObj.logout(logoutRequest);
 		}
 
+		window.signIn = signIn;
 		window.signOut = signOut;
 
 		/**
@@ -182,6 +256,6 @@
 				});
 		}
 
-		selectAccount();
+		// selectAccount();
 	});
 </script>

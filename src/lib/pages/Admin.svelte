@@ -1,5 +1,5 @@
 <script>
-	import { base } from '$app/paths';
+	import { base } from "$app/paths";
 	import { onMount } from "svelte";
 
 	import {
@@ -7,9 +7,8 @@
 		Analytics,
 		Spinner,
 		Layout,
-	
-	_API_STORE_WEBSITE_
-} from "../index";
+		_API_STORE_WEBSITE_,
+	} from "../index";
 
 	let reconnectionAttempts = 0;
 	let localAccount = {};
@@ -20,29 +19,32 @@
 
 	$: website = {};
 
-	_API_STORE_WEBSITE_.subscribe(value => {
+	_API_STORE_WEBSITE_.subscribe((value) => {
 		website = value || {};
 	});
 
 	/* set variables from local storage */
 	const retrieveLocaldata = async () => {
-		console.log('retrieveLocaldata');
-		let account = (localStorage.getObject('accounts', window.signIn));
+		console.log("retrieveLocaldata");
+		let account = localStorage.getObject("accounts", window.signIn);
 		localAccount = account;
 		localAccountId = account?.localAccountId || null;
 		localAccountName = account?.name;
-		if ((localAccountName) && (localAccountId)) {
-			localAccountPermissions = await (await fetch("../api/authenticated.json")).json();
-			localAccountHasAdminPermissions = localAccountPermissions.ids.includes(localAccountId);
+		if (localAccountName && localAccountId) {
+			localAccountPermissions = await (
+				await fetch("../api/authenticated.json")
+			).json();
+			localAccountHasAdminPermissions =
+				localAccountPermissions.ids.includes(localAccountId);
 		}
 	};
 
 	/**/
 	const retrieveTimeout = () => {
-		console.log(localAccountHasAdminPermissions)
+		console.log(localAccountHasAdminPermissions);
 		if (reconnectionAttempts++ > 2) {
 			if (localAccountHasAdminPermissions) {
-				//alert('eh')
+				window.location = base + "/admin";
 			} else {
 				window.location = base + "/unauthorized";
 			}
@@ -51,7 +53,7 @@
 				retrieveTimeout();
 			}
 		}
-	}
+	};
 
 	/**/
 	onMount(() => {
@@ -59,29 +61,35 @@
 		if (!localAccountHasAdminPermissions) {
 			setTimeout(retrieveTimeout, 1000);
 		} else {
-			console.log('user has admin permissions');
+			console.log("user has admin permissions");
 		}
 	});
+	export let override = false;
 </script>
 
 <svelte:head>
-	<title>{website.siteName || ''}</title>
+	<title>{website.siteName || ""}</title>
 </svelte:head>
 
 <!-- <Drawer /> -->
 <Analytics />
-{#if (localAccountId)}
-{#if (localAccountHasAdminPermissions)}
-<Layout account={localAccount}></Layout>
-{:else if ((reconnectionAttempts
-<2))} <Spinner message={"checking permissions"} />
-{:else}
-<Spinner message={"redirecting"} />
-{/if}
-{:else}
-<Spinner />
-<Authenticate localAccountHasAdminPermissions={localAccountPermissions} onSuccess={async (more)=>{
-	await more();
-	await retrieveLocaldata();
-	}} />
+{#if localAccountId}
+	{#if localAccountHasAdminPermissions}
+		<Layout {override} account={localAccount}>
+			<slot />
+		</Layout>
+	{:else if reconnectionAttempts < 2}
+		<Spinner message={"checking permissions"} />
+	{:else}
+		<Spinner message={"redirecting"} />
 	{/if}
+{:else}
+	<Spinner />
+	<Authenticate
+		localAccountHasAdminPermissions={localAccountPermissions}
+		onSuccess={async (more) => {
+			await more();
+			await retrieveLocaldata();
+		}}
+	/>
+{/if}

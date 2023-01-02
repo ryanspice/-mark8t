@@ -1,3 +1,7 @@
+<h2>{h2}</h2>
+<h1>{h1}</h1>
+<slot />
+
 <style>
 	h1 {
 		font-size: bold;
@@ -16,6 +20,3 @@
 		overflow: hidden !important;
 	}
 </style>
-<h2>{h2}</h2>
-<h1>{h1}</h1>
-<slot />

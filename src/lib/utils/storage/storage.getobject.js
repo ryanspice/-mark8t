@@ -4,9 +4,9 @@ Storage.prototype.getObject = function (key, callback) {
 
   let keyName = key;
 
-  if (dev) {
-    keyName = "" + key;
-  }
+  // if (dev) {
+  //   keyName = "" + key;
+  // }
 
   try {
     const value = this.getItem(keyName);
@@ -16,14 +16,14 @@ Storage.prototype.getObject = function (key, callback) {
       if (ttl < new Date().getTime()) {
         this.removeItem(keyName);
         this.removeItem(keyName + "~ttl");
-        callback();
+        if (callback) callback();
         return false;
       }
     } else {
-      callback();
+      if (callback) callback();
     }
 
-    return value && JSON.parse(Storage.prototype.decode(value));
+    return JSON.parse(Storage.prototype.decode(value));
   } catch (e) {
     new Error(e);
     return key;

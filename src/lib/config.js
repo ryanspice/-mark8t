@@ -1,6 +1,7 @@
 
 // build redirect url from environment variables
 const redirectUrl = import.meta.env.VITE_REDIRECT_URL;
+const baseUrl = import.meta.env.VITE_BASE;
 const authClientID = import.meta.env.VITE_API_MS_AUTH_CLIENT_ID;
 // scopes 
 const scopes = ["https://graph.microsoft.com/User.Read.All", "https://graph.microsoft.com/AppRoleAssignment.ReadWrite.All", "https://graph.microsoft.com/AppRoleAssignment.ReadWrite.All", "openid", "email", "offline_access", "profile"];
@@ -27,8 +28,8 @@ const msalConfig = {
 		authority: `https://${tenantName}.b2clogin.com/${tenantName}.onmicrosoft.com/B2C_1_susi`,
 		validateAuthority: false,
 		knownAuthorities: ["tracercanada.b2clogin.com"],
-		redirectUri: redirectUrl,// + "/admin",
-		postLogoutRedirectUri: redirectUrl + "/logout",
+		redirectUri: redirectUrl + baseUrl + "admin/",
+		postLogoutRedirectUri: redirectUrl + baseUrl + "logout/",
 		scopes: scopes,
 		navigateToLoginRequestUrl: false,
 		extraQueryParameters: { domain_hint: 'organizations' },

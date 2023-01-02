@@ -68,7 +68,7 @@
 
 	a:focus,
 	a:hover {
-		color: #fe0100;
+		//color: #fe0100;
 		cursor: pointer;
 		opacity: 0.5;
 		-webkit-transform: scale(1.1) 0.2s ease;
@@ -78,6 +78,8 @@
 	}
 
 	a:focus {
+
+		color: var(--primary);
 		outline: 5px auto -webkit-focus-ring-color;
 		outline-offset: -2px;
 	}

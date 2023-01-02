@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from "svelte";
-	import View from "./View.svelte";
+	import View from "./admin/View.svelte";
 	import DynamicForm from "./form/DynamicForm.svelte";
 
 	import Menu from "@smui/menu";
@@ -82,6 +82,8 @@
 	}
 
 	onMount(() => {});
+
+	export let override = false;
 </script>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -113,12 +115,13 @@
 	</div>
 </nav>
 
-<View>
-	<div class="container">
-		<h1 />
-		<DynamicForm />
+<View {override}>
+	<slot />
+	<!-- <div class="container"> -->
+	<!-- <h1 /> -->
+	<!-- <DynamicForm /> -->
 
-		<section hidden>
+	<!-- <section hidden>
 			<input placeholder="filter prefix" bind:value={prefix} />
 			<select bind:value={i} size={5}>
 				{#each filteredPeople as person, i}
@@ -137,8 +140,8 @@
 				>
 				<button on:click={remove} disabled={!selected}>delete</button>
 			</div>
-		</section>
-	</div>
+		</section> -->
+	<!-- </div> -->
 </View>
 
 <style>
