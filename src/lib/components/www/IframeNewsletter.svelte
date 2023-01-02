@@ -1,8 +1,8 @@
 <script>
-	import { _NEWSLETTER_URL_ } from "../../stores.js";
-	let url = "";
+	let url;
 	let h2Text = "keep in touch";
 	let h1Text = "NEWSLETTER";
+	import { _NEWSLETTER_URL_ } from "../../stores.js";
 	_NEWSLETTER_URL_.subscribe((value) => {
 		url = value;
 	});

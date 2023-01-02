@@ -201,6 +201,7 @@ export {
 	fetchWebsiteInfoFromJson,
 	fetchGoogleInfoFromJson,
 	postJsonToTenant,
+	_NEWSLETTER_URL_,
 	_API,
 	_TENANT,
 	_STORAGE,
