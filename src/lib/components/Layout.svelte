@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from "svelte";
-	import View from "./View.svelte";
+	import View from "./admin/View.svelte";
 	import DynamicForm from "./form/DynamicForm.svelte";
 
 	import Menu from "@smui/menu";

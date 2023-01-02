@@ -22,18 +22,17 @@ _GOOGLE_MAP_API_URL_.set(mapsUrl);
 
 export const _NEWSLETTER_URL_ = writable("");
 export const _CALENDAR_URL_ = writable("");
-
 export const _CALENDAR_IFRAME_ = writable("");
-
 
 /* URLS 
 	dev/
-	api/
-	storage/
-	storage/{tenant}/
-	https://{_API}.ca/{_API_URL}
-	https://{_DOMAIN}.ca/{_BASE}{_STORAGE}{_API_TENANT_}/
+		api/
+		storage/
+		storage/{tenant}/
+		https://{_API}.ca/{_API_URL}
+		https://{_DOMAIN}.ca/{_BASE}{_STORAGE}{_API_TENANT_}/
 */
+
 const _NAME = (import.meta.env.VITE_NAME);
 const _DOMAIN = (import.meta.env.VITE_DOMAIN);
 const _BASE = (import.meta.env.VITE_BASE);
@@ -165,8 +164,8 @@ const timeStampStillValid = (key) => {
 	return diff;
 }
 
-//
-let a = async (filter) => {
+// 
+let initializeLatestDataCall = async (filter) => {
 	fetchGoogleInfoFromJson();
 	_API_STORE_PRODUCTS_.set((localStorage.getObject('--store-products', () => { fetchProducts(filter) })));
 	return;
@@ -192,7 +191,7 @@ let a = async (filter) => {
 	// }
 };
 
-a('in stock');
+initializeLatestDataCall('in stock');
 getAccountDataFromLocalStorage();
 
 export {
