@@ -1,6 +1,6 @@
 <script>
-  export let href;// = "https://dundasandsons.ca/";
-  export let alt = "dundasandsons.ca";
+  export let href;
+  export let alt = '';
   export let icon = null;
   export let label = null;
   export let style = '';
