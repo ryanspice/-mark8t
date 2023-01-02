@@ -1,0 +1,150 @@
+@function text-stroke($size: 2, $color: #fff, $correction: 0) {
+	$radius: $size - $correction;
+	$stroke: ();
+
+	@for $i from -$size through $size {
+		@for $k from -$size through $size {
+
+			$x: $k;
+			$y: $i;
+
+			@if $k >0 {
+				$x: $k - 0.5;
+			}
+
+			@elseif $k < 0 {
+				$x: $k +0.5;
+			}
+
+			@if $i >0 {
+				$y: $i - 0.5;
+			}
+
+			@elseif $i < 0 {
+				$y: $i +0.5;
+			}
+
+			@if ($x*$x + $y*$y <=$radius*$radius) {
+				$stroke: append($stroke, $i*1px $k*1px 0 $color, comma);
+			}
+		}
+	}
+
+	@return $stroke;
+}
+
+@mixin text-stroke($size: 2, $color: #fff, $correction: 0) {
+	text-shadow: text-stroke($size, $color, $correction) !important;
+}
+
+.mk8-site-name {
+	width: 100%;
+	text-align: center;
+	@include text-stroke(3, var(--primary));
+	color: var(--secondary);
+	margin-top: 7rem;
+	font-weight: bolder;
+}
+
+:global(.mk8-site-name>a) {
+	color: var(--secondary) !important;
+}
+
+.mk8-site-stroke-theme {
+
+	@include text-stroke(2, var(--primary));
+	color: var(--secondary);
+	font-weight: bolder;
+}
+
+.logo-fixed {
+	width: 50px;
+	height: 50px;
+	left: 0px;
+	top: 0px;
+	position: fixed;
+	z-index: 999999;
+}
+
+.logo {
+	width: 100%;
+	height: auto;
+}
+
+#hero {
+	background-color: #010101;
+	background-color: white;
+	opacity: 0.8;
+	opacity: 0.1;
+	background: linear-gradient(0deg, #00000088 30%, #ffffff44 100%), no-repeat;
+	filter: sepia(50%) contrast(150%) saturate(200%) brightness(100%) hue-rotate(-15deg) grayscale(45%);
+
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+
+
+	min-height: 1920px;
+	min-height: 1662px;
+	max-height: 1662px;
+	min-height: 1662px;
+
+
+	width: 100%;
+	display: inline-block;
+	border: none;
+	outline: none;
+	height: 100%;
+	margin-bottom: 0px;
+	position: relative;
+	z-index: -2;
+	position: absolute;
+
+}
+
+@media (max-width: 767px) {
+
+
+	#hero {
+		min-height: 720px;
+		max-height: 720px;
+	}
+}
+
+
+@media (max-width: 992px) {
+
+
+	#hero {
+		min-height: 720px;
+		max-height: 720px;
+		min-height: 1502px;
+		max-height: 1502px;
+	}
+}
+
+@media (max-width: 1200px) {
+
+
+	#hero {
+		min-height: 1662px;
+		max-height: 1662px;
+	}
+}
+
+
+span {
+	position: relative;
+}
+
+.social {
+
+	position: relative;
+	top: 28px;
+}
+
+@media (max-width: 767px) {
+	.social {
+		display: none;
+	}
+}
