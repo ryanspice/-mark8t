@@ -4,8 +4,7 @@
 	import Textfield from "@smui/textfield";
 	import Input from "../Input.svelte";
 	let panelWebsite = false;
-	panelWebsite =
-		localStorage.getObject("--panel--panelWebsite") === "true" || false;
+	panelWebsite = localStorage.getObject("--panel--panelWebsite");
 	$: website = {};
 	import { _API_STORE_WEBSITE_ } from "../../stores.js";
 	_API_STORE_WEBSITE_.subscribe((value) => {
@@ -31,7 +30,7 @@
 	<Panel
 		bind:open={panelWebsite}
 		on:click={(e) => {
-			localStorage.setItem("--panel--panelWebsite", panelWebsite);
+			localStorage.setObject("--panel--panelWebsite", panelWebsite);
 		}}
 	>
 		<Header>

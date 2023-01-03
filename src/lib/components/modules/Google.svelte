@@ -4,8 +4,7 @@
 	import Textfield from "@smui/textfield";
 	import Input from "../Input.svelte";
 	let panel3Open = false;
-	panel3Open =
-		localStorage.getObject("--panel--panel3Open") === "true" || false;
+	panel3Open = localStorage.getObject("--panel--panel3Open");
 	$: google = {};
 	import { _API_STORE_GOOGLE_ } from "../../stores.js";
 	_API_STORE_GOOGLE_.subscribe((value) => {
@@ -26,7 +25,7 @@
 	<Panel
 		bind:open={panel3Open}
 		on:click={(e) => {
-			localStorage.setItem("--panel--panel3Open", panel3Open);
+			localStorage.setObject("--panel--panel3Open", panel3Open);
 		}}
 	>
 		<Header>

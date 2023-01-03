@@ -5,10 +5,8 @@
 	import Input from "../Input.svelte";
 	let panelInfo = false;
 	let panelContactInfo = false;
-	panelInfo =
-		localStorage.getObject("--panel--panelInfo") === "true" || false;
-	panelContactInfo =
-		localStorage.getObject("--panel--panelContactInfo") === "true" || false;
+	panelInfo = localStorage.getObject("--panel--panelInfo");
+	panelContactInfo = localStorage.getObject("--panel--panelContactInfo");
 	$: account = {};
 	$: website = {};
 	import { _API_STORE_ACCOUNT_, _API_STORE_WEBSITE_ } from "../../stores.js";
@@ -39,7 +37,7 @@
 <Panel
 	bind:open={panelInfo}
 	on:click={(e) => {
-		localStorage.setItem("--panel--panelInfo", panelInfo);
+		localStorage.setObject("--panel--panelInfo", panelInfo);
 	}}
 >
 	<Header style="cursor:pointer;">
