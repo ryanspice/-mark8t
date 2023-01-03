@@ -65,6 +65,7 @@
 		}
 	});
 	export let override = false;
+	export let data = {};
 </script>
 
 <svelte:head>
@@ -78,6 +79,12 @@
 		<Layout {override} account={localAccount}>
 			<slot />
 		</Layout>
+
+		<!-- <div class="submenu">
+			{#each data?.sections as section}
+				<a href="/dev/admin/{section.slug}">{section.title}</a>
+			{/each}
+		</div> -->
 	{:else if reconnectionAttempts < 2}
 		<Spinner message={"checking permissions"} />
 	{:else}

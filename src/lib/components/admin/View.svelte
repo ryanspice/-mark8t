@@ -29,6 +29,8 @@
   import ContactList from "../ContactList.svelte";
   import DialogForEditing from "../DialogForEditing.svelte";
 
+  import Breadcrumbs from "./Breadcrumbs.svelte";
+
   import Modules from "../modules/index.js";
 
   import { _NEW_PRODUCT_ } from "../../schema.js";
@@ -94,6 +96,9 @@
     _API_STORE_PRODUCTS_,
     _API_STORE_GOOGLE_,
   } from "../../stores.js";
+  import Overview from "./Overview.svelte";
+  import OverviewModules from "./OverviewModules.svelte";
+  import SavedChanges from "./SavedChanges.svelte";
   _API_STORE_ACCOUNT_.subscribe((value) => {
     account = value || {};
   });
@@ -142,22 +147,14 @@
 
   //
   function getPanelInfo() {
-    panelInfo =
-      localStorage.getObject("--panel--panelInfo") === "true" || false;
-    panelProducts =
-      localStorage.getObject("--panel--panelProducts") === "true" || false;
-    panel1Open =
-      localStorage.getObject("--panel--panel1Open") === "true" || false;
-    panelContactInfo =
-      localStorage.getObject("--panel--panelContactInfo") === "true" || false;
-    panel3Open =
-      localStorage.getObject("--panel--panel3Open") === "true" || false;
-    panel4Open =
-      localStorage.getObject("--panel--panel4Open") === "true" || false;
-    panelLayouts =
-      localStorage.getObject("--panel--panelLayouts") === "true" || false;
-    panelWebsite =
-      localStorage.getObject("--panel--panelWebsite") === "true" || false;
+    panelInfo = localStorage.getObject("--panel--panelInfo");
+    panelProducts = localStorage.getObject("--panel--panelProducts");
+    panel1Open = localStorage.getObject("--panel--panel1Open");
+    panelContactInfo = localStorage.getObject("--panel--panelContactInfo");
+    panel3Open = localStorage.getObject("--panel--panel3Open");
+    panel4Open = localStorage.getObject("--panel--panel4Open");
+    panelLayouts = false; // localStorage.getObject("--panel--panelLayouts");
+    panelWebsite = localStorage.getObject("--panel--panelWebsite");
   }
 
   //
@@ -267,17 +264,42 @@
     unsavedChanges();
   }
 
-  let scrollPosition;
-  $: () => {
-    document.getElementById(
-      "saved-changes"
-    ).style = `position:absolute;top: ${scrollPosition}px;`;
-  };
+  // let scrollPosition;
+  // $: () => {
+  //   document.getElementById(
+  //     "saved-changes"
+  //   ).style = `position:absolute;top: ${scrollPosition}px;`;
+  // };
   export let override = false;
 </script>
 
-<svelte:window bind:scrollY={scrollPosition} />
+<!-- <svelte:window bind:scrollY={scrollPosition} /> -->
 
+<DialogForEditing
+  {data}
+  open={openDialogForEditing}
+  onSave={onSaveProducts}
+  onClose={() => {
+    openDialogForEditing = false;
+  }}
+  onDismiss={() => {
+    openDialogForEditing = false;
+    unsavedChanges();
+  }}
+  onDelete={(id) => {
+    removeProduct(id);
+    unsavedChanges();
+  }}
+/>
+<SavedChanges
+  bind:open
+  bind:centered
+  bind:mobileStacked
+  {onDiscard}
+  {onSave}
+  {handleBannerClosed}
+/>
+<!-- 
 <div id="saved-changes" class="top-app-bar-container">
   <Banner
     bind:open
@@ -292,10 +314,17 @@
       <Button secondary on:click={onSave}>Save</Button>
     </Label>
   </Banner>
-</div>
+</div> -->
+
+<!-- <Breadcrumbs /> -->
 <!-- <Drawer>yrdy</Drawer> -->
-<div><a href={base + "/admin"}>Home \ Admin</a></div>
-<br />
+<!-- <Paper elevation={0} class="container">
+  <OverviewModules />
+</Paper>
+<Paper elevation={0} class="container">
+  <Overview {account} {unsavedChanges} {website} />
+</Paper> -->
+
 {#if override}
   <section class="container">
     <Paper elevation={0}>
@@ -307,22 +336,14 @@
 {/if}
 {#if override === false}
   <section class="container">
-    <Paper elevation={0}>
-      <!--<Title>Dundas & Sons</Title>-->
-      <!-- <Subtitle>Dundas & Sons Admin.</Subtitle> -->
-      <!-- <p>use this Page to configure your plugins</p> -->
+    <Paper elevation={0} class="transparent">
       <br />
-      <Accordion
-        on:click={() => {
-          window.location = "./admin/account";
-        }}
-      >
+      <Accordion>
         <Modules.Account {unsavedChanges} />
       </Accordion>
       <Accordion>
         <Modules.Contact {unsavedChanges} />
       </Accordion>
-      <br />
       <!-- WEBSITTE -->
       <Accordion>
         <Modules.Website {unsavedChanges} />
@@ -332,7 +353,7 @@
         <Panel
           bind:open={panelProducts}
           on:click={(e) => {
-            localStorage.setItem("--panel--panelProducts", panelProducts);
+            localStorage.setObject("--panel--panelProducts", panelProducts);
           }}
         >
           <Header>
@@ -353,10 +374,10 @@
             >
             <Button
               raised
-              disabled
               on:click={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                window.location.href = base + "/admin/products";
               }}>View All</Button
             >
             <!-- <Button raised on:click={onAddProduct}>View All</Button> -->
@@ -458,7 +479,7 @@
         <Panel
           bind:open={panelLayouts}
           on:click={(e) => {
-            localStorage.setItem("--panel--panelLayouts", panelLayouts);
+            localStorage.setObject("--panel--panelLayouts", panelLayouts);
           }}
           disabled
         >
@@ -540,28 +561,12 @@
     </Paper>
   </section>
 {/if}
-<DialogForEditing
-  {data}
-  open={openDialogForEditing}
-  onSave={onSaveProducts}
-  onClose={() => {
-    openDialogForEditing = false;
-  }}
-  onDismiss={() => {
-    openDialogForEditing = false;
-    unsavedChanges();
-  }}
-  onDelete={(id) => {
-    removeProduct(id);
-    unsavedChanges();
-  }}
-/>
 
 <style>
-  #saved-changes {
-    position: fixed;
-    width: 100%;
-    top: 0px;
-    z-index: 1;
+  :global(.smui-paper) {
+    /* margin-top: 0.5rem; */
+  }
+  :global(.smui-accordion) {
+    /* margin-top: 0.5rem; */
   }
 </style>

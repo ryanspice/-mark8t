@@ -15,12 +15,12 @@ const mapsId = import.meta.env.VITE_API_G_MAPS_ID;
 const mapsUrl = 'https://maps.googleapis.com/maps/api/js?key=' + mapsId + '&libraries=places&callback=initMap';
 
 export const _WEBSITE_QUOTE_ = writable('');
-_WEBSITE_QUOTE_.set("You never know when it's not time for a Jager.");
+_WEBSITE_QUOTE_.set("");
 
 export const _GOOGLE_MAP_API_URL_ = writable('');
 _GOOGLE_MAP_API_URL_.set(mapsUrl);
 
-export const _NEWSLETTER_URL_ = writable("");
+const _NEWSLETTER_URL_ = writable("");
 export const _CALENDAR_URL_ = writable("");
 export const _CALENDAR_IFRAME_ = writable("");
 
@@ -79,7 +79,7 @@ const postJsonToTenant = async (json, file) => {
 		redirect: 'follow'
 	};
 
-	await fetch(_API_POST_TO_TENANT_, requestOptions)
+	await fetch(_POST_TO_TENANT, requestOptions)
 		.then(response => response.text())
 		.then(result => console.log(result))
 		.catch(error => console.log('error', error));
