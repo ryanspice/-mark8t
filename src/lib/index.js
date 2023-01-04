@@ -1,4 +1,6 @@
 
+import { base } from "$app/paths";
+
 import * as Landing from "./components/www/Header.svelte";
 import AgeGate from "./components/www/AgeGate.svelte";
 import Quote from "./components/www/Quote.svelte";
@@ -22,13 +24,13 @@ import Modules from "./components/modules/index.js";
 import Analytics from "./components/Analytics.svelte";
 import Authenticate from "./components/Authenticate.svelte";
 import Spinner from "./components/Spinner.svelte";
-import Layout from "./components/Layout.svelte";
+import Layout from "./components/admin/Layout.svelte";
 
 import Admin from "./pages/Admin.svelte";
 
 import { _API_STORE_WEBSITE_ } from './stores.js';
 
-import { base } from "$app/paths";
+
 const Logout = () => {
 	_API_STORE_WEBSITE_.set({});
 	localStorage.removeItem('--store-website');

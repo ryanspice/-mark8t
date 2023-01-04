@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from "svelte";
-	import View from "./admin/View.svelte";
-	import DynamicForm from "./form/DynamicForm.svelte";
+	import View from "./View.svelte";
+	import DynamicForm from "../form/DynamicForm.svelte";
 
 	import Menu from "@smui/menu";
 	import List, { Item, Separator, Text } from "@smui/list";
@@ -25,7 +25,7 @@
 		_API_STORE_WEBSITE_,
 		_API_STORE_PRODUCTS_,
 		_API_STORE_GOOGLE_,
-	} from "../stores.js";
+	} from "../../stores.js";
 	_API_STORE_ACCOUNT_.subscribe((value) => {
 		account = value || [];
 	});
