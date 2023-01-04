@@ -23,20 +23,35 @@
 		website = value || {};
 	});
 
-	/* set variables from local storage */
+	/* set variables from local storage 
+	 * get account data and if data exists
+	 * else signIn then;
+	 * get permissions
+	 * skip if user has secret code in local storage
+	 * else fetch permissions from mark8t.ca/storage/{tenant}/auth.users.json
+	*/
 	const retrieveLocaldata = async () => {
+
 		console.log("retrieveLocaldata");
+
+		let secret = await localStorage.getObject("--secret", (data) => {
+			console.log(secret);
+			localAccountHasAdminPermissions = true;
+		});
+
 		let account = localStorage.getObject("accounts", window.signIn);
 		localAccount = account;
 		localAccountId = account?.localAccountId || null;
 		localAccountName = account?.name;
-		if (localAccountName && localAccountId) {
+
+		if (localAccountName && localAccountId && (!localAccountHasAdminPermissions)) {
 			localAccountPermissions = await (
 				await fetch("../api/authenticated.json")
 			).json();
 			localAccountHasAdminPermissions =
 				localAccountPermissions.ids.includes(localAccountId);
 		}
+
 	};
 
 	/**/
@@ -59,9 +74,10 @@
 	onMount(() => {
 		retrieveLocaldata();
 		if (!localAccountHasAdminPermissions) {
+			console.log("Admin - user has no permissions");
 			setTimeout(retrieveTimeout, 1000);
 		} else {
-			console.log("user has admin permissions");
+			console.log("Admin - user has admin permissions");
 		}
 	});
 	export let override = false;
@@ -75,28 +91,26 @@
 <!-- <Drawer /> -->
 <Analytics />
 {#if localAccountId}
-	{#if localAccountHasAdminPermissions}
-		<Layout {override} account={localAccount}>
-			<slot />
-		</Layout>
+{#if localAccountHasAdminPermissions}
+<Layout {override} account={localAccount}>
+	<slot />
+</Layout>
 
-		<!-- <div class="submenu">
+<!-- <div class="submenu">
 			{#each data?.sections as section}
 				<a href="/dev/admin/{section.slug}">{section.title}</a>
 			{/each}
 		</div> -->
-	{:else if reconnectionAttempts < 2}
-		<Spinner message={"checking permissions"} />
-	{:else}
-		<Spinner message={"redirecting"} />
-	{/if}
+{:else if reconnectionAttempts
+< 2} <Spinner message={"checking permissions"} />
 {:else}
-	<Spinner />
-	<Authenticate
-		localAccountHasAdminPermissions={localAccountPermissions}
-		onSuccess={async (more) => {
-			await more();
-			await retrieveLocaldata();
-		}}
-	/>
+<Spinner message={"redirecting"} />
 {/if}
+{:else}
+<Spinner />
+<Authenticate localAccountHasAdminPermissions={localAccountPermissions} onSuccess={async (more)=> {
+	await more();
+	await retrieveLocaldata();
+	}}
+	/>
+	{/if}

@@ -11,33 +11,35 @@
 	let username = "";
 	let myMSALObj = null;
 	let currentAccounts = [];
+
 	export let localAccountHasAdminPermissions = false;
 
-	//
 	export let onSuccess = (handleSuccess) => {
 		handleSuccess();
 	};
 
-	/**/
-	onMount(() => {
-		if (localAccountHasAdminPermissions != false) {
-			console.log(
-				"Authenticate - localAccountHasAdminPermissions - " +
-					localAccountHasAdminPermissions
-			);
-			return;
-		}
+	/* Handle all MSAL Authenticate Logic */
+	const authenticate = async () => {
 
 		console.log(
 			"Authenticate - localAccountHasAdminPermissions - " +
-				localAccountHasAdminPermissions
+			localAccountHasAdminPermissions
 		);
 
+		if (localAccountHasAdminPermissions != false) {
+			return;
+		}
+
+		/** 
+		 * Attempt to resolve a new instance of MSAL
+		 * If MSAL fails to resolve, log the error and return 
+		 */
 		try {
-			myMSALObj = new msal.PublicClientApplication(msalConfig);
+			myMSALObj = await new msal.PublicClientApplication(msalConfig);
 			console.log("Authenticate - myMSALObj - success");
 		} catch (err) {
-			console.warn("Authenticate - myMSALObj - ", err);
+
+			console.error("Authenticate - myMSALObj - ", err);
 			localStorage.setItem("msal auth", JSON.stringify(err));
 
 			if (myMSALObj === null) {
@@ -62,9 +64,8 @@
 				);
 			});
 
-		/**
-		 * See here for more info on account retrieval:
-		 * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-common/docs/Accounts.md
+		/** 
+		 * Attempt to resolve the current user account
 		 */
 		async function selectAccount() {
 			currentAccounts = await myMSALObj.getAllAccounts();
@@ -104,6 +105,8 @@
 			}
 		}
 
+		// UNUSED
+
 		async function querySiteSpecificData() {
 			// const rWebsite = await fetch("data/website.json");
 			// const rWebsiteItems = await (await rWebsite.json())
@@ -121,8 +124,6 @@
 		 * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/request-response-object.md#response
 		 */
 		function handleResponse(response) {
-			//localStorage.setItem('err: response', JSON.stringify(response));
-
 			if (response !== null) {
 				_API_STORE_ACCOUNT_.set(response.account);
 				localStorage.setObject("accounts", response.account, 24 * 60);
@@ -130,25 +131,6 @@
 				selectAccount();
 			} else {
 				selectAccount();
-
-				/**
-				 * If you already have a session that exists with the authentication server, you can use the ssoSilent() API
-				 * to make request for tokens without interaction, by providing a "login_hint" property. To try this, comment the
-				 * line above and uncomment the section below.
-				 */
-
-				// myMSALObj.ssoSilent(silentRequest).
-				//     then(() => {
-				//         const currentAccounts = myMSALObj.getAllAccounts();
-				//         username = currentAccounts[0].username;
-				//         welcomeUser(username);
-				//         updateTable();
-				//     }).catch(error => {
-				//         console.error("Silent Error: " + error);
-				//         if (error instanceof msal.InteractionRequiredAuthError) {
-				//             signIn();
-				//         }
-				//     });
 			}
 		}
 
@@ -221,6 +203,9 @@
 			myMSALObj.logout(logoutRequest);
 		}
 
+		/**
+		 * expose functions to the global scope
+		 */
 		window.signIn = signIn;
 		window.signOut = signOut;
 
@@ -228,7 +213,6 @@
 		 * See here for more info on account retrieval:
 		 * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-common/docs/Accounts.md
 		 */
-
 		function getTokenRedirect(request) {
 			request.account = myMSALObj.getAccountByUsername(username);
 
@@ -256,6 +240,8 @@
 				});
 		}
 
-		// selectAccount();
-	});
+	}
+
+	/**/
+	onMount(authenticate);
 </script>
