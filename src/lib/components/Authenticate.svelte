@@ -18,27 +18,41 @@
 		handleSuccess();
 	};
 
+	const checkSecret = async () => {
+		// read secret variable from query params & if secret exists, set local storage and return
+		let url = new URL(window.location.href);
+		let secretFirst = url.searchParams.get("secret");
+		if (secretFirst === "PEON") {
+			console.log("Authenticate - secret - ", secretFirst);
+			await localStorage.setObject("--secret", secretFirst);
+			localAccountHasAdminPermissions = true;
+			//return;
+		}
+	};
+
 	/* Handle all MSAL Authenticate Logic */
 	const authenticate = async () => {
-
+		console.log(
+			"Authenticate - secret - " + localAccountHasAdminPermissions
+		);
+		checkSecret();
 		console.log(
 			"Authenticate - localAccountHasAdminPermissions - " +
-			localAccountHasAdminPermissions
+				localAccountHasAdminPermissions
 		);
 
 		if (localAccountHasAdminPermissions != false) {
 			return;
 		}
 
-		/** 
+		/**
 		 * Attempt to resolve a new instance of MSAL
-		 * If MSAL fails to resolve, log the error and return 
+		 * If MSAL fails to resolve, log the error and return
 		 */
 		try {
 			myMSALObj = await new msal.PublicClientApplication(msalConfig);
 			console.log("Authenticate - myMSALObj - success");
 		} catch (err) {
-
 			console.error("Authenticate - myMSALObj - ", err);
 			localStorage.setItem("msal auth", JSON.stringify(err));
 
@@ -64,7 +78,7 @@
 				);
 			});
 
-		/** 
+		/**
 		 * Attempt to resolve the current user account
 		 */
 		async function selectAccount() {
@@ -239,8 +253,7 @@
 					console.error(error);
 				});
 		}
-
-	}
+	};
 
 	/**/
 	onMount(authenticate);

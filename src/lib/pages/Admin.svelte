@@ -23,35 +23,47 @@
 		website = value || {};
 	});
 
-	/* set variables from local storage 
+	/* intercept secret code from local storage */
+	const interceptSecret = () => {
+		// TODO : implememnt API for secret codes and permissions for users based on click funnel
+		if (
+			localStorage.getObject("--secret") ===
+			JSON.parse(Storage.prototype.decode("IlBFT04i"))
+		) {
+			localAccountHasAdminPermissions = true;
+		}
+	};
+
+	/* set variables from local storage
 	 * get account data and if data exists
 	 * else signIn then;
 	 * get permissions
 	 * skip if user has secret code in local storage
 	 * else fetch permissions from mark8t.ca/storage/{tenant}/auth.users.json
-	*/
+	 */
 	const retrieveLocaldata = async () => {
+		console.log(
+			"retrieveLocaldata - " + (await localStorage.getObject("--secret"))
+		);
 
-		console.log("retrieveLocaldata");
-
-		let secret = await localStorage.getObject("--secret", (data) => {
-			console.log(secret);
-			localAccountHasAdminPermissions = true;
-		});
+		interceptSecret();
 
 		let account = localStorage.getObject("accounts", window.signIn);
 		localAccount = account;
 		localAccountId = account?.localAccountId || null;
 		localAccountName = account?.name;
 
-		if (localAccountName && localAccountId && (!localAccountHasAdminPermissions)) {
+		if (
+			localAccountName &&
+			localAccountId &&
+			!localAccountHasAdminPermissions
+		) {
 			localAccountPermissions = await (
 				await fetch("../api/authenticated.json")
 			).json();
 			localAccountHasAdminPermissions =
 				localAccountPermissions.ids.includes(localAccountId);
 		}
-
 	};
 
 	/**/
@@ -91,26 +103,28 @@
 <!-- <Drawer /> -->
 <Analytics />
 {#if localAccountId}
-{#if localAccountHasAdminPermissions}
-<Layout {override} account={localAccount}>
-	<slot />
-</Layout>
+	{#if localAccountHasAdminPermissions}
+		<Layout {override} account={localAccount}>
+			<slot />
+		</Layout>
 
-<!-- <div class="submenu">
+		<!-- <div class="submenu">
 			{#each data?.sections as section}
 				<a href="/dev/admin/{section.slug}">{section.title}</a>
 			{/each}
 		</div> -->
-{:else if reconnectionAttempts
-< 2} <Spinner message={"checking permissions"} />
-{:else}
-<Spinner message={"redirecting"} />
-{/if}
-{:else}
-<Spinner />
-<Authenticate localAccountHasAdminPermissions={localAccountPermissions} onSuccess={async (more)=> {
-	await more();
-	await retrieveLocaldata();
-	}}
-	/>
+	{:else if reconnectionAttempts < 2}
+		<Spinner message={"checking permissions"} />
+	{:else}
+		<Spinner message={"redirecting"} />
 	{/if}
+{:else}
+	<Spinner />
+	<Authenticate
+		localAccountHasAdminPermissions={localAccountPermissions}
+		onSuccess={async (more) => {
+			await more();
+			await retrieveLocaldata();
+		}}
+	/>
+{/if}

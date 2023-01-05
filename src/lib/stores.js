@@ -41,6 +41,7 @@ const _TENANT = (import.meta.env.VITE_TENANT).replaceAll("-", "_");
 const _API = (import.meta.env.VITE_API_DOMAIN) + _BASE + (import.meta.env.VITE_API_URL);
 const _STORAGE = (import.meta.env.VITE_API_DOMAIN) + _BASE + (import.meta.env.VITE_STORAGE_URL) + _TENANT;
 
+const _USERS_AUTHENTICATED = _STORAGE + '/users.auth.json?r=' + Math.random() * 99999;
 const _WEBSITE = _STORAGE + '/website.json?r=' + Math.random() * 999998;
 const _PRODUCTS = _STORAGE + '/products.json?r=' + Math.random() * 999997;
 const _GOOGLE = _STORAGE + '/google.json?r=' + Math.random() * 999996;

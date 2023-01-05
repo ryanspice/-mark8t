@@ -18,7 +18,7 @@
 			<img
 				class="thumb"
 				width="325"
-				src={base + ("/" + item.image.replace("/", ""))}
+				src={base + ("/" + item?.image?.replace("/", ""))}
 			/>
 			<br />
 			{#if item.ibu}
