@@ -54,7 +54,10 @@
   "license": "MIT",
   "dependencies": {
     "sass": "^1.56.2",
-    "svelte-media-queries": "^1.5.1"
+    "stripe": "^11.6.0",
+    "svelte-media-queries": "^1.5.1",
+    "@stripe/stripe-js": "^1.46.0",
+    "svelte-stripe": "^0.0.21"
   },
   "keywords": [
     "svelte",

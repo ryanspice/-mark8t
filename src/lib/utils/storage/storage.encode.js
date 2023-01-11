@@ -211,16 +211,24 @@ function strToUTF8Arr(sDOMStr) {
 }
 
 //
-Storage.prototype.encode = function (value) {
+const encode = function (value) {
 	const aMyUTF8Input = strToUTF8Arr(value);
 
 	return base64EncArr(aMyUTF8Input);
 
 };
 
+import { browser } from '$app/environment';
 //
-Storage.prototype.decode = function (value) {
+const decode = function (value) {
 	const aMyUTF8Output = base64DecToArr(value);
 
 	return UTF8ArrToStr(aMyUTF8Output);
 };
+
+if (browser) { Storage.prototype.encode = encode; }
+if (browser) { Storage.prototype.decode = decode; }
+export {
+	encode,
+	decode
+}

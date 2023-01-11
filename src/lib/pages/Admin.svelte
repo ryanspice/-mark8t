@@ -10,6 +10,8 @@
 		_API_STORE_WEBSITE_,
 	} from "../index";
 
+	import { fetchSecretsFromJson } from "../stores.js";
+
 	let reconnectionAttempts = 0;
 	let localAccount = {};
 	let localAccountId = "";
@@ -24,14 +26,55 @@
 	});
 
 	/* intercept secret code from local storage */
-	const interceptSecret = () => {
+	const interceptSecret = async () => {
+		console.log(
+			"retrieveLocaldata - " + (await localStorage.getObject("--secret"))
+		);
+
+		await fetchSecretsFromJson((data) => {
+			data?.forEach((secret) => {
+				if (
+					localStorage.getObject("--secret") ===
+					JSON.parse(Storage.prototype.decode(secret))
+				) {
+					console.log(
+						"Admin.svelte :: interceptSecret - secretList - ",
+						data
+					);
+					localAccountHasAdminPermissions = true;
+
+					// Add user id to authenticated.json via post
+					// fetch("https://mark8t.ca/storage/tenant/authenticated.json", {
+					// 	method: "POST",
+					// 	headers: {
+					// 		"Content-Type": "application/json",
+					// 	},
+					// 	body: JSON.stringify({
+					// 		ids: [localAccountId],
+					// 	}),
+					// });
+
+					// Add user id to authenticated.json via put
+					// fetch("https://mark8t.ca/storage/tenant/authenticated.json", {
+					// 	method: "PUT",
+					// 	headers: {
+					// 		"Content-Type": "application/json",
+					// 	},
+					// 	body: JSON.stringify({
+					// 		ids: [localAccountId],
+					// 	}),
+					// });
+				}
+			});
+		});
+		// console.log("interceptSecret - secretList - ", secretList, data);
 		// TODO : implememnt API for secret codes and permissions for users based on click funnel
-		if (
-			localStorage.getObject("--secret") ===
-			JSON.parse(Storage.prototype.decode("IlBFT04i"))
-		) {
-			localAccountHasAdminPermissions = true;
-		}
+		// if (
+		// 	localStorage.getObject("--secret") ===
+		// 	JSON.parse(Storage.prototype.decode("IlBFT04i"))
+		// ) {
+		// 	localAccountHasAdminPermissions = true;
+		// }
 	};
 
 	/* set variables from local storage
@@ -42,11 +85,7 @@
 	 * else fetch permissions from mark8t.ca/storage/{tenant}/auth.users.json
 	 */
 	const retrieveLocaldata = async () => {
-		console.log(
-			"retrieveLocaldata - " + (await localStorage.getObject("--secret"))
-		);
-
-		interceptSecret();
+		await interceptSecret();
 
 		let account = localStorage.getObject("accounts", window.signIn);
 		localAccount = account;

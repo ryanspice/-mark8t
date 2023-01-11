@@ -2,6 +2,8 @@
 	import { base } from "$app/paths";
 	import { onMount } from "svelte";
 
+	import { Logo } from "static";
+
 	import styles from "./Landing.svelte.scss";
 
 	import Header from "../components/header/Header.svelte";
@@ -30,9 +32,8 @@
 	});
 </script>
 
-<a href={base + "/admin/login"} class="logo-fixed">
-	<img src={base + "/logo_og.jpg"} alt="logo" class="logo-fixed" />
-</a>
+<Logo />
+
 <br />
 <!-- <Navigation /> -->
 <div id="hero" />
@@ -45,6 +46,7 @@
 <main class="container">
 	<div class="col" hidden>
 		<div class="row" style="margin-top:0vh;">
+			<!-- center -->
 			<!-- <div class="col center">
 				<a href={base}>
 					{#if (website.logo)}

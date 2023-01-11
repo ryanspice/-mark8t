@@ -10,7 +10,7 @@
 	import ExternalLinkFacebook from "../static/ExternalLinkFacebook.svelte";
 	import ExternalLinkInstagram from "../static/ExternalLinkInstagram.svelte";
 	import ExternalLinkShare from "../static/ExternalLinkShare.svelte";
-	import Navigation from "../Navigation.svelte";
+	import Navigation from "./Navigation.svelte";
 
 	$: website = {};
 	import { _API_STORE_WEBSITE_ } from "../../stores.js";

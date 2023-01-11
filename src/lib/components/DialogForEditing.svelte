@@ -9,12 +9,17 @@
 		ActionButtons,
 		ActionIcons,
 	} from "@smui/card";
+
 	import Button, { Label } from "@smui/button";
+
 	import IconButton, { Icon } from "@smui/icon-button";
 
 	import Dialog, { Header, Title } from "@smui/dialog";
+
 	import Chip from "./Chip.svelte";
+
 	import Textfield from "@smui/textfield";
+
 	import Input from "./Input.svelte";
 
 	let valueA = "";

@@ -156,33 +156,30 @@
 			let account = localStorage.getObject("accounts");
 			console.log(account);
 
-			if (account) {
-				// verify account data
-				if (
-					account.homeAccountId &&
-					account.localAccountId &&
-					account.username
-				) {
-					// account is valid
-					console.log("Authenticate - signIn - account is valid");
-					const timeToLive =
-						new Date(
-							Number(String(account.idTokenClaims.exp) + "000")
-						) - new Date().getTime();
+			const isValidAccount =
+				account &&
+				account.homeAccountId &&
+				account.localAccountId &&
+				account.username;
 
-					if (
-						timeToLive > 0 &&
-						timeToLive < 1000 * 60 * 60 * 24 * 30
-					) {
-						console.log(
-							"Authenticate - signIn - account is valid - token is valid"
-						);
-						console.log(
-							"Authenticate - signIn - time to live",
-							timeToLive
-						);
-						return;
-					}
+			if (isValidAccount) {
+				console.log("Authenticate - signIn - account is valid");
+				const timeToLive =
+					new Date(
+						Number(String(account.idTokenClaims.exp) + "000")
+					) - new Date().getTime();
+
+				const isValidToken =
+					timeToLive > 0 && timeToLive < 1000 * 60 * 60 * 24 * 30;
+				if (isValidToken) {
+					console.log(
+						"Authenticate - signIn - account is valid - token is valid"
+					);
+					console.log(
+						"Authenticate - signIn - time to live",
+						timeToLive
+					);
+					return;
 				}
 			}
 

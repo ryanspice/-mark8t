@@ -41,7 +41,12 @@ const _TENANT = (import.meta.env.VITE_TENANT).replaceAll("-", "_");
 const _API = (import.meta.env.VITE_API_DOMAIN) + _BASE + (import.meta.env.VITE_API_URL);
 const _STORAGE = (import.meta.env.VITE_API_DOMAIN) + _BASE + (import.meta.env.VITE_STORAGE_URL) + _TENANT;
 
-const _USERS_AUTHENTICATED = _STORAGE + '/users.auth.json?r=' + Math.random() * 99999;
+const _SECRETS = (() => {
+	return _STORAGE + '/_secrets.json?r=' + Math.random() * 99999;
+})();
+const _AUTHENTICATED = (() => {
+	return _STORAGE + '/_authenticated.json?r=' + Math.random() * 99999;
+})();
 const _WEBSITE = _STORAGE + '/website.json?r=' + Math.random() * 999998;
 const _PRODUCTS = _STORAGE + '/products.json?r=' + Math.random() * 999997;
 const _GOOGLE = _STORAGE + '/google.json?r=' + Math.random() * 999996;
@@ -97,6 +102,31 @@ const fetchJsonFromUrl = async (url, callback) => {
 		.catch(error => {
 			console.error('Error:', error);
 		});
+}
+
+//
+function fetchSecretsFromJson(callback) {
+	fetchJsonFromUrl(_SECRETS, (data) => {
+		// _API_STORE_WEBSITE_.set(data);
+		console.log("stores.js :: secrets :: ", data);
+
+		const key = 'ImFkbWluIg==';
+		const keyDecoded = JSON.parse(Storage.prototype.decode(key));
+		console.log("stores.js :: secrets :: ", keyDecoded);
+		console.log("stores.js :: secrets :: ", Storage.prototype.encode(JSON.stringify(keyDecoded)));
+
+		localStorage.setObject('--store-secrets', data || JSON.stringify(''), 1);
+		callback(data[key]);
+	});
+}
+
+//
+function fetchAuthenticatedFromJson() {
+	fetchJsonFromUrl(_AUTHENTICATED, (data) => {
+		// _API_STORE_WEBSITE_.set(data);
+		console.log("stores.js :: authenticated :: ", data);
+		localStorage.setObject('--store-authenticated', data || JSON.stringify(''), 1);
+	});
 }
 
 //
@@ -168,6 +198,8 @@ const timeStampStillValid = (key) => {
 // 
 let initializeLatestDataCall = async (filter) => {
 	fetchGoogleInfoFromJson();
+	//fetchSecretsFromJson();
+	fetchAuthenticatedFromJson();
 	_API_STORE_PRODUCTS_.set((localStorage.getObject('--store-products', () => { fetchProducts(filter) })));
 	return;
 
@@ -195,12 +227,41 @@ let initializeLatestDataCall = async (filter) => {
 initializeLatestDataCall('in stock');
 getAccountDataFromLocalStorage();
 
+
+// let products = [];
+// _API_STORE_PRODUCTS_.subscribe((value) => {
+// 	products = value || [];
+// });
+
+
+/* transformProductNameToSlug */
+const transformProductNameToSlug = (name) => {
+	return name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+}
+
+/* getProductBySlug */
+const getProductBySlug = async (slug) => {
+	console.log(_API_STORE_PRODUCTS_);
+	let a;
+	await _API_STORE_PRODUCTS_.subscribe(value => {
+		a = value.find(product => transformProductNameToSlug(product.name) === slug);
+	});
+	return a;
+}
+
+
+
+
 export {
 	fetchAdmin,
 	fetchProducts,
 	getAccountDataFromLocalStorage,
+	getProductBySlug,
 	fetchWebsiteInfoFromJson,
 	fetchGoogleInfoFromJson,
+	fetchSecretsFromJson,
+	fetchAuthenticatedFromJson,
+	transformProductNameToSlug,
 	postJsonToTenant,
 	_NEWSLETTER_URL_,
 	_API,

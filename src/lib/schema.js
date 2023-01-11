@@ -7,7 +7,7 @@ const _NEW_PRODUCT_ = (products) => {
 		ibu: "N/A",
 		abv: "N/A",
 		image: 'beerlabel.png',
-		thumb: 'https://dundasandsons.ca/dev/logo_red.jpg',
+		thumb: '',
 		link: 'https://via.placeholder.com/150',
 		id: products.length
 	}

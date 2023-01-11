@@ -8,6 +8,7 @@ import Map from "./components/www/Map.svelte";
 import Calendar from "./components/www/Calendar.svelte";
 import Newsletter from "./components/www/IframeNewsletter.svelte";
 import Hours from "./components/www/Hours.svelte";
+import Navigation from "./components/www/Navigation.svelte";
 import FeatureVideo from "./components/www/FeatureVideo.svelte";
 
 import Account from "./components/modules/Account.svelte";
@@ -20,6 +21,9 @@ import Header from "./components/header/Header.svelte";
 import ExternalLink from "./components/header/banner/ExternalLink.svelte";
 import Footer from "./components/www/Footer.svelte";
 
+import Chip from "./components/Chip.svelte";
+import Input from "./components/Input.svelte";
+
 import Modules from "./components/modules/index.js";
 import Analytics from "./components/Analytics.svelte";
 import Authenticate from "./components/Authenticate.svelte";
@@ -28,7 +32,16 @@ import Layout from "./components/admin/Layout.svelte";
 
 import Admin from "./pages/Admin.svelte";
 
-import { _API_STORE_WEBSITE_ } from './stores.js';
+import * as Static from "./components/static/index.js";
+
+import {
+	_API_STORE_PRODUCTS_,
+	_API_STORE_WEBSITE_,
+	_TENANT,
+	_API,
+	getProductBySlug,
+	transformProductNameToSlug,
+} from './stores.js';
 
 
 const Logout = () => {
@@ -41,6 +54,10 @@ const Logout = () => {
 
 
 export {
+
+	Static,
+
+	Navigation,
 	Landing,
 	AgeGate,
 	Quote,
@@ -49,6 +66,9 @@ export {
 	Newsletter,
 	Hours,
 	FeatureVideo,
+
+	Chip,
+	Input,
 
 	Modules,
 	Account,
@@ -69,5 +89,12 @@ export {
 	Admin,
 	Logout,
 
-	_API_STORE_WEBSITE_
+
+	getProductBySlug,
+	transformProductNameToSlug,
+
+	_API,
+	_API_STORE_PRODUCTS_,
+	_API_STORE_WEBSITE_,
+	_TENANT
 }

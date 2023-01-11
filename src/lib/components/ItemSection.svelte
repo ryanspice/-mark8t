@@ -2,40 +2,52 @@
 	import { base } from "$app/paths";
 	import { onMount } from "svelte";
 	let products = [];
-	import { _API_STORE_PRODUCTS_ } from "../stores.js";
+	import {
+		_API_STORE_PRODUCTS_,
+		transformProductNameToSlug,
+	} from "../stores.js";
 	_API_STORE_PRODUCTS_.subscribe((value) => {
 		products = value || [];
 	});
 </script>
 
 {#each products as item}
-	<section>
-		<div class="col center image">
-			<img width="325" src={item.thumb} />
+	<a href={base + "/products/" + transformProductNameToSlug(item.name)}>
+		<div>
+			<div class="col center image">
+				<img width="325" src={item.thumb} />
+			</div>
+			<div class="content">
+				<h2>{item.name}</h2>
+				<img
+					class="thumb"
+					width="325"
+					src={base + ("/" + item?.image?.replace("/", ""))}
+				/>
+				<br />
+				{#if item.ibu}
+					<span class="left">IBU: {item.ibu}</span>
+				{/if}
+				{#if item.abv}
+					<span class="right"
+						>ABV:
+						{item.abv}</span
+					><br />
+				{/if}
+				<br />
+			</div>
 		</div>
-		<div class="content">
-			<h2>{item.name}</h2>
-			<img
-				class="thumb"
-				width="325"
-				src={base + ("/" + item?.image?.replace("/", ""))}
-			/>
-			<br />
-			{#if item.ibu}
-				<span class="left">IBU: {item.ibu}</span>
-			{/if}
-			{#if item.abv}
-				<span class="right"
-					>ABV:
-					{item.abv}</span
-				><br />
-			{/if}
-			<br />
-		</div>
-	</section>
+	</a>
 {/each}
 
 <style>
+	a {
+		text-decoration: none;
+		display: flex;
+		text-align: center;
+		width: 100%;
+	}
+
 	.content {
 		margin: 0px auto;
 		max-width: 1100px;
