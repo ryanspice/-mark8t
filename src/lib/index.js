@@ -14,7 +14,7 @@ import FeatureVideo from "./components/www/FeatureVideo.svelte";
 import Account from "./components/modules/Account.svelte";
 import Contact from "./components/modules/Contact.svelte";
 import Website from "./components/modules/Website.svelte";
-import Google from "./components/modules/Google.svelte";
+import Keys from "./components/modules/Keys.svelte";
 import Products from "./components/www/Products.svelte";
 
 import Header from "./components/header/Header.svelte";
@@ -74,7 +74,7 @@ export {
 	Account,
 	Contact,
 	Website,
-	Google,
+	Keys,
 	Products,
 
 	Header,

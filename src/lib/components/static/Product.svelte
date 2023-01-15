@@ -18,6 +18,19 @@
 	import Input from "../Input.svelte";
 	import { _TENANT, _API } from "../../stores.js";
 
+	// import {
+	// 	Grid,
+	// 	GridItem,
+	// 	Image,
+	// 	Carousel,
+	// 	CarouselItem,
+	// 	Text,
+	// 	Button,
+	// } from "@smui/grid";
+
+	// import { Card } from "@smui/card";
+	// import { Typography } from "@smui/typography";
+
 	let valueA = "";
 	let valueB = "";
 	let valueC = "";
@@ -73,7 +86,7 @@
 	const customFields = {
 		ibu: "IBU",
 		abv: "ABV",
-		// 'price':'Price',
+		price: "Price",
 	};
 </script>
 
@@ -121,8 +134,7 @@
 			on:click={() => {
 				document.getElementById("fileToUpload").click();
 			}}
-		>
-		</Button>
+		/>
 		<Content class="mdc-typography--body2">
 			{#each Object.entries(standardFields) as [key, value]}
 				<Input

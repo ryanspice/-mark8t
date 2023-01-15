@@ -78,6 +78,7 @@
 	nav span {
 		padding-left: 0.5rem;
 		padding-right: 0.5rem;
+		padding-bottom: 1rem;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
