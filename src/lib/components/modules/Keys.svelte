@@ -23,19 +23,20 @@
 </script>
 
 <Accordion>
+	<strong>API Keys</strong>
+	<hr />
 	<p>
-		<strong>API Keys</strong>
 		<small
-			>This page allows you to manage and configure the different Google
-			services that are integrated with our B2B2C app. <br /> You can
-			create or edit API keys for services like Google Maps, YouTube, and
-			Google Drive.
+			>This page allows you to manage and configure the different
+			services. <br /> You can create or edit API keys for services like
+			Google Maps, and other API keys.
 			<br /> <br />
 			You can also access a Google Calendar directly from the app to schedule
 			and manage events. Plus, you can use your Google Tag ID to track and
 			analyze user behavior on the app using Google Analytics.
 		</small>
 	</p>
+	<hr />
 	<Panel
 		bind:open={panel3Open}
 		on:click={(e) => {
@@ -44,13 +45,20 @@
 	>
 		<Header>
 			<strong class="mdc-typography--headline6">Google</strong>
-			<span slot="description">Google Account Settings</span>
+			<span slot="description">URLs and API Keys</span>
 			<IconButton slot="icon" toggle pressed={panel3Open}>
 				<Icon class="material-icons" on>expand_less</Icon>
 				<Icon class="material-icons">expand_more</Icon>
 			</IconButton>
 		</Header>
 		<Content>
+			<p class="mdc-typography--body1">
+				<br />
+				<small
+					>These are the secrets that are used to enable google
+					components on your webpage. <br />
+				</small>
+			</p>
 			<Input
 				type="password"
 				label="Calendar ICS"
@@ -104,7 +112,7 @@
 
 	<!-- Facebook -->
 
-	<Panel
+	<!-- <Panel
 		bind:open={panelFacebook}
 		on:click={(e) => {
 			localStorage.setObject("--panel--panelFacebook", panelFacebook);
@@ -119,7 +127,7 @@
 			</IconButton>
 		</Header>
 		<Content />
-	</Panel>
+	</Panel> -->
 
 	<!-- Secret Keys -->
 
@@ -131,12 +139,27 @@
 	>
 		<Header>
 			<strong class="mdc-typography--headline6">Secrets</strong>
-			<span slot="description">Secrets Account Settings</span>
+			<span slot="description">Keys and Passcodes</span>
 			<IconButton slot="icon" toggle pressed={panelSecrets}>
 				<Icon class="material-icons" on>expand_less</Icon>
 				<Icon class="material-icons">expand_more</Icon>
 			</IconButton>
 		</Header>
-		<Content />
+		<Content>
+			<p class="mdc-typography--body1">
+				<br />
+				<small
+					>These are the secrets that are used to enable special
+					access to this admin panel. <br />
+				</small>
+				<Input
+					type="promotion"
+					label=""
+					class="w-50"
+					value={"PEON"}
+					disabled
+				/>
+			</p></Content
+		>
 	</Panel>
 </Accordion>

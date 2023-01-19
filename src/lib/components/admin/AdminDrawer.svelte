@@ -14,7 +14,7 @@
 	let active = "";
 
 	// loop through the files in ./modules/ creating an array of the names
-	import * as modules from "./modules/index";
+	import * as modules from "../modules/index";
 	const adminPanels = Object.keys(modules.default);
 
 	function setActive(value) {
@@ -76,12 +76,6 @@
 	.drawer-container > .mdc-card {
 		/* height: 100vh; */
 	}
-	:global(.mdc-drawer .mdc-card) {
-		/* position: fixed; */
-		/* top: 3.6rem; */
-		/* height: 100vh; */
-	}
-
 	* :global(.app-content) {
 		flex: auto;
 		overflow: auto;

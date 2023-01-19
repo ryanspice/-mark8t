@@ -167,3 +167,54 @@
 		}}
 	/>
 {/if}
+
+<style>
+	/* Theme colors. */
+	:root {
+		--mdc-theme-primary: #ff3e00;
+		--mdc-theme-secondary: #676778;
+		--mdc-theme-background: #fff;
+		--mdc-theme-surface: #fff;
+		--mdc-theme-error: #b71c1c;
+		--mdc-theme-on-primary: #fff;
+		--mdc-theme-on-secondary: #fff;
+		--mdc-theme-on-surface: #000;
+		--mdc-theme-on-error: #fff;
+		--mdc-theme-text-primary-on-background: rgba(0, 0, 0, 0.87);
+		--mdc-theme-text-secondary-on-background: rgba(0, 0, 0, 0.54);
+		--mdc-theme-text-hint-on-background: rgba(0, 0, 0, 0.38);
+		--mdc-theme-text-disabled-on-background: rgba(0, 0, 0, 0.38);
+		--mdc-theme-text-icon-on-background: rgba(0, 0, 0, 0.38);
+		--mdc-theme-text-primary-on-light: rgba(0, 0, 0, 0.87);
+		--mdc-theme-text-secondary-on-light: rgba(0, 0, 0, 0.54);
+		--mdc-theme-text-hint-on-light: rgba(0, 0, 0, 0.38);
+		--mdc-theme-text-disabled-on-light: rgba(0, 0, 0, 0.38);
+		--mdc-theme-text-icon-on-light: rgba(0, 0, 0, 0.38);
+		--mdc-theme-text-primary-on-dark: white;
+		--mdc-theme-text-secondary-on-dark: rgba(255, 255, 255, 0.7);
+		--mdc-theme-text-hint-on-dark: rgba(255, 255, 255, 0.5);
+		--mdc-theme-text-disabled-on-dark: rgba(255, 255, 255, 0.5);
+		--mdc-theme-text-icon-on-dark: rgba(255, 255, 255, 0.5);
+	}
+	:global(.mdc-drawer .mdc-card) {
+		background-color: var(--smui-theme-primary) !important;
+		/* position: fixed; */
+		/* top: 3.6rem; */
+		/* height: 100vh; */
+	}
+
+	:global(.mdc-drawer .mdc-card > a) {
+		color: var(--smui-theme-on-primary) !important;
+	}
+	:global(.mdc-drawer > a) {
+		color: var(--smui-theme-primary) !important;
+	}
+
+	:global(a) {
+		/* color: var(--smui-theme-primary) !important; */
+		cursor: pointer;
+	}
+	:global(.mdc-drawer .mdc-deprecated-list-item) {
+		color: red !important;
+	}
+</style>

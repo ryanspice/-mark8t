@@ -10,7 +10,7 @@
     ActionIcons,
   } from "@smui/card";
 
-  import AdminDrawer from "../AdminDrawer.svelte";
+  import AdminDrawer from "./AdminDrawer.svelte";
 
   import Input from "@smui/textfield";
   import Checkbox from "@smui/checkbox";
@@ -26,11 +26,13 @@
   import Account from "../modules/Account.svelte";
   import Contact from "../modules/Contact.svelte";
 
+  import Quote from "./Quote.svelte";
   import "./View.svelte.scss?inline";
   import Drawer from "../Drawer.svelte";
   import ContactList from "../ContactList.svelte";
   import DialogForEditing from "../DialogForEditing.svelte";
 
+  // import Analytics from "./Analytics.svelte";
   import Breadcrumbs from "./Breadcrumbs.svelte";
 
   import Modules from "../modules/index.js";
@@ -318,17 +320,9 @@
   </Banner>
 </div> -->
 
-<!-- <Drawer>yrdy</Drawer> -->
-<!-- <Paper elevation={0} class="container">
-  <OverviewModules />
-</Paper>
-<Paper elevation={0} class="container">
-  <Overview {account} {unsavedChanges} {website} />
-</Paper> -->
-
 <AdminDrawer>
-  <Breadcrumbs />
-
+  <!-- <Breadcrumbs /> -->
+  <!-- <Analytics /> -->
   {#if override}
     <section class="container">
       <Paper elevation={0}>
@@ -339,7 +333,8 @@
     </section>
   {/if}
   {#if override === false}
-    <section class="container">
+    <Quote />
+    <section class="container hidden">
       <Paper elevation={0} class="transparent">
         <br />
         <Accordion>

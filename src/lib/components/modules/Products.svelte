@@ -10,7 +10,7 @@
 		ActionIcons,
 	} from "@smui/card";
 
-	import AdminDrawer from "../AdminDrawer.svelte";
+	import AdminDrawer from "../admin/AdminDrawer.svelte";
 
 	import Input from "@smui/textfield";
 	import Checkbox from "@smui/checkbox";
