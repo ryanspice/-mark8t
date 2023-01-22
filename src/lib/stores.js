@@ -1,13 +1,18 @@
 import { base } from '$app/paths';
 import { writable } from 'svelte/store';
 
+import "./stores.store.js";
+
 import "./utils/storage/storage.encode.js";
 import "./utils/storage/storage.getobject.js";
 import "./utils/storage/storage.setobject.js";
 
 export const isOpen = writable(0);
 export const opening_hours = writable(0);
-export const place = writable(0);
+export const place = writable({
+	"address": "",
+	"vicinity": "string"
+});
 
 const baseUrl = import.meta.env.VITE_BASE;
 const tenantId = import.meta.env.VITE_TENANT_ID;

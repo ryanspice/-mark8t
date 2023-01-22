@@ -61,7 +61,7 @@
 	}
 
 	img {
-		max-height: 475px;
+		max-height: 300px;
 	}
 
 	div {

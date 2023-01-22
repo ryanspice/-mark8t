@@ -1,17 +1,58 @@
 <script>
 	import { base } from "$app/paths";
+	import Button, { Label } from "@smui/button";
 	import { onMount } from "svelte";
-	let products = [];
+
 	import {
 		_API_STORE_PRODUCTS_,
 		transformProductNameToSlug,
 	} from "../stores.js";
+
+	import { addToCart, removeFromCart, cartStore } from "../stores.store.js";
+
+	let products = [];
+	let order = [];
+
 	_API_STORE_PRODUCTS_.subscribe((value) => {
 		products = value || [];
+		products.forEach((item, index) => {
+			order[item.id] = 0;
+			getQuantityFromItemId(item.id);
+		});
 	});
+
+	let cart = [];
+	let cartCount = 0;
+	cartStore.subscribe((value) => {
+		cart = value;
+	});
+
+	$: products = [];
+	$: orderCount = [];
+
+	function getQuantityFromItemId(id) {
+		let quantity = 0;
+		try {
+			console.log("cart", cart);
+			cart.forEach((item) => {
+				if (item.id === id) {
+					quantity = item.quantity || 1;
+				}
+			});
+		} catch (error) {
+			console.log(error);
+		}
+		// cart.forEach((item) => {
+		// 	if (item.id === id) {
+		// 		quantity = item.quantity;
+		// 	}
+		// });
+		order[id] = quantity || 0;
+		return quantity || 0;
+	}
 </script>
 
-{#each products as item}
+{#each products as item, index}
 	<a href={base + "/products/" + transformProductNameToSlug(item.name)}>
 		<div>
 			<div class="col center image">
@@ -38,6 +79,35 @@
 			</div>
 		</div>
 	</a>
+	<div>
+		<Button
+			style="position:relative;top:-124px;z-index:214;"
+			on:click={(event) => {
+				// decrement();
+				removeFromCart(item.id);
+				getQuantityFromItemId(item.id);
+				event.preventDefault();
+				event.stopPropagation();
+			}}>-</Button
+		>
+		<Button
+			style="position:relative;top:-124px;z-index:214;"
+			on:click={(event) => {
+				increment();
+				event.preventDefault();
+				event.stopPropagation();
+			}}>{order[item.id] || 0}</Button
+		>
+		<Button
+			style="position:relative;top:-124px;z-index:214;"
+			on:click={async (event) => {
+				await addToCart(item);
+				getQuantityFromItemId(item.id);
+				event.preventDefault();
+				event.stopPropagation();
+			}}>+</Button
+		>
+	</div>
 {/each}
 
 <style>

@@ -31,8 +31,10 @@ import Spinner from "./components/Spinner.svelte";
 import Layout from "./components/admin/Layout.svelte";
 
 import Admin from "./pages/Admin.svelte";
+import Cart from "./pages/Cart.svelte";
 
 import * as Static from "./components/static/index.js";
+import * as Store from "./components/store/index.js";
 
 import {
 	_API_STORE_PRODUCTS_,
@@ -56,6 +58,7 @@ const Logout = () => {
 export {
 
 	Static,
+	Store,
 
 	Navigation,
 	Landing,
@@ -88,6 +91,7 @@ export {
 
 	Admin,
 	Logout,
+	Cart,
 
 
 	getProductBySlug,
