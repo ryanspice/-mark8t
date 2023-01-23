@@ -36,6 +36,8 @@ import * as Store from "./components/store/index.js";
 import * as Www from "./components/www/index.js";
 import * as Pages from "./pages/index.js";
 
+import { cartStore } from "./stores.store.js";
+
 import {
 	_API_STORE_PRODUCTS_,
 	_API_STORE_WEBSITE_,
@@ -56,6 +58,7 @@ const Logout = () => {
 
 
 export {
+	cartStore,
 	Pages,
 	Www,
 	Static,
