@@ -1,4 +1,5 @@
 <script>
+  import { goto } from "$app/navigation";
   import { base } from "$app/paths";
   import MediaQuery from "svelte-media-queries";
   import { isOpen } from "../stores.js";
@@ -7,50 +8,41 @@
   isOpen.subscribe((value) => {
     open = value;
   });
+  let handleClick = () => {
+    goto(base + "/events");
+  };
 </script>
 
 <section>
   {#if open}
-    <div
-      on:click={() => {
-        window.location = base + "/admin";
-      }}
+  <div on:click={()=> {
+    window.location = base + "/admin";
+    }}
     >
-      <p>
-        <span>O</span>
-        <span>P</span>
-        <span>E</span>
-        <span>N</span>
-      </p>
-    </div>
+    <p>
+      <span>O</span>
+      <span>P</span>
+      <span>E</span>
+      <span>N</span>
+    </p>
+  </div>
   {:else}
-    <div
-      class="closed"
-      on:click={() => {
-        window.location = "/events";
-      }}
-    >
-      <p>
-        <span>C</span>
-        <span>L</span>
-        <span>O</span>
-        <span>S</span>
-        <span>E</span>
-        <span>D</span>
-      </p>
-    </div>
+  <div class="closed" on:click={handleClick}>
+    <p>
+      <span>C</span>
+      <span>L</span>
+      <span>O</span>
+      <span>S</span>
+      <span>E</span>
+      <span>D</span>
+    </p>
+  </div>
   {/if}
-  <MediaQuery
-    query={[
-      "(max-width: 768px)",
-      "(min-width: 768px) and (max-width: 1280px)",
-      "(min-width: 1280px)",
-    ]}
-    let:matches
-  >
+  <MediaQuery query={[ "(max-width: 768px)" , "(min-width: 768px) and (max-width: 1280px)" , "(min-width: 1280px)" , ]}
+    let:matches>
     {@const [mobile, tablet, desktop] = matches}
     {#if desktop}
-      <Hours />
+    <Hours />
     {/if}
   </MediaQuery>
 </section>
@@ -191,8 +183,8 @@
     text-shadow: none !important;
   }
 
-  .closed > p,
-  .closed > span {
+  .closed>p,
+  .closed>span {
     color: black !important;
     text-shadow: none !important;
   }

@@ -30,11 +30,11 @@ import Authenticate from "./components/Authenticate.svelte";
 import Spinner from "./components/Spinner.svelte";
 import Layout from "./components/admin/Layout.svelte";
 
-import Admin from "./pages/Admin.svelte";
-import Cart from "./pages/Cart.svelte";
 
 import * as Static from "./components/static/index.js";
 import * as Store from "./components/store/index.js";
+import * as Www from "./components/www/index.js";
+import * as Pages from "./pages/index.js";
 
 import {
 	_API_STORE_PRODUCTS_,
@@ -56,7 +56,8 @@ const Logout = () => {
 
 
 export {
-
+	Pages,
+	Www,
 	Static,
 	Store,
 
@@ -89,10 +90,7 @@ export {
 	Spinner,
 	Layout,
 
-	Admin,
 	Logout,
-	Cart,
-
 
 	getProductBySlug,
 	transformProductNameToSlug,

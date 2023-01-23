@@ -1,18 +1,45 @@
 <script>
+	import { goto } from "$app/navigation";
 	import { base } from "$app/paths";
 	import { onMount } from "svelte";
 
 	import ItemSection from "../ItemSection.svelte";
 	import { fetchProducts } from "../../stores.js";
 
+	import {
+		addToCart,
+		removeFromCart,
+		cartStore,
+		clearCart,
+	} from "../../stores.store.js";
+
 	let frame;
 
-	//
+	//wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 	$: products = [];
 	import { _API_STORE_PRODUCTS_ } from "../../stores.js";
+	import QuickActionButtons from "../store/QuickActionButtons.svelte";
 	_API_STORE_PRODUCTS_.subscribe((value) => {
 		products = value;
 	});
+
+	let cart = [];
+	let cartCount = 0;
+	cartStore.subscribe((value) => {
+		cart = value;
+	});
+
+	// get ontario tax rate
+	let tax = 0.08;
+	let total = 0;
+
+	$: {
+		total = 0;
+		cart.forEach((product) => {
+			total += product.price * product.quantity;
+		});
+		total += total * tax;
+	}
 
 	//
 	onMount(() => {
@@ -77,10 +104,17 @@
 					<h2>what is</h2>
 					<h1>ON TAP</h1>
 					<h3>(today, or something like that)</h3>
+
+					<QuickActionButtons />
+					<br />
+					<br />
+					<hr />
 					<ItemSection filter="in stock" />
 				</div>
 			</div>
 		</div>
+		<QuickActionButtons />
+		<hr />
 		<!-- <div class='row'>
 			<div class='column'>
 				<div class='left-column'>

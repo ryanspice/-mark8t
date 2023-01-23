@@ -10,7 +10,7 @@
 
 	import { addToCart, removeFromCart, cartStore } from "../stores.store.js";
 
-	let products = [];
+	let products = localStorage.getObject("--store-products") || [];
 	let order = [];
 
 	_API_STORE_PRODUCTS_.subscribe((value) => {
@@ -21,7 +21,7 @@
 		});
 	});
 
-	let cart = [];
+	let cart = localStorage.getObject("cart") || [];
 	let cartCount = 0;
 	cartStore.subscribe((value) => {
 		cart = value;
@@ -52,63 +52,69 @@
 	}
 </script>
 
-{#each products as item, index}
-	<a href={base + "/products/" + transformProductNameToSlug(item.name)}>
-		<div>
-			<div class="col center image">
-				<img width="325" src={item.thumb} />
+<hr />
+<section class="content product-container">
+	{#each products as item, index}
+		<a
+			class="product-entry"
+			hrefs={base + "/products/" + transformProductNameToSlug(item.name)}
+		>
+			<div>
+				<div class="col center image">
+					<img width="325" src={item.thumb} />
+				</div>
+				<div class="content">
+					<h2>{item.name}</h2>
+					<img
+						class="thumb"
+						width="325"
+						src={base + ("/" + item?.image?.replace("/", ""))}
+					/>
+					<br />
+					{#if item.ibu}
+						<span class="left">IBU: {item.ibu}</span>
+					{/if}
+					{#if item.abv}
+						<span class="right"
+							>ABV:
+							{item.abv}</span
+						><br />
+					{/if}
+					<br />
+				</div>
 			</div>
-			<div class="content">
-				<h2>{item.name}</h2>
-				<img
-					class="thumb"
-					width="325"
-					src={base + ("/" + item?.image?.replace("/", ""))}
-				/>
-				<br />
-				{#if item.ibu}
-					<span class="left">IBU: {item.ibu}</span>
-				{/if}
-				{#if item.abv}
-					<span class="right"
-						>ABV:
-						{item.abv}</span
-					><br />
-				{/if}
-				<br />
-			</div>
+		</a>
+		<div class="product-buttons">
+			<Button
+				style="position:relative;top:-124px;z-index:214;"
+				on:click={(event) => {
+					// decrement();
+					removeFromCart(item.id);
+					getQuantityFromItemId(item.id);
+					event.preventDefault();
+					event.stopPropagation();
+				}}>-</Button
+			>
+			<Button
+				style="position:relative;top:-124px;z-index:214;"
+				on:click={(event) => {
+					increment();
+					event.preventDefault();
+					event.stopPropagation();
+				}}>{order[item.id] || 0}</Button
+			>
+			<Button
+				style="position:relative;top:-124px;z-index:214;"
+				on:click={async (event) => {
+					await addToCart(item);
+					getQuantityFromItemId(item.id);
+					event.preventDefault();
+					event.stopPropagation();
+				}}>+</Button
+			>
 		</div>
-	</a>
-	<div>
-		<Button
-			style="position:relative;top:-124px;z-index:214;"
-			on:click={(event) => {
-				// decrement();
-				removeFromCart(item.id);
-				getQuantityFromItemId(item.id);
-				event.preventDefault();
-				event.stopPropagation();
-			}}>-</Button
-		>
-		<Button
-			style="position:relative;top:-124px;z-index:214;"
-			on:click={(event) => {
-				increment();
-				event.preventDefault();
-				event.stopPropagation();
-			}}>{order[item.id] || 0}</Button
-		>
-		<Button
-			style="position:relative;top:-124px;z-index:214;"
-			on:click={async (event) => {
-				await addToCart(item);
-				getQuantityFromItemId(item.id);
-				event.preventDefault();
-				event.stopPropagation();
-			}}>+</Button
-		>
-	</div>
-{/each}
+	{/each}
+</section>
 
 <style>
 	a {
@@ -116,6 +122,7 @@
 		display: flex;
 		text-align: center;
 		width: 100%;
+		color: var(--primary);
 	}
 
 	.content {
@@ -163,5 +170,20 @@
 		left: 5px;
 		margin-left: 5px;
 		font-size: 1.5rem;
+	}
+	.product-container {
+		display: flex;
+		align-content: center;
+		flex-wrap: wrap;
+		flex-direction: column;
+	}
+	.product-entry {
+		width: 375px;
+	}
+	.product-buttons {
+		position: relative;
+		top: 75px;
+		z-index: 3;
+		transform: scale(1.5);
 	}
 </style>

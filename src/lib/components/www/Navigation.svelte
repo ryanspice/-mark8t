@@ -7,6 +7,7 @@
 		<a href={base + "/products"} target="_top">BEER</a>
 	{:else}
 		<a href={base + "/"} target="_top">HOME</a>
+		<a href={base + "/products"} target="_top">BEER</a>
 	{/if}
 	<a href={base + "/events"} target="_top">EVENTS</a>
 	<a href={base + "/location"} target="_top">LOCATION</a>
@@ -18,7 +19,7 @@
 		width: 100%;
 		margin: 0px auto;
 		display: flex;
-		max-width: 720px;
+		max-width: 730px;
 		overflow-y: none;
 		overflow-x: auto;
 	}
@@ -27,7 +28,7 @@
 		flex: auto;
 		text-decoration: none;
 		font-size: 1rem;
-		font-weight: 600;
+		/* font-weight: 600; */
 		color: #444;
 		line-height: 1.5;
 		color: #fe0100;
