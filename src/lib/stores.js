@@ -180,12 +180,12 @@ const fetchProducts = async (filter) => {
 	const response = await fetch(_PRODUCTS);
 	let items;
 	items = (await response.json());
-	if (filter) {
-		// find tag in items tag list with tag.v == filter
-		items = await [...items.filter(item => {
-			return item.tags.find(tag => tag.v == filter);
-		})];
-	}
+	// if (filter) {
+	// 	// find tag in items tag list with tag.v == filter
+	// 	items = await [...items.filter(item => {
+	// 		return item.tags.find(tag => tag.v == filter);
+	// 	})];
+	// }
 	_API_STORE_PRODUCTS_.set(items);
 	localStorage.setObject('--store-products', (items));
 	//localStorage.setItem('--store-products-timestamp', new Date().getTime() + CACHE_DELAY);

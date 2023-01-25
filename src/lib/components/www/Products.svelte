@@ -90,6 +90,8 @@
 </script>
 
 <section id="section__products">
+	<h2>last updated</h2>
+	<h3>23-01-25</h3>
 	<iframe
 		id="effects"
 		src=""
@@ -103,13 +105,38 @@
 				<div>
 					<h2>what is</h2>
 					<h1>ON TAP</h1>
-					<h3>(today, or something like that)</h3>
+					<!-- <h3>(today, or something like that)</h3> -->
+
+					<QuickActionButtons />
+					<br />
+					<br />
+					<hr />
+					<ItemSection filter="on tap" price="false" />
+				</div>
+			</div>
+			<div class="column">
+				<div>
+					<h2>what is in for</h2>
+					<h1>RETAIL</h1>
+					<!-- <h3>(today, or something like that)</h3> -->
 
 					<QuickActionButtons />
 					<br />
 					<br />
 					<hr />
 					<ItemSection filter="in stock" />
+				</div>
+
+				<div>
+					<h2>what you can wear</h2>
+					<h1>MERCH</h1>
+					<!-- <h3>(today, or something like that)</h3> -->
+
+					<QuickActionButtons />
+					<br />
+					<br />
+					<hr />
+					<ItemSection filter="merch" />
 				</div>
 			</div>
 		</div>

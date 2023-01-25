@@ -50,69 +50,89 @@
 		order[id] = quantity || 0;
 		return quantity || 0;
 	}
+	export let price = true;
+	export let filter = "";
+	// function which checks if a product as item has a tag, which is an array of tags, which contains the filter
+	function hasTag(item, tag) {
+		let found = false;
+		item.tags.forEach((item) => {
+			if (item.v === tag) {
+				found = true;
+				console.log(item, tag);
+			}
+			return found;
+		});
+		return found;
+	}
 </script>
 
 <hr />
 <section class="content product-container">
 	{#each products as item, index}
-		<a
-			class="product-entry"
-			hrefs={base + "/products/" + transformProductNameToSlug(item.name)}
-		>
-			<div>
-				<div class="col center image">
-					<img width="325" src={item.thumb} />
+		{#if hasTag(item, filter)}
+			<a
+				class="product-entry"
+				hrefs={base +
+					"/products/" +
+					transformProductNameToSlug(item.name)}
+			>
+				<div>
+					<div class="col center image">
+						<img width="325" src={item.thumb} />
+					</div>
+					<div class="content">
+						<h2>{item.name}</h2>
+						<img
+							class="thumb"
+							width="325"
+							src={base + ("/" + item?.image?.replace("/", ""))}
+						/>
+						<br />
+						{#if item.ibu}
+							<span class="left">IBU: {item.ibu}</span>
+						{/if}
+						{#if item.abv}
+							<span class="right"
+								>ABV:
+								{item.abv}</span
+							><br />
+						{/if}
+						<br />
+					</div>
 				</div>
-				<div class="content">
-					<h2>{item.name}</h2>
-					<img
-						class="thumb"
-						width="325"
-						src={base + ("/" + item?.image?.replace("/", ""))}
-					/>
-					<br />
-					{#if item.ibu}
-						<span class="left">IBU: {item.ibu}</span>
-					{/if}
-					{#if item.abv}
-						<span class="right"
-							>ABV:
-							{item.abv}</span
-						><br />
-					{/if}
-					<br />
+			</a>
+			{#if price == true}
+				<div class="product-buttons">
+					<Button
+						style="position:relative;top:-124px;z-index:214;"
+						on:click={(event) => {
+							// decrement();
+							removeFromCart(item.id);
+							getQuantityFromItemId(item.id);
+							event.preventDefault();
+							event.stopPropagation();
+						}}>-</Button
+					>
+					<Button
+						style="position:relative;top:-124px;z-index:214;"
+						on:click={(event) => {
+							increment();
+							event.preventDefault();
+							event.stopPropagation();
+						}}>{order[item.id] || 0}</Button
+					>
+					<Button
+						style="position:relative;top:-124px;z-index:214;"
+						on:click={async (event) => {
+							await addToCart(item);
+							getQuantityFromItemId(item.id);
+							event.preventDefault();
+							event.stopPropagation();
+						}}>+</Button
+					>
 				</div>
-			</div>
-		</a>
-		<div class="product-buttons">
-			<Button
-				style="position:relative;top:-124px;z-index:214;"
-				on:click={(event) => {
-					// decrement();
-					removeFromCart(item.id);
-					getQuantityFromItemId(item.id);
-					event.preventDefault();
-					event.stopPropagation();
-				}}>-</Button
-			>
-			<Button
-				style="position:relative;top:-124px;z-index:214;"
-				on:click={(event) => {
-					increment();
-					event.preventDefault();
-					event.stopPropagation();
-				}}>{order[item.id] || 0}</Button
-			>
-			<Button
-				style="position:relative;top:-124px;z-index:214;"
-				on:click={async (event) => {
-					await addToCart(item);
-					getQuantityFromItemId(item.id);
-					event.preventDefault();
-					event.stopPropagation();
-				}}>+</Button
-			>
-		</div>
+			{/if}
+		{/if}
 	{/each}
 </section>
 

@@ -25,6 +25,10 @@ export const addToCart = (product) => {
 			localStorage.setItem('cart', JSON.stringify(items));
 			return items;
 		}
+
+		if (!product.quantity)
+			product.quantity = 0;
+		product.quantity += 1;
 		items.push(product);
 		localStorage.setItem('cart', JSON.stringify(items));
 		return items;
