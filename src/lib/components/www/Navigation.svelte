@@ -5,11 +5,11 @@
 <nav class="uppercase">
 	{#if window.location.pathname == base}
 		<a href={base + "/products"} target="_top">BEER</a>
-		<a href={base + "/products"} target="_top">ON TAP</a>
+		<!-- <a href={base + "/products"} target="_top">ON TAP</a> -->
 	{:else}
 		<a href={base + "/"} target="_top">HOME</a>
-		<a href={base + "/products"} target="_top">ON TAP</a>
-		<a href={base + "/products"} target="_top">OUR BEER</a>
+		<!-- <a href={base + "/products"} target="_top">ON TAP</a> -->
+		<a href={base + "/products"} target="_top">BEER</a>
 	{/if}
 	<a href={base + "/events"} target="_top">EVENTS</a>
 	<a href={base + "/location"} target="_top">LOCATION</a>

@@ -335,12 +335,12 @@
 <hr />
 <div hidden>
 	<!-- <label for="email-description">Email Description:</label> -->
-	<textarea
+	<!-- <textarea
 		id="email-description"
 		class="w-100"
 		bind:value={_EMAILS_LISTING_[selectedEmailType].description}
 		disabled
-	/>
+	/> -->
 	<label for="email-template"><h3 class="w-100">Template</h3></label>
 	<pre id="editor" use:quill>
 		<!-- {"<!DOCTYPE html" + emailTemplate.split("<!DOCTYPE html")[1]} -->

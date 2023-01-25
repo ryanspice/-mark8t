@@ -76,7 +76,7 @@
 {#if cart.length !== 0}
 	<section class="container">
 		<iframe
-			style="min-width:470px;max-width:680px;width: 50vw; margin:0px auto; height: 100%;height:65vh;max-height:790px;overflow:none;padding:0.5rem;border-radius:14px;outline:none;border:none;"
+			style="border:1px solid black; border-radius:16px; min-width:470px;max-width:680px;width: 50vw; margin:0px auto; height: 100%;height:65vh;max-height:800px;overflow:none;padding:0.5rem;border-radius:14px;outline:none;border:none;"
 			src={base +
 				"/payment-element?total=" +
 				total +

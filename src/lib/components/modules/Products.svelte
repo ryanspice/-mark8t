@@ -283,7 +283,7 @@
 </script>
 
 <h3>Product Management page!</h3>
-<p>
+<!-- <p>
 	Here, you can update and edit your products with ease. You can add new
 	products, update existing product information, and delete products that are
 	no longer needed. You can also manage product images, pricing, and inventory
@@ -294,7 +294,7 @@
 
 	<a href="">View All </a>to get a more comprehensive management view of your
 	products.
-</p>
+</p> -->
 
 <Panel
 	bind:open={panelProducts}
