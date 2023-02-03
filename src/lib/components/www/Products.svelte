@@ -15,7 +15,6 @@
 
 	let frame;
 
-	//wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 	$: products = [];
 	import { _API_STORE_PRODUCTS_ } from "../../stores.js";
 	import QuickActionButtons from "../store/QuickActionButtons.svelte";
@@ -30,7 +29,7 @@
 	});
 
 	// get ontario tax rate
-	let tax = 0.08;
+	// let tax = 0.08;
 	let total = 0;
 
 	$: {
@@ -38,7 +37,7 @@
 		cart.forEach((product) => {
 			total += product.price * product.quantity;
 		});
-		total += total * tax;
+		// total += total * tax;
 	}
 
 	//
@@ -103,19 +102,6 @@
 		<div class="row">
 			<div class="column">
 				<div>
-					<h2>what is</h2>
-					<h1>ON TAP</h1>
-					<!-- <h3>(today, or something like that)</h3> -->
-
-					<QuickActionButtons />
-					<br />
-					<br />
-					<hr />
-					<ItemSection filter="on tap" price="false" />
-				</div>
-			</div>
-			<div class="column">
-				<div>
 					<h2>what is in for</h2>
 					<h1>RETAIL</h1>
 					<!-- <h3>(today, or something like that)</h3> -->
@@ -137,6 +123,19 @@
 					<br />
 					<hr />
 					<ItemSection filter="merch" />
+				</div>
+			</div>
+			<div class="column">
+				<div>
+					<h2>what is</h2>
+					<h1>ON TAP</h1>
+					<!-- <h3>(today, or something like that)</h3> -->
+
+					<QuickActionButtons hideControls={true} />
+					<br />
+					<br />
+					<hr />
+					<ItemSection filter="on tap" price="false" />
 				</div>
 			</div>
 		</div>

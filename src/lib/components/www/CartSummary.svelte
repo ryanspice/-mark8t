@@ -6,13 +6,13 @@
 	export let cart = [];
 	export let hideButtons = false;
 	let total = 0;
-	let tax = 0.13;
+	// let tax = 0.13;
 	$: {
 		total = 0;
 		cart.forEach((product) => {
 			total += product.price * product.quantity;
 		});
-		total += total * tax;
+		// total += total * tax;
 	}
 
 	const convertToDollars = (price) => {
@@ -42,7 +42,8 @@
 	<div class="total">
 		{#if cart.length !== 0}
 			<h3 style="width:100%;text-align:center;">
-				Total (including tax): ${convertToDollars(total)}
+				<!-- Total (including tax): ${convertToDollars(total)} -->
+				Total: ${convertToDollars(total)}
 			</h3>
 		{/if}
 		{#if cart.length === 0}

@@ -32,7 +32,7 @@
 	});
 
 	// get ontario tax rate
-	let tax = 0.08;
+	// let tax = 0.08;
 	let total = 0;
 
 	$: {
@@ -40,49 +40,52 @@
 		cart.forEach((product) => {
 			total += product.price * product.quantity;
 		});
-		total += total * tax;
+		// total += total * tax;
 	}
+	export let hideControls = false;
 </script>
 
 <div class="container center" style="position:relative;z-index: 3;">
 	<div class="cart-actions center">
-		{#if cart.length !== 0}
-			<button
-				class="btn btn-danger"
-				style="margin-right:0px;"
-				on:click={abandonCart}>Abandon Cart</button
-			>
-			{#if window.location.href.indexOf("/checkout") == -1}
-				<!-- <button class="btn btn-secondary" on:click={storeCart}>Save Cart</button> -->
+		{#if !hideControls}
+			{#if cart.length !== 0}
 				<button
-					class="btn btn-primary"
-					style="margin-left:0px;margin-right:0px;"
-					on:click={checkout}>Checkout</button
+					class="btn btn-danger"
+					style="margin-right:0px;"
+					on:click={abandonCart}>Abandon Cart</button
 				>
-			{:else}
-				<button
-					class="btn btn-primary hidden"
-					style="margin-left:0px;margin-right:0px;"
-					on:click={checkout}>Checkout</button
-				>
-			{/if}
+				{#if window.location.href.indexOf("/checkout") == -1}
+					<!-- <button class="btn btn-secondary" on:click={storeCart}>Save Cart</button> -->
+					<button
+						class="btn btn-primary"
+						style="margin-left:0px;margin-right:0px;"
+						on:click={checkout}>Checkout</button
+					>
+				{:else}
+					<button
+						class="btn btn-primary hidden"
+						style="margin-left:0px;margin-right:0px;"
+						on:click={checkout}>Checkout</button
+					>
+				{/if}
 
-			{#if window.location.href.indexOf("/cart") == -1}
-				<button
-					class="btn btn-primary"
-					style="margin-left:0px;"
-					on:click={() => {
-						goto(base + "/cart");
-					}}>View Cart</button
-				>
-			{:else}
-				<button
-					class="btn btn-primary hidden"
-					style="margin-left:0px;"
-					on:click={() => {
-						goto(base + "/cart");
-					}}>View Cart</button
-				>
+				{#if window.location.href.indexOf("/cart") == -1}
+					<button
+						class="btn btn-primary"
+						style="margin-left:0px;"
+						on:click={() => {
+							goto(base + "/cart");
+						}}>View Cart</button
+					>
+				{:else}
+					<button
+						class="btn btn-primary hidden"
+						style="margin-left:0px;"
+						on:click={() => {
+							goto(base + "/cart");
+						}}>View Cart</button
+					>
+				{/if}
 			{/if}
 		{/if}
 	</div>
