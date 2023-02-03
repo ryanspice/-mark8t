@@ -13,7 +13,7 @@
   };
 </script>
 
-<section>
+<section class="open">
   {#if open}
     <div
       on:click={() => {
@@ -55,6 +55,44 @@
 </section>
 
 <style>
+  .open {
+    position: fixed;
+    top: -75px;
+    right: 1rem;
+    z-index: 2;
+    overflow: hidden;
+    transform: scale(1);
+    top: 50px;
+  }
+
+  @media (max-width: 768px) {
+    /* styles for screens with width less than or equal to 768px */
+    .open {
+      transform: scale(0.5);
+      right: -7.8rem;
+      top: -83px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* styles for screens with width greater than or equal to 768px and less than or equal to 1280px */
+
+    .open {
+      transform: scale(0.5);
+      right: -7.8rem;
+      top: -83px;
+    }
+  }
+
+  @media (min-width: 1280px) and (max-width: 1520px) {
+    /* styles for screens with width greater than or equal to 1520px */
+
+    .open {
+      top: 50px;
+      transform: scale(0.7);
+    }
+  }
+
   section {
     position: absolute;
     top: -75px;
