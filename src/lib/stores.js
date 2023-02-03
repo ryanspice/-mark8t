@@ -50,7 +50,8 @@ const _SECRETS = (() => {
 	return _STORAGE + '/_secrets.json?r=' + Math.random() * 99999;
 })();
 const _AUTHENTICATED = (() => {
-	return _STORAGE + '/_authenticated.json?r=' + Math.random() * 99999;
+	// return _STORAGE + '/_authenticated.json?r=' + Math.random() * 99999;
+	return _STORAGE + '/users.auth.json?r=' + Math.random() * 99999;
 })();
 const _WEBSITE = _STORAGE + '/website.json?r=' + Math.random() * 999998;
 const _PRODUCTS = _STORAGE + '/products.json?r=' + Math.random() * 999997;

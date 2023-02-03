@@ -98,7 +98,7 @@
 			!localAccountHasAdminPermissions
 		) {
 			localAccountPermissions = await (
-				await fetch("../api/authenticated.json")
+				await fetch("../api/users.auth.json")
 			).json();
 			localAccountHasAdminPermissions =
 				localAccountPermissions.ids.includes(localAccountId);
