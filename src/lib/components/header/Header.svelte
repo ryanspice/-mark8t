@@ -3,15 +3,18 @@
   import Contact from "./Contact.svelte";
 
   //
-  $: website = [];
+  $: website = {};
   import { _API_STORE_WEBSITE_ } from "../../stores.js";
-  _API_STORE_WEBSITE_.subscribe((value) => {
-    website = value;
+  import { onMount } from "svelte";
+  onMount(() => {
+    _API_STORE_WEBSITE_.subscribe((value) => {
+      website = value;
+    });
   });
 </script>
 
 <svelte:head>
-  <title>{website.siteName}</title>
+  <!-- <title>{website.siteName}</title> -->
   <meta name="description" content={website.siteDescription} />
   <link href="/" rel="canonical" />
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
@@ -22,7 +25,7 @@
     content="black-translucent"
   />
   <meta name="apple-mobile-web-app-title" content={website.siteDescription} />
-  <link rel="apple-touch-icon" href={base + "/logo_og.jpg"} />
+  <!-- <link rel="apple-touch-icon" href={base + "/logo_og.jpg"} />  -->
   <!-- <link rel="manifest" href={base+"/manifest.json"} /> -->
 
   <!--  Essential META Tags -->

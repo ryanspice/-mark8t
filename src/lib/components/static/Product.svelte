@@ -1,188 +1,108 @@
 <script>
-	import { onMount } from "svelte";
-	import Card, {
-		Content,
-		PrimaryAction,
-		Media,
-		MediaContent,
-		Actions,
-		ActionButtons,
-		ActionIcons,
-	} from "@smui/card";
-	import Button, { Label } from "@smui/button";
-	import IconButton, { Icon } from "@smui/icon-button";
+	export let data;
 
-	import Dialog, { Header, Title } from "@smui/dialog";
-	import Chip from "../Chip.svelte";
-	// import Textfield from "@smui/textfield";
-	import Input from "../Input.svelte";
-	import { _TENANT, _API } from "../../stores.js";
-
-	// import {
-	// 	Grid,
-	// 	GridItem,
-	// 	Image,
-	// 	Carousel,
-	// 	CarouselItem,
-	// 	Text,
-	// 	Button,
-	// } from "@smui/grid";
-
-	// import { Card } from "@smui/card";
-	// import { Typography } from "@smui/typography";
-
-	let valueA = "";
-	let valueB = "";
-	let valueC = "";
-	let response = "";
-
-	export let data = {
-		name: "",
-		description: "",
-		tags: [],
-		price: 0,
-		ibu: "N/A",
-		abv: "N/A",
-		image: "",
-		thumb: "",
-		link: "",
-		id: 3,
-	};
-
-	let clicked = 0;
-	let startData = {};
-
-	export let open = false;
-	export let onDismiss = () => {};
-	export let onDelete = () => {};
-	export let onSave = () => {};
-	export let onClose = () => {};
+	import {
+		addToCart,
+		removeFromCart,
+		cartStore,
+		clearCart,
+	} from "../../stores.store.js";
+	import Image from "./Image.svelte";
+	let product = {};
+	product = data;
+	let cart = [];
 
 	//
-	function closeHandler(e) {
-		switch (e.detail.action) {
-			case "close":
-				data = { ...startData };
-				onClose();
-				response = "Closed without response.";
-				console.log(response);
-				break;
-			case "reject":
-				response = "Rejected.";
-				onDelete(data.id);
-				break;
-			case "accept":
-				response = "Accepted.";
-				break;
-		}
-	}
-
-	const standardFields = {
-		name: "Product Name",
-		style: "Product Style",
-		description: "Product Description",
+	const productTagsContain = (product, tag) => {
+		return product.tags.includes(tag);
 	};
 
-	const customFields = {
-		ibu: "IBU",
-		abv: "ABV",
-		price: "Price",
+	//
+	const handleAddToCart = () => {
+		if (!product) return;
+		if (!productTagsContain(product, "retail")) return;
+		if (product?.quantity === 0) {
+			product.quantity = 1;
+		}
+
+		addToCart(product);
+		product.quantity++;
 	};
 </script>
 
-<!-- <Dialog
-	bind:open
-	aria-labelledby="fullscreen-title"
-	aria-describedby="fullscreen-content"
-	on:SMUIDialog:closed={closeHandler}
-> -->
-<Actions>
-	<Button
-		action="close"
-		defaultAction
-		on:click={(e) => {
-			onClose();
-		}}
-	>
-		<Label>
-			<Icon
-				class="material-icons"
-				style="    font-size: 2rem; margin-top: -6px;margin-left:-4px"
-				on:click={(e) => {
-					closeHandler({ detail: { action: "close" } });
-				}}>{"close"}</Icon
-			>
-		</Label>
-	</Button>
-</Actions>
-<Content id="fullscreen-content">
-	<!-- <Card> -->
-	<PrimaryAction on:click={() => clicked++}>
-		<Media class="card-media-16x9" aspectRatio="16x9" />
-
-		<img src={data.thumb} alt="Placeholder image" />
-
-		<Button
-			on:click={() => {
-				data.thumb = "http://mark8t.ca/dev/storage/thumb.jpg";
-			}}
+<div class="product-view">
+	<div
+		class="product-image"
+		style={"--image-src:url('" + data.thumb + "')"}
+	/>
+	<div class="product-info">
+		<div class="product-name">{product.name}</div>
+		<div class="product-price">${product.price / 100}</div>
+		<div class="product-description">{product.description}</div>
+		<button class="add-to-cart-button" on:click={handleAddToCart}
+			>Add to Cart</button
 		>
-			<Label>Remove Image</Label>
-		</Button>
+	</div>
+</div>
 
-		<Button
-			on:click={() => {
-				document.getElementById("fileToUpload").click();
-			}}
-		/>
-		<Content class="mdc-typography--body2">
-			{#each Object.entries(standardFields) as [key, value]}
-				<Input
-					bind:value={data[key]}
-					label={value}
-					on:click={() => {
-						data[key] = "";
-					}}
-				/>
-			{/each}
-			<br />
-			<br />
-
-			{#each Object.entries(customFields) as [key, value]}
-				<Input
-					bind:value={data[key]}
-					label={value}
-					on:click={() => {
-						data[key] = "";
-					}}
-				/>
-			{/each}
-			<br />
-			<br />
-
-			<!-- material input for adding tags -->
-			<Chip bind:keyed={data.tags} />
-		</Content>
-	</PrimaryAction>
-</Content>
-
-<!-- </Dialog> -->
 <style>
-	img {
-		max-width: 375px;
-		width: 100%;
-		vertical-align: middle;
-		margin: 0px auto;
+	.product-view {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
-
-	:global(.mdc-card) {
+	.product-image {
+		width: 250px;
+		height: 250px;
+		background-image: var(--image-src);
+		background-size: cover;
 	}
-
-	:global(.mdc-card__media--16-9::before) {
-		margin-top: 12px !important;
+	.product-info {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 1rem;
 	}
-
-	:global(.mdc-card__actions) {
-		direction: rtl;
+	.product-name {
+		font-size: 1.5rem;
+		font-weight: bold;
+		text-align: center;
+	}
+	.product-price {
+		font-size: 1.25rem;
+		margin-top: 0.5rem;
+	}
+	.product-description {
+		margin-top: 1rem;
+		text-align: center;
+		font-size: 1rem;
+		width: 80%;
+	}
+	.add-to-cart-button {
+		margin-top: 1rem;
+		padding: 1rem;
+		background-color: green;
+		color: white;
+		cursor: pointer;
+		text-align: center;
+		border: none;
+		border-radius: 5px;
+		outline: none;
+		box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+	}
+	.add-to-cart-button:hover {
+		background-color: #2e7d32;
+	}
+	.add-to-cart-button:active {
+		background-color: #005005;
+	}
+	.add-to-cart-button:focus {
+		background-color: #1b5e20;
+	}
+	/* Accessibility styles */
+	.add-to-cart-button:active,
+	.add-to-cart-button:focus {
+		box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.2),
+			0px 0px 0px 4px rgba(255, 255, 255, 0.5);
 	}
 </style>

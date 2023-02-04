@@ -50,12 +50,45 @@
 			product.quantity--;
 		}
 	};
+	import Button from "@smui/button";
 </script>
 
-<div>
-	<button on:click={handleMinus}>-</button>
-	<span>{cartCount} in cart</span>
-	<button on:click={handleAddToCart}>+</button>
+<div class="product-container">
+	<div class="quantity-container">
+		<Button aria-label="minus" on:click={handleMinus}>-</Button>
+		<span class="quantity-text">{cartCount} in cart</span>
+		<Button aria-label="add" on:click={handleAddToCart}>+</Button>
+	</div>
+	<Button
+		class="remove-button"
+		aria-label="remove"
+		on:click={handleRemoveFromCart}>Remove from cart</Button
+	>
+	<Button
+		class="checkout-button"
+		aria-label="checkout"
+		on:click={handleGoToCheckout}>Go to checkout</Button
+	>
 </div>
-<button on:click={handleRemoveFromCart}>Remove from cart</button>
-<button on:click={handleGoToCheckout}>Go to checkout</button>
+
+<style>
+	.product-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.quantity-container {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+	.quantity-text {
+		margin: 0 10px;
+	}
+	.remove-button,
+	.checkout-button {
+		width: 200px;
+		margin-top: 10px;
+	}
+</style>
