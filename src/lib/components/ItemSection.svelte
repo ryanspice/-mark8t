@@ -23,9 +23,6 @@
 
 	let cart = localStorage.getObject("cart") || [];
 	let cartCount = 0;
-	cartStore.subscribe((value) => {
-		cart = value;
-	});
 
 	$: products = [];
 	$: orderCount = [];
@@ -64,6 +61,17 @@
 		});
 		return found;
 	}
+
+	//
+	onMount(() => {
+		cartStore.subscribe((value) => {
+			cart = value;
+		});
+		// console.log("products", products);
+		// console.log("cart", cart);
+		// console.log("order", order);
+		// console.log("orderCount", orderCount);
+	});
 </script>
 
 <hr />
@@ -72,7 +80,7 @@
 		{#if hasTag(item, filter)}
 			<a
 				class="product-entry"
-				hrefs={base +
+				href={base +
 					"/products/" +
 					transformProductNameToSlug(item.name)}
 			>

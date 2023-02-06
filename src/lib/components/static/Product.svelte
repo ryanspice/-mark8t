@@ -1,32 +1,25 @@
 <script>
 	export let data;
-
+	import QuickActionButtons from "../store/QuickActionButtons.svelte";
 	import {
 		addToCart,
 		removeFromCart,
 		cartStore,
 		clearCart,
 	} from "../../stores.store.js";
-	import Image from "./Image.svelte";
+
+	import { productTagsContain, productAvailable } from "../../utils";
+
 	let product = {};
 	product = data;
 	let cart = [];
 
 	//
-	const productTagsContain = (product, tag) => {
-		return product.tags.includes(tag);
-	};
-
-	//
 	const handleAddToCart = () => {
-		if (!product) return;
-		if (!productTagsContain(product, "retail")) return;
-		if (product?.quantity === 0) {
-			product.quantity = 1;
+		if (productAvailable(product)) {
+			addToCart(product);
+			product.quantity++;
 		}
-
-		addToCart(product);
-		product.quantity++;
 	};
 </script>
 
@@ -39,9 +32,9 @@
 		<div class="product-name">{product.name}</div>
 		<div class="product-price">${product.price / 100}</div>
 		<div class="product-description">{product.description}</div>
-		<button class="add-to-cart-button" on:click={handleAddToCart}
+		<!-- <button class="add-to-cart-button" on:click={handleAddToCart}
 			>Add to Cart</button
-		>
+		> -->
 	</div>
 </div>
 

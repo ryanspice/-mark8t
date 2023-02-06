@@ -18,12 +18,15 @@
 	_API_STORE_WEBSITE_.subscribe((value) => {
 		website = value;
 	});
-
 </script>
 
-<a href={localStorage.getObject("accounts")==="accounts" ? base + "/admin/secret" : base + "/admin/" }
-	class="logo-fixed">
-	<img src={base + "/logo_red.jpg" } alt="logo" class="logo-fixed" />
+<a
+	href={localStorage.getObject("accounts") === "accounts"
+		? base + "/admin/secret"
+		: base + "/admin/"}
+	class="logo-fixed"
+>
+	<img src={base + "/logo_red.jpg"} alt="logo" class="logo-fixed" />
 </a>
 <Header />
 <Background />
@@ -46,7 +49,9 @@
 				</div>
 				<br />
 				<div class="row">
-					<ExternalLinkInstagram label={website.siteContactInstagram} />
+					<ExternalLinkInstagram
+						label={website.siteContactInstagram}
+					/>
 				</div>
 				<br />
 				<div class="row">
@@ -61,6 +66,9 @@
 <Navigation />
 
 <style>
+	.open {
+		transform: scale(0.24);
+	}
 	.logo-fixed {
 		width: 50px;
 		height: 50px;
@@ -74,7 +82,6 @@
 		width: 100%;
 		height: auto;
 	}
-
 
 	span {
 		position: relative;
