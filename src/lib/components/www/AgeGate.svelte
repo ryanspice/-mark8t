@@ -10,7 +10,7 @@
 {#if !ageGate}
 	<aside>
 		<div>
-			<img src={base + "/logo_og.jpg"} alt="logo" class="logo" />
+			<!-- <img src={base + "/logo_og.jpg"} alt="logo" class="logo" /> -->
 
 			<hr />
 			<h2>Are you over 18?</h2>

@@ -7,6 +7,7 @@
 		_API_STORE_WEBSITE_,
 		fetchWebsiteInfoFromJson,
 	} from "../../stores.js";
+
 	_API_STORE_WEBSITE_.subscribe((value) => {
 		website = value;
 	});

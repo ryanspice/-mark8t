@@ -4,6 +4,7 @@
 	import { opening_hours, place, isOpen } from "../../stores.js";
 	import Hours from "./Hours.svelte";
 	import Address from "../Address.svelte";
+
 	const fetchJSONP = (url) => {
 		return new Promise((resolve, reject) => {
 			const script = document.createElement("script");
@@ -79,13 +80,14 @@
 </script>
 
 <svelte:window on:resize={handleResize} />
+
 <section id="section__map">
 	<h2>where are we</h2>
 	<br />
 	<h1>
 		<Address />
 	</h1>
-	<h3>London, Ontario</h3>
+	<h3 />
 </section>
 <div id="map" />
 

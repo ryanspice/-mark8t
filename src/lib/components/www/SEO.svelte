@@ -24,7 +24,7 @@
 		content="black-translucent"
 	/>
 	<meta name="apple-mobile-web-app-title" content={website.siteDescription} />
-	<link rel="apple-touch-icon" href={base + "/logo_og.jpg"} />
+	<!-- <link rel="apple-touch-icon" href={base + "/logo_og.jpg"} /> -->
 	<!-- <link rel="manifest" href={base+"/manifest.json"} /> -->
 	<link
 		rel="icon"

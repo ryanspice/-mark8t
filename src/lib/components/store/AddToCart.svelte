@@ -1,7 +1,7 @@
 <script>
 	import { base } from "$app/paths";
 	import { addToCart, removeFromCart } from "../../stores.store.js";
-
+	import QuickActionButtons from "./QuickActionButtons.svelte";
 	let product = {
 		id: 1,
 		name: "Product 1",
@@ -53,42 +53,22 @@
 	import Button from "@smui/button";
 </script>
 
-<div class="product-container">
-	<div class="quantity-container">
-		<Button aria-label="minus" on:click={handleMinus}>-</Button>
-		<span class="quantity-text">{cartCount} in cart</span>
-		<Button aria-label="add" on:click={handleAddToCart}>+</Button>
-	</div>
-	<Button
-		class="remove-button"
-		aria-label="remove"
-		on:click={handleRemoveFromCart}>Remove from cart</Button
-	>
-	<Button
-		class="checkout-button"
-		aria-label="checkout"
-		on:click={handleGoToCheckout}>Go to checkout</Button
-	>
-</div>
+<br />
+
+<br />
+<!-- <div class="container"> -->
+<Button on:click={handleMinus}>-</Button>
+<span>${cartCount} in cart</span>
+<Button on:click={handleAddToCart}>+</Button>
+<QuickActionButtons />
+<!-- </div> -->
+<Button on:click={handleRemoveFromCart}>Remove from cart</Button>
+<Button on:click={handleGoToCheckout}>Go to checkout</Button>
 
 <style>
-	.product-container {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-	.quantity-container {
+	.container {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		margin-bottom: 10px;
-	}
-	.quantity-text {
-		margin: 0 10px;
-	}
-	.remove-button,
-	.checkout-button {
-		width: 200px;
-		margin-top: 10px;
 	}
 </style>

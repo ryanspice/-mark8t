@@ -56,7 +56,7 @@
 
 <style>
   .open {
-    position: fixed;
+    position: absolute;
     top: -75px;
     right: 1rem;
     z-index: 2;

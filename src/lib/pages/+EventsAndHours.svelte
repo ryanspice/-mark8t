@@ -23,17 +23,13 @@
 	});
 </script>
 
-<!-- <Www.SEO title={website?.siteName + " - Events & Hours" || ""} /> -->
-<!-- <Landing.default /> -->
-
-<Header />
+<!-- <Header /> -->
 <Www.SEO title="Events & Hours" />
-<Www.Background />
-<Www.Open />
-<Static.Logo />
-<AgeGate />
-<Navigation />
-<AgeGate />
+<!-- <Www.Background /> -->
+<!-- <Www.Open /> -->
+<!-- <Static.Logo /> -->
+<!-- <AgeGate /> -->
+<!-- <Navigation /> -->
 <section id="section__hours" class="center w-100">
 	<h2>Events or Bookings</h2>
 	<br />
@@ -59,9 +55,6 @@
 </section>
 <Calendar />
 <Map />
-<hr />
-<Header />
-<Footer />
 
 <style>
 	h3,
