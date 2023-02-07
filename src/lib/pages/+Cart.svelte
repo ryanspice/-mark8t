@@ -38,7 +38,7 @@
 		cart.forEach((product) => {
 			total += product.price * product.quantity;
 		});
-		total += total * tax;
+		// total += total * tax;
 	}
 
 	function abandonCart() {
@@ -66,21 +66,8 @@
 	}
 </script>
 
-<Header />
 <Www.SEO title="Cart" />
-<Www.Background />
-<Www.Open />
-<Static.Logo />
-<Store.Cart />
-<Navigation />
-<AgeGate />
 <hr />
 <Www.CartSummary {cart} {abandonCart} {checkout} />
 <hr />
-<!-- <section class="content center">
-
-</section> -->
-<hr />
 <Map />
-<Header />
-<Footer />

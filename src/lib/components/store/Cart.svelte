@@ -8,7 +8,7 @@
 	let cartCount = 0;
 
 	$: cart = cartStore.subscribe((value) => {
-		console.log(value);
+		// console.log(value);
 		cart = value;
 		// set cartCount to the number of items in the cart
 		// for each item add the quantities together

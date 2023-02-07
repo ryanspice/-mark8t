@@ -5,23 +5,27 @@
 	import Hours from "./Hours.svelte";
 	import Address from "../Address.svelte";
 
-	const fetchJSONP = (url) => {
-		return new Promise((resolve, reject) => {
-			const script = document.createElement("script");
-			script.src = url;
-			script.onload = () => {
-				resolve(window.data);
-				window.data = undefined;
-			};
-			script.onerror = (error) => {
-				reject(error);
-			};
-			document.head.appendChild(script);
-		});
-	};
+	import { _GOOGLE_MAP_API_URL_ } from "../../stores.js";
+	import { fetchJSONP, viewport } from "../../utils";
+
+	// const fetchJSONP = (url) => {
+	// 	return new Promise((resolve, reject) => {
+	// 		const script = document.createElement("script");
+	// 		script.src = url;
+	// 		script.onload = () => {
+	// 			resolve(window.data);
+	// 			window.data = undefined;
+	// 		};
+	// 		script.onerror = (error) => {
+	// 			reject(error);
+	// 		};
+	// 		document.head.appendChild(script);
+	// 	});
+	// };
 
 	export let height;
 	let zoom = 19;
+	let initialized = false;
 
 	//
 	const updateHours = (value) => {
@@ -35,9 +39,6 @@
 	};
 
 	//
-	const handleResize = (event) => {};
-
-	//
 	const initMap = () => {
 		var map = new google.maps.Map(document.getElementById("map"), {
 			center: { lat: -33.866, lng: 151.196 },
@@ -49,7 +50,7 @@
 
 		service.getDetails(
 			{
-				placeId: "ChIJw69pYAvyLogR-b1OU0JnnAw",
+				placeId: localStorage.getObject("--store-google").placeId,
 			},
 			function (place, status) {
 				if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -60,28 +61,48 @@
 					map.setCenter(place.geometry.location);
 					updateHours(place.opening_hours);
 					updatePlace(place);
-					localStorage.setObject("place", place);
+					localStorage.setObject("place", place, 60);
 				}
 			}
 		);
 	};
 
-	import { _GOOGLE_MAP_API_URL_ } from "../../stores.js";
 	//
-	onMount(() => {
-		window.initMap = initMap;
-
+	const init = () => {
 		let url;
 		_GOOGLE_MAP_API_URL_.subscribe((value) => {
 			url = value;
 			fetchJSONP(url);
 		});
+	};
+
+	//
+	const handleEnterViewport = () => {
+		if (!initialized) {
+			init();
+			initialized = true;
+		}
+	};
+
+	//
+	onMount(() => {
+		let place = localStorage.getObject("place");
+		if (place.opening_hours) {
+			updateHours(place.opening_hours);
+			updatePlace(place);
+		} else {
+			// init();
+		}
+		window.initMap = initMap;
 	});
 </script>
 
-<svelte:window on:resize={handleResize} />
-
-<section id="section__map">
+<section
+	id="section__map"
+	use:viewport
+	on:enterViewport={handleEnterViewport}
+	on:exitViewport={() => {}}
+>
 	<h2>where are we</h2>
 	<br />
 	<h1>

@@ -89,8 +89,8 @@
 </script>
 
 <section id="section__products">
-	<h2>last updated</h2>
-	<h3>23-01-25</h3>
+	<!-- <h2>last updated</h2> -->
+	<!-- <h3>23-01-25</h3> -->
 	<iframe
 		id="effects"
 		src=""
@@ -101,9 +101,11 @@
 	<div>
 		<div class="row">
 			<div class="column">
-				<div>
+				<div class="row w-100">
 					<h2>what is in for</h2>
 					<h1>RETAIL</h1>
+				</div>
+				<div>
 					<!-- <h3>(today, or something like that)</h3> -->
 
 					<QuickActionButtons />

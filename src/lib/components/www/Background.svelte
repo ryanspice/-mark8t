@@ -1,13 +1,31 @@
 <script>
 	import { onMount } from "svelte";
 	import { base } from "$app/paths";
-	onMount(() => {
-		//set #hero class backgorund image
-		let hero = document.getElementById("hero");
-		hero.style.backgroundImage = "url(" + base + "/bg_openingday.jpg)";
-	});
+	let hero;
+	const updateBackground = () => {
+		let background = "";
+
+		let width = window.innerWidth;
+		if (width >= 2048 - 400) {
+			background = "background-2048.jpg";
+		} else if (width >= 1920 - 300) {
+			background = "background-1920.jpg";
+		} else if (width >= 1248 - 200) {
+			background = "background-1248.jpg";
+		} else if (width >= 720 - 100) {
+			background = "background-720.jpg";
+		} else if (width >= 320) {
+			background = "background-320.jpg";
+		}
+		if (hero.style.backgroundImage !== `url(${base}/${background})`)
+			hero.style.backgroundImage = `url(${base}/${background})`;
+	};
+	onMount(updateBackground);
 </script>
-<div id="hero" />
+
+<svelte:window on:resize={updateBackground} />
+<div id="hero" bind:this={hero} />
+
 <style>
 	.logo-fixed {
 		width: 50px;
@@ -30,7 +48,13 @@
 			no-repeat;
 		background-size: cover;
 		background-position: center;
-		filter: sepia(50%) contrast(150%) saturate(200%) brightness(100%) hue-rotate(-15deg) grayscale(45%);
+		/* background-position-y: 0; */
+
+		background-position: -50% -170px;
+		background-repeat: repeat-x;
+
+		filter: sepia(50%) contrast(150%) saturate(200%) brightness(100%)
+			hue-rotate(-15deg) grayscale(45%);
 
 		min-height: 1920px;
 		min-height: 1662px;
@@ -42,7 +66,6 @@
 		outline: none;
 		height: 100%;
 		margin-bottom: 0px;
-		background-position-y: 0;
 		opacity: 0.1;
 		position: relative;
 		z-index: -1;

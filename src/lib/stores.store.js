@@ -19,9 +19,11 @@ export const addToCart = (product) => {
 	cartStore.update(items => {
 		const index = items.findIndex(item => item.id === product.id);
 		if (index !== -1) {
-			if (!items[index].quantity)
+			if (!items[index].quantity) {
 				items[index].quantity = 1;
-			items[index].quantity += 1;
+			} else {
+				items[index].quantity += 1;
+			}
 			localStorage.setItem('cart', JSON.stringify(items));
 			return items;
 		}
@@ -41,7 +43,7 @@ export const removeFromCart = (productId) => {
 	cartStore.update(items => {
 		const index = items.findIndex(item => item.id === productId);
 		if (index !== -1) {
-			if (items[index].quantity > 1) {
+			if (items[index].quantity > 0) {
 				items[index].quantity -= 1;
 				localStorage.setItem('cart', JSON.stringify(items));
 				return items;

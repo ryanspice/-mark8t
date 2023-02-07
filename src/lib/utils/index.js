@@ -11,3 +11,11 @@ export const productAvailable = (product) => {
 		product.quantity = 1;
 	}
 };
+
+import fetchJSONP from "./fetchJsonp.js";
+import viewport from "./checkInViewport.js";
+
+export {
+	fetchJSONP,
+	viewport
+}

@@ -3,6 +3,8 @@
 	import Button, { Label } from "@smui/button";
 	import { onMount } from "svelte";
 
+	import getObject from "../utils/storage/storage.getobject";
+
 	import {
 		_API_STORE_PRODUCTS_,
 		transformProductNameToSlug,
@@ -10,18 +12,17 @@
 
 	import { addToCart, removeFromCart, cartStore } from "../stores.store.js";
 
-	let products = localStorage.getObject("--store-products") || [];
+	let products =
+		getObject("--store-products") === "products"
+			? []
+			: getObject("--store-products");
 	let order = [];
 
-	_API_STORE_PRODUCTS_.subscribe((value) => {
-		products = value || [];
-		products.forEach((item, index) => {
-			order[item.id] = 0;
-			getQuantityFromItemId(item.id);
-		});
-	});
+	let cart =
+		getObject("--store-cart") === "--store-cart"
+			? []
+			: getObject("--store-cart");
 
-	let cart = localStorage.getObject("cart") || [];
 	let cartCount = 0;
 
 	$: products = [];
@@ -29,8 +30,12 @@
 
 	function getQuantityFromItemId(id) {
 		let quantity = 0;
+		// console.log(cart);
+		if (!cart || cart.length === 0) {
+			return 0;
+		}
 		try {
-			console.log("cart", cart);
+			// console.log("cart", cart);
 			cart.forEach((item) => {
 				if (item.id === id) {
 					quantity = item.quantity || 1;
@@ -55,7 +60,7 @@
 		item.tags.forEach((item) => {
 			if (item.v === tag) {
 				found = true;
-				console.log(item, tag);
+				// console.log(item, tag);
 			}
 			return found;
 		});
@@ -64,13 +69,17 @@
 
 	//
 	onMount(() => {
+		_API_STORE_PRODUCTS_.subscribe((value) => {
+			products = value || [];
+			products.forEach((item, index) => {
+				order[item.id] = 0;
+				getQuantityFromItemId(item.id);
+			});
+		});
+
 		cartStore.subscribe((value) => {
 			cart = value;
 		});
-		// console.log("products", products);
-		// console.log("cart", cart);
-		// console.log("order", order);
-		// console.log("orderCount", orderCount);
 	});
 </script>
 
