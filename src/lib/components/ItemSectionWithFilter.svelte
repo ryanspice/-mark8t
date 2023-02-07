@@ -24,7 +24,7 @@
 		getObject("--store-products") === "products"
 			? []
 			: getObject("--store-products");
-	let order = [];
+	$: order = [];
 
 	let cart =
 		getObject("--store-cart") === "--store-cart"
@@ -39,7 +39,7 @@
 	function getQuantityFromItemId(id) {
 		let quantity = 0;
 		// console.log(cart);
-		if (!cart || cart.length === 0) {
+		if (!cart) {
 			return 0;
 		}
 		try {
@@ -78,8 +78,8 @@
 
 	const checkIfInCart = () => {
 		let any = 0;
-		products.forEach((productItem) => {
-			if (productItem.quantity > 0) {
+		products.forEach((item) => {
+			if (item.quantity > 0) {
 				any++;
 			}
 		});
@@ -106,11 +106,8 @@
 
 		cartStore.subscribe((value) => {
 			cart = value;
-			checkIfInCart();
 		});
 	});
-
-	let alive = 0;
 </script>
 
 <hr />
@@ -151,10 +148,11 @@
 						<div>
 							<Button
 								style="position:relative;top:-40px;z-index:3;"
-								on:click={(event) => {
+								on:click={async (event) => {
 									// decrement();
-									removeFromCart(item.id);
+									await removeFromCart(item.id);
 									getQuantityFromItemId(item.id);
+									checkIfInCart();
 									event.preventDefault();
 									event.stopPropagation();
 								}}>-</Button
@@ -162,16 +160,17 @@
 							<Button
 								style="position:relative;top:-40px;z-index:3;"
 								on:click={(event) => {
-									increment();
+									// increment();
 									event.preventDefault();
 									event.stopPropagation();
-								}}>{order[item.id] || 0}</Button
+								}}>{order[item.id]}</Button
 							>
 							<Button
 								style="position:relative;top:-40px;z-index:3;"
 								on:click={async (event) => {
 									await addToCart(item);
 									getQuantityFromItemId(item.id);
+									checkIfInCart();
 									event.preventDefault();
 									event.stopPropagation();
 								}}>+</Button
@@ -198,75 +197,6 @@
 	{#if price && showActionButtons > 0}
 		<QuickActionButtons />
 	{/if}
-</div>
-
-<div class="filter-grid" hidden>
-	{#each products as item, index}
-		{#if hasTag(item, filter)}
-			<a
-				class="product-entry"
-				href={base +
-					"/products/" +
-					transformProductNameToSlug(item.name)}
-			>
-				<div>
-					<div class="col center image">
-						<img width="325" src={item.thumb} />
-					</div>
-					<div class="content">
-						<h2>{item.name}</h2>
-						<img
-							class="thumb"
-							width="325"
-							src={base + ("/" + item?.image?.replace("/", ""))}
-						/>
-						<br />
-						{#if item.ibu}
-							<span class="left">IBU: {item.ibu}</span>
-						{/if}
-						{#if item.abv}
-							<span class="right"
-								>ABV:
-								{item.abv}</span
-							><br />
-						{/if}
-						<br />
-					</div>
-				</div>
-			</a>
-			{#if price == true}
-				<div class="product-buttons">
-					<Button
-						style="position:relative;top:-124px;z-index:214;"
-						on:click={(event) => {
-							// decrement();
-							removeFromCart(item.id);
-							getQuantityFromItemId(item.id);
-							event.preventDefault();
-							event.stopPropagation();
-						}}>-</Button
-					>
-					<Button
-						style="position:relative;top:-124px;z-index:214;"
-						on:click={(event) => {
-							increment();
-							event.preventDefault();
-							event.stopPropagation();
-						}}>{order[item.id] || 0}</Button
-					>
-					<Button
-						style="position:relative;top:-124px;z-index:214;"
-						on:click={async (event) => {
-							await addToCart(item);
-							getQuantityFromItemId(item.id);
-							event.preventDefault();
-							event.stopPropagation();
-						}}>+</Button
-					>
-				</div>
-			{/if}
-		{/if}
-	{/each}
 </div>
 
 <style>

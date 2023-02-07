@@ -43,14 +43,18 @@ export const removeFromCart = (productId) => {
 	cartStore.update(items => {
 		const index = items.findIndex(item => item.id === productId);
 		if (index !== -1) {
+
+			if (!items[index].quantity)
+				items[index].quantity = 0;
+
 			if (items[index].quantity > 0) {
 				items[index].quantity -= 1;
-				localStorage.setItem('cart', JSON.stringify(items));
-				return items;
-			} else {
-
-				items = items.filter(item => item.id !== productId);
+				// localStorage.setItem('cart', JSON.stringify(items));
+				// return items;
 			}
+			if (items[index].quantity === 0)
+				items = items.filter(item => item.id !== productId);
+
 		}
 		localStorage.setItem('cart', JSON.stringify(items));
 		return items;
