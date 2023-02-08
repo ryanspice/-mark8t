@@ -1,17 +1,13 @@
 <script>
 	import { base } from "$app/paths";
-	import { onMount } from "svelte";
-	const logo = base + "/logo_red.jpg";
-	let redirect = base + "/admin/login";
-	onMount(() => {
-		if (window.location.pathname !== "/") {
-			redirect = base;
-		}
-	});
 </script>
 
-<a href={redirect} class="logo-fixed">
-	<img src={logo} alt="logo" class="logo-fixed" />
+<a href={"/" + base} class="logo-fixed" target="_self">
+	<img
+		src={"https://mark8t.ca/storage/3988fc5a_af7d_4ffb_8ce4_06132bd037a2/images/logo-64.jpg"}
+		alt="logo"
+		class="logo-fixed"
+	/>
 </a>
 
 <style>

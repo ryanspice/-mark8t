@@ -50,21 +50,35 @@
 			product.quantity--;
 		}
 	};
+
+	export let data;
+	onMount(() => {
+		console.log(data);
+	});
+
 	import Button from "@smui/button";
+	import { onMount } from "svelte";
 </script>
 
 <br />
 
 <br />
 <!-- <div class="container"> -->
-<Button on:click={handleMinus}>-</Button>
-<span>${cartCount} in cart</span>
-<Button on:click={handleAddToCart}>+</Button>
-<QuickActionButtons />
+<!-- <div style="align-content:center; text-align:center;margin-bottom:2rem;">
+	<Button
+		on:click={() => {
+			console.log(data.id);
+			removeFromCart(data.id);
+		}}>-</Button
+	>
+	<span>${cartCount} in cart</span>
+	<Button on:click={addToCart}>+</Button>
+	<QuickActionButtons />
+</div> -->
 <!-- </div> -->
-<Button on:click={handleRemoveFromCart}>Remove from cart</Button>
-<Button on:click={handleGoToCheckout}>Go to checkout</Button>
 
+<!-- <Button on:click={handleRemoveFromCart}>Remove from cart</Button>
+<Button on:click={handleGoToCheckout}>Go to checkout</Button> -->
 <style>
 	.container {
 		display: flex;

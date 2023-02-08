@@ -42,8 +42,8 @@
       rgba(0, 0, 0, 0) 100%
     );
 
-    height: 100vh;
-    min-height: 320px;
+    /* height: 100vh; */
+    min-height: 950px;
     max-height: 1000px;
 
     padding: 0.5rem;

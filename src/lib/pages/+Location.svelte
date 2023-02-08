@@ -1,6 +1,7 @@
 <script>
-	import { Www, Map } from "../index";
+	import { Www, Map, Calendar } from "../index";
 </script>
 
 <Www.SEO title="Location" />
 <Map />
+<Calendar />

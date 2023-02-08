@@ -1,19 +1,22 @@
 <script>
   export let href;
-  export let alt = '';
+  export let alt = "";
   export let icon = null;
   export let label = null;
-  export let style = '';
+  export let style = "";
   export let clickHandler = null;
-  export let className = '';
+  export let className = "";
+  export let target = "_blank";
 </script>
+
 <object title={href} class={className}>
-  <a href={href} alt={alt} target="_blank" on:click={clickHandler}>
+  <a {href} {alt} {target} on:click={clickHandler}>
     <slot />
-    {#if (icon)}<i class='material-icons' style={style}>{icon}</i>{/if}
-    {#if (label)}<span style={style}>{label}</span>{/if}
+    {#if icon}<i class="material-icons" {style}>{icon}</i>{/if}
+    {#if label}<span {style}>{label}</span>{/if}
   </a>
 </object>
+
 <style>
   a,
   a:visited {
@@ -29,7 +32,6 @@
     position: relative;
     top: 6px;
   }
-
 
   @media (max-width: 767px) {
     span {

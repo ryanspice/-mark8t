@@ -18,7 +18,7 @@
 		<br />
 		<br />
 		Copyrights © 2022 All Rights Reserved.
-		<a style="opacity:0.5;" href={website.siteUrl}>{website.siteName}</a>
+		<a href={website.siteUrl}>{website.siteName}</a>
 	</p>
 </copy>
 
@@ -57,10 +57,6 @@
 		box-sizing: border-box;
 	}
 
-	a {
-		color: black;
-	}
-
 	a,
 	a:visited {
 		text-decoration: underline;
@@ -78,7 +74,6 @@
 	}
 
 	a:focus {
-
 		color: var(--primary);
 		outline: 5px auto -webkit-focus-ring-color;
 		outline-offset: -2px;

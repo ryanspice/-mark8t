@@ -20,12 +20,13 @@
 	});
 </script>
 
-<a
+<!-- <a
 	href={localStorage.getObject("accounts") === "accounts"
 		? base + "/admin/secret"
 		: base + "/admin/"}
 	class="logo-fixed"
->
+> -->
+<a href={"/"} class="logo-fixed">
 	<img src={base + "/logo_red.jpg"} alt="logo" class="logo-fixed" />
 </a>
 <Header />

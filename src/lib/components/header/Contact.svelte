@@ -95,7 +95,7 @@
           </li> -->
 
         <li style={"order:233;position:relative;left:13vw;"}>
-          <ExternalLink href={base + "/retail "} alt="Order Now">
+          <ExternalLink target="" href={base + "/retail "} alt="Order Now">
             <Button>Order Now</Button>
           </ExternalLink>
         </li>

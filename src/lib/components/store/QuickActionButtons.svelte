@@ -10,7 +10,7 @@
 
 	function abandonCart() {
 		clearCart();
-		window.location = window.location;
+		// goto(base + "/");
 	}
 
 	function checkout() {
@@ -19,6 +19,18 @@
 		goto(
 			base +
 				"/checkout?total=" +
+				total +
+				"&cart=" +
+				encodeURIComponent(JSON.stringify(cart))
+		);
+	}
+
+	function retail() {
+		// code to process checkout and payment
+		// window.location.href = base + "/checkout";
+		goto(
+			base +
+				"/retail?total=" +
 				total +
 				"&cart=" +
 				encodeURIComponent(JSON.stringify(cart))
@@ -63,15 +75,15 @@
 					>
 				{:else}
 					<button
-						class="btn btn-primary hidden"
+						class="btn btn-primary"
 						style="margin-left:0px;margin-right:0px;"
-						on:click={checkout}>Checkout</button
+						on:click={retail}>View Store</button
 					>
 				{/if}
 
 				{#if window.location.href.indexOf("/cart") == -1}
 					<button
-						class="btn btn-primary"
+						class={"btn btn-primary"}
 						style="margin-left:0px;"
 						on:click={() => {
 							goto(base + "/cart");
@@ -79,11 +91,11 @@
 					>
 				{:else}
 					<button
-						class="btn btn-primary hidden"
+						class="btn btn-primary"
 						style="margin-left:0px;"
 						on:click={() => {
-							goto(base + "/cart");
-						}}>View Cart</button
+							goto(base + "/retail");
+						}}>View Store</button
 					>
 				{/if}
 			{/if}

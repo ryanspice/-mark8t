@@ -88,6 +88,7 @@
 		} else {
 			showActionButtons = 0;
 		}
+		return showActionButtons;
 	};
 
 	//
@@ -122,6 +123,7 @@
 		{#if showAll || index <= displayCount}
 			<a
 				class="product-entry"
+				target="_self"
 				href={base +
 					"/products/" +
 					transformProductNameToSlug(item.name)}
@@ -181,7 +183,7 @@
 			</a>
 		{/if}
 		{#if !showAll && index === displayCount && index < products.length - 1}
-			<a />
+			<!-- <a />
 			<a />
 			<a />
 			<a
@@ -189,12 +191,12 @@
 				on:click={() => {
 					showAll = true;
 				}}>show all</a
-			>
+			> -->
 		{/if}
 	{/each}
 </div>
 <div>
-	{#if price && showActionButtons > 0}
+	{#if checkIfInCart() && showActionButtons > 0}
 		<QuickActionButtons />
 	{/if}
 </div>

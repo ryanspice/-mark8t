@@ -49,7 +49,7 @@
 		{#if cart.length === 0}
 			<h3>
 				Oops! There's nothing here! <br /><br /><a
-					href={base + "/products"}>View Store</a
+					href={base + "/retail"}>View Store</a
 				>
 			</h3>
 		{/if}
