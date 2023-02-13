@@ -6,6 +6,8 @@
 	let isLoading = false;
 
 	$: tenant = "3988fc5a_af7d_4ffb_8ce4_06132bd037a2";
+	$: backupTarget = "new-backup-2023-02-13-10-18-16.tar.gz";
+
 	async function deleteBackup(tenant, file) {
 		return await fetch("https://mark8t.ca/api/delete.php", {
 			method: "POST",
@@ -73,6 +75,57 @@
 	}
 
 	//
+	async function renameBackup(tenant_id, backup_file, new_backup_file) {
+		console.log(new_backup_file);
+		//add .tar.gz if not in new_backup_file
+		if (!new_backup_file.includes(".tar.gz")) {
+			new_backup_file = new_backup_file + ".tar.gz";
+		}
+		//add .gz if not in new_backup_file
+		if (!new_backup_file.includes(".gz")) {
+			new_backup_file = new_backup_file + ".gz";
+		}
+		//if new_backup_file doesnt include a date, put it between the name and the .tar.gz
+
+		const addDateToBackupFile = () => {
+			let date = new Date()
+				.toISOString()
+				.substring(0, 19)
+				.replace(/[-T]/g, "-");
+
+			if (!new_backup_file.includes(date)) {
+				let [name, extension] = new_backup_file.split(".tar.gz");
+				new_backup_file = `${name}-${date}.tar.gz`;
+			}
+		};
+
+		addDateToBackupFile();
+
+		try {
+			let response = await fetch("https://mark8t.ca/api/rename.php", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+				body: `tenant=${tenant_id}&old_filename=${backup_file}&new_filename=${new_backup_file}`,
+			});
+			let data = await response.json();
+			if (data.success) {
+				console.log(
+					`Success: Backup file "${backup_file}" was renamed to "${new_backup_file}" for tenant "${tenant_id}".`
+				);
+			} else {
+				console.error(
+					`Error: Could not rename backup file "${backup_file}" for tenant "${tenant_id}". Reason: ${data.message}`
+				);
+			}
+		} catch (error) {
+			console.error(
+				`Error: Could not rename backup file "${backup_file}" for tenant "${tenant_id}". Reason: ${error}`
+			);
+		}
+	}
+	//
 	onMount(async () => {
 		backupList(tenant);
 	});
@@ -84,15 +137,38 @@
 
 	function handleRestoreClick() {
 		console.log("selectedBackup", selectedBackup);
-		restoreBackup(
-			"3988fc5a_af7d_4ffb_8ce4_06132bd037a2",
-			"backup-2023-02-13-10-16-56.tar.gz"
-		);
+		restoreBackup("3988fc5a_af7d_4ffb_8ce4_06132bd037a2", selectedBackup);
 	}
 
 	function handleSelect(backup) {
 		selectedBackup = backup;
 		restoreDisabled = false;
+	}
+
+	async function handleRenameClick() {
+		if (!selectedBackup) return;
+		let a = await prompt(selectedBackup);
+		// dialogValue = selectedBackup;
+		// dialogOpen = !dialogOpen;
+		// return;
+		if (!a) return;
+		// dialogOpen = true;
+		// dialogOnDismiss = () => {
+		// dialogOpen = false;
+		renameBackup(
+			"3988fc5a_af7d_4ffb_8ce4_06132bd037a2",
+			selectedBackup,
+			a
+		).then(() => {
+			backups = backups.map((backup) => {
+				if (backup.filename === selectedBackup) {
+					backup.filename = a;
+				}
+				return backup;
+			});
+			backupList(tenant);
+		});
+		// };
 	}
 
 	function handleDeleteBackup() {
@@ -108,7 +184,41 @@
 			restoreDisabled = true;
 		});
 	}
+
+	import Dialog from "./Dialog.svelte";
+
+	let dialogValue = "";
+	let dialogOpen = false;
+	let dialogOnDismiss = () => {};
+
+	const handleSave = (value) => {
+		dialogValue = value;
+		console.log(value);
+		// dialogOnDismiss();
+
+		renameBackup(
+			"3988fc5a_af7d_4ffb_8ce4_06132bd037a2",
+			selectedBackup,
+			value
+		).then(() => {
+			backups = backups.map((backup) => {
+				if (backup.filename === selectedBackup) {
+					backup.filename = value;
+				}
+				return backup;
+			});
+		});
+	};
 </script>
+
+<Dialog
+	bind:value={dialogValue}
+	on:save={handleSave}
+	bind:open={dialogOpen}
+	on:dialogOnDismiss={() => {
+		dialogOpen = !dialogOpen;
+	}}
+/>
 
 <button on:click={handleBackupClick} disabled={isLoading}
 	>{isLoading ? "..." : "Backup"}</button
@@ -132,7 +242,8 @@
 				Created: {backup.created_date}
 			</div>
 			<div>
-				<button>Restore</button>
+				<button on:click={handleRestoreClick}>Restore</button>
+				<button on:click={handleRenameClick}>Rename</button>
 				<button on:click={handleDeleteBackup}>Delete</button>
 			</div>
 		</li>
