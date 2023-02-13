@@ -14,6 +14,17 @@
 	import Background from "./Background.svelte";
 
 	$: website = {};
+	$: layout = {
+		navigation: [
+			{ name: "HOME", url: base + "/" },
+			{ name: "RETAIL", url: base + "/retail" },
+			{ name: "ON TAP", url: base + "/products" },
+			{ name: "EVENT SPACE", url: base + "/events" },
+			{ name: "LOCATION", url: base + "/location" },
+			{ name: "CALENDAR", url: base + "/calendar" },
+			{ name: "ORDER NOW", url: base + "/order" },
+		],
+	};
 	import { _API_STORE_WEBSITE_ } from "../../stores.js";
 	_API_STORE_WEBSITE_.subscribe((value) => {
 		website = value;
@@ -64,7 +75,7 @@
 	</div>
 </main>
 <hr />
-<Navigation />
+<Navigation layout />
 
 <style>
 	.open {

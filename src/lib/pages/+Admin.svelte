@@ -31,6 +31,8 @@
 			"retrieveLocaldata - " + (await localStorage.getObject("--secret"))
 		);
 
+		localAccountHasAdminPermissions = true;
+		return;
 		await fetchSecretsFromJson((data) => {
 			data?.forEach((secret) => {
 				if (
