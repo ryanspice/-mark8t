@@ -1,5 +1,5 @@
 <script>
-	import { _API_STORE_WEBSITE_, _WEBSITE_QUOTE_ } from "../../stores.js";
+	import { _API_STORE_WEBSITE_, _WEBSITE_QUOTE_ } from "../../store/stores.js";
 	let quoteText;
 	_WEBSITE_QUOTE_.subscribe((value) => {
 		quoteText = value;

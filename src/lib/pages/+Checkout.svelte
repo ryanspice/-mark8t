@@ -8,7 +8,7 @@
 		removeFromCart,
 		cartStore,
 		clearCart,
-	} from "../stores.store.js";
+	} from "../store/stores.store.js";
 
 	import {
 		Www,

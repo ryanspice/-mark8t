@@ -8,9 +8,9 @@
 	import {
 		_API_STORE_PRODUCTS_,
 		transformProductNameToSlug,
-	} from "../stores.js";
+	} from "../store/stores.js";
 
-	import { addToCart, removeFromCart, cartStore } from "../stores.store.js";
+	import { addToCart, removeFromCart, cartStore } from "../store/stores.store.js";
 
 	import QuickActionButtons from "./store/QuickActionButtons.svelte";
 	export let price = false;
@@ -93,6 +93,25 @@
 
 	//
 	onMount(() => {
+
+	
+			products = localStorage.getObject("--store-products");
+			if (typeof products === "string") {
+				products = [];
+			}
+			products.forEach((item, index) => {
+				order[item.id] = 0;
+				getQuantityFromItemId(item.id);
+			});
+			products = products.filter((item) => {
+				return hasTag(item, filter);
+			});
+			checkIfInCart();
+
+		cartStore.subscribe((value) => {
+			cart = value;
+		});
+		return;
 		_API_STORE_PRODUCTS_.subscribe((value) => {
 			products = value || [];
 			products.forEach((item, index) => {

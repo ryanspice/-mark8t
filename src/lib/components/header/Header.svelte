@@ -4,7 +4,7 @@
 
   //
   $: website = {};
-  import { _API_STORE_WEBSITE_ } from "../../stores.js";
+  import { _API_STORE_WEBSITE_ } from "../../store/stores.js";
   import { onMount } from "svelte";
   onMount(() => {
     _API_STORE_WEBSITE_.subscribe((value) => {

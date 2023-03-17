@@ -8,7 +8,7 @@
 		removeFromCart,
 		cartStore,
 		clearCart,
-	} from "../stores.store.js";
+	} from "../store/stores.store.js";
 
 	import {
 		AgeGate,
@@ -35,6 +35,7 @@
 
 	$: {
 		total = 0;
+		if (typeof cart !== "string")
 		cart.forEach((product) => {
 			total += product.price * product.quantity;
 		});

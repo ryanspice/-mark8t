@@ -1,6 +1,6 @@
 <script>
 	import { base } from "$app/paths";
-	import { cartStore, addToCart } from "../../stores.store.js";
+	import { cartStore, addToCart } from "../../store/stores.store.js";
 
 	import Button, { Label } from "@smui/button";
 	import IconButton, { Icon } from "@smui/icon-button";
@@ -13,6 +13,7 @@
 		// set cartCount to the number of items in the cart
 		// for each item add the quantities together
 		// if no quantity is set, add 1
+		if (!cart.reduce) return;
 		cartCount = cart.reduce(
 			(count, item) => count + (item.quantity || 1),
 			0

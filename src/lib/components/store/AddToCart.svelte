@@ -1,6 +1,6 @@
 <script>
 	import { base } from "$app/paths";
-	import { addToCart, removeFromCart } from "../../stores.store.js";
+	import { addToCart, removeFromCart } from "../../store/stores.store.js";
 	import QuickActionButtons from "./QuickActionButtons.svelte";
 	let product = {
 		id: 1,

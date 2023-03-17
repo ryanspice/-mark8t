@@ -1,27 +1,15 @@
 <script defer>
 	import { onMount } from "svelte";
 
-	import { opening_hours, place, isOpen } from "../../stores.js";
+	import { opening_hours, place, isOpen } from "../../store/stores.js";
 	import Hours from "./Hours.svelte";
 	import Address from "../Address.svelte";
 
-	import { _GOOGLE_MAP_API_URL_ } from "../../stores.js";
+	import { _GOOGLE_MAP_API_URL_ } from "../../store/stores.js";
 	import { fetchJSONP, viewport } from "../../utils";
 
-	// const fetchJSONP = (url) => {
-	// 	return new Promise((resolve, reject) => {
-	// 		const script = document.createElement("script");
-	// 		script.src = url;
-	// 		script.onload = () => {
-	// 			resolve(window.data);
-	// 			window.data = undefined;
-	// 		};
-	// 		script.onerror = (error) => {
-	// 			reject(error);
-	// 		};
-	// 		document.head.appendChild(script);
-	// 	});
-	// };
+	import getObject from "../../utils/storage/storage.getobject";
+	import setObject from "../../utils/storage/storage.setobject";
 
 	export let height;
 	let zoom = 19;
@@ -61,7 +49,7 @@
 					map.setCenter(place.geometry.location);
 					updateHours(place.opening_hours);
 					updatePlace(place);
-					localStorage.setObject("place", place, 60);
+					setObject("place", place, 60);
 				}
 			}
 		);
@@ -86,14 +74,14 @@
 
 	//
 	onMount(() => {
-		let place = localStorage.getObject("place");
+		let place = getObject("place") === "place" ? false : getObject("place");
 		if (place.opening_hours) {
 			updateHours(place.opening_hours);
 			updatePlace(place);
 		} else {
-			// init();
 		}
 		window.initMap = initMap;
+		init();
 	});
 </script>
 
@@ -121,7 +109,7 @@
 		height: 756px;
 		opacity: 1;
 		padding-bottom: 1rem;
-		//background-image: url('map.png');
+		background-image: url("map.png");
 	}
 
 	h1 {

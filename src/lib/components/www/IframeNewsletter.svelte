@@ -4,7 +4,7 @@
 	let h2Text = "keep in touch";
 	let h1Text = "NEWSLETTER";
 
-	import { _NEWSLETTER_URL_ } from "../../stores.js";
+	import { _NEWSLETTER_URL_ } from "../../store/stores.js";
 
 	onMount(() => {
 		_NEWSLETTER_URL_.subscribe((value) => {

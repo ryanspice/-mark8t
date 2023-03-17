@@ -6,7 +6,7 @@
 		loginRequest,
 		tokenRequest,
 	} from "../config.js";
-	import { _API_STORE_ACCOUNT_ } from "../stores.js";
+	import { _API_STORE_ACCOUNT_ } from "../store/stores.js";
 
 	let username = "";
 	let myMSALObj = null;

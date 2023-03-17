@@ -18,20 +18,24 @@ import Keys from "./components/modules/Keys.svelte";
 import ProductsWithFilter from "./components/www/ProductsWithFilter.svelte";
 import Products from "./components/www/Products.svelte";
 
+import Notifications from "./components/Notifications.svelte";
+
 import Header from "./components/header/Header.svelte";
 import ExternalLink from "./components/header/banner/ExternalLink.svelte";
 import Footer from "./components/www/Footer.svelte";
 
+//
 import Chip from "./components/Chip.svelte";
 import Input from "./components/Input.svelte";
 
+//
 import Modules from "./components/modules/index.js";
 import Analytics from "./components/Analytics.svelte";
 import Authenticate from "./components/Authenticate.svelte";
 import Spinner from "./components/Spinner.svelte";
 import Layout from "./components/admin/Layout.svelte";
 
-
+//
 import * as Static from "./components/static/index.js";
 import * as Store from "./components/store/index.js";
 import * as Www from "./components/www/index.js";
@@ -42,7 +46,7 @@ import {
 	removeFromCart,
 	cartStore,
 	clearCart
-} from "./stores.store.js";
+} from "./store/stores.store.js";
 
 import {
 	_API_STORE_PRODUCTS_,
@@ -51,18 +55,19 @@ import {
 	_API,
 	getProductBySlug,
 	transformProductNameToSlug,
-} from './stores.js';
+} from './store/stores.js';
+import { goto } from "$app/navigation";
 
-
+//
 const Logout = () => {
 	_API_STORE_WEBSITE_.set({});
 	localStorage.removeItem('--store-website');
 
 	localStorage.clear();
-	window.location = base + "/";
+	goto(base + "/");
 }
 
-
+//
 export {
 	addToCart,
 	removeFromCart,
@@ -99,6 +104,7 @@ export {
 	ExternalLink,
 	Footer,
 
+	Notifications,
 	Analytics,
 	Authenticate,
 	Spinner,

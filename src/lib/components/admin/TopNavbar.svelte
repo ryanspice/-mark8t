@@ -11,7 +11,7 @@
 		_API_STORE_WEBSITE_,
 		_API_STORE_PRODUCTS_,
 		_API_STORE_GOOGLE_,
-	} from "../../stores.js";
+	} from "../../store/stores.js";
 	import TopNavbar from "./TopNavbar.svelte";
 	_API_STORE_ACCOUNT_.subscribe((value) => {
 		account = value || [];

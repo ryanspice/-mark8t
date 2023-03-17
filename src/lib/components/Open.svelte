@@ -1,16 +1,44 @@
 <script>
   import { goto } from "$app/navigation";
   import { base } from "$app/paths";
+
+    import { onMount } from "svelte";
   import MediaQuery from "svelte-media-queries";
-  import { isOpen } from "../stores.js";
+  
+  import { isOpen } from "../store/stores.js";
   import Hours from "./www/Hours.svelte";
-  let open;
-  isOpen.subscribe((value) => {
-    open = value;
-  });
-  let handleClick = () => {
+
+  let open = 0;
+  
+  //
+  const handleClick = () => {
     goto(base + "/events");
   };
+
+  //
+	const setProperty = (duration = 0) => {
+		document.documentElement.style.setProperty(
+			"--animation-time",
+			duration + "s"
+		);
+	};
+
+  //
+	const changeAnimationTime = () => {
+		const animationDuration = Math.random();
+		setProperty(animationDuration);
+	};
+
+  onMount(() => {
+    
+    isOpen.subscribe((value) => {
+      open = value;
+
+      console.log("Open.svelte: ", value);
+    });
+    setInterval(changeAnimationTime, 1000);
+  });
+
 </script>
 
 <section class="open">
@@ -47,7 +75,7 @@
     ]}
     let:matches
   >
-    {@const [mobile, tablet, desktop] = matches}
+    {@const [desktop] = matches}
     {#if desktop}
       <Hours />
     {/if}
@@ -65,28 +93,26 @@
     top: 50px;
   }
 
+  /* styles for screens with width less than or equal to 768px */
   @media (max-width: 768px) {
-    /* styles for screens with width less than or equal to 768px */
     .open {
       transform: scale(0.5);
-      right: -7.8rem;
-      top: -83px;
+      right: -5.5rem;
+      top: -25px;
     }
   }
 
+  /* styles for screens with width greater than or equal to 768px and less than or equal to 1280px */
   @media (min-width: 768px) and (max-width: 1280px) {
-    /* styles for screens with width greater than or equal to 768px and less than or equal to 1280px */
-
     .open {
       transform: scale(0.5);
-      right: -7.8rem;
-      top: -83px;
+      right: 1.25rem;
+      top: -25px;
     }
   }
 
+  /* styles for screens with width greater than or equal to 1520px */
   @media (min-width: 1280px) and (max-width: 1520px) {
-    /* styles for screens with width greater than or equal to 1520px */
-
     .open {
       top: 50px;
       transform: scale(0.7);

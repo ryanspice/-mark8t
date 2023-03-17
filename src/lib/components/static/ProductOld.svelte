@@ -16,7 +16,7 @@
 	import Chip from "../Chip.svelte";
 	// import Textfield from "@smui/textfield";
 	import Input from "../Input.svelte";
-	import { _TENANT, _API } from "../../stores.js";
+	import { _TENANT, _API } from "../../store/stores.js";
 
 	// import {
 	// 	Grid,

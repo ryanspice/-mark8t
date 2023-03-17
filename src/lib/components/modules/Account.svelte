@@ -9,7 +9,7 @@
 	panelContactInfo = localStorage.getObject("--panel--panelContactInfo");
 	$: account = {};
 	$: website = {};
-	import { _API_STORE_ACCOUNT_, _API_STORE_WEBSITE_ } from "../../stores.js";
+	import { _API_STORE_ACCOUNT_, _API_STORE_WEBSITE_ } from "../../store/stores.js";
 	import { onMount } from "svelte";
 	_API_STORE_ACCOUNT_.subscribe((value) => {
 		account = value || {};

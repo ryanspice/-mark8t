@@ -9,6 +9,7 @@
 	// let tax = 0.13;
 	$: {
 		total = 0;
+		if (typeof cart !== "string")
 		cart.forEach((product) => {
 			total += product.price * product.quantity;
 		});

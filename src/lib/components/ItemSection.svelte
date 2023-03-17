@@ -8,9 +8,9 @@
 	import {
 		_API_STORE_PRODUCTS_,
 		transformProductNameToSlug,
-	} from "../stores.js";
+	} from "../store/stores.js";
 
-	import { addToCart, removeFromCart, cartStore } from "../stores.store.js";
+	import { addToCart, removeFromCart, cartStore } from "../store/stores.store.js";
 
 	let products =
 		getObject("--store-products") === "products"

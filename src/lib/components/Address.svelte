@@ -1,5 +1,5 @@
 <script>
-	import { place } from "../stores.js";
+	import { place } from "../store/stores.js";
 	$: address = "";
 	place.subscribe((value) => {
 		address = value?.vicinity;

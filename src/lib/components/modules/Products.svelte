@@ -40,7 +40,7 @@
 
 	import { _NEW_PRODUCT_ } from "../../schema.js";
 
-	import { postJsonToTenant } from "../../stores";
+	import { postJsonToTenant } from "../../store/stores";
 
 	let productContainer;
 	let layoutContainer;
@@ -72,11 +72,6 @@
 	let panelLayouts = false;
 	let panelWebsite = false;
 
-	// let account;
-	// let email = '';
-	// let name = '';
-	// let tenant = '';
-	// let tenantid = '';
 	let layoutSelected;
 	$: account = {};
 	$: google = {};
@@ -100,22 +95,10 @@
 		_API_STORE_WEBSITE_,
 		_API_STORE_PRODUCTS_,
 		_API_STORE_GOOGLE_,
-	} from "../../stores.js";
+	} from "../../store/stores.js";
 	import Overview from "../admin/Overview.svelte";
 	import OverviewModules from "../admin/OverviewModules.svelte";
 	import SavedChanges from "../admin/SavedChanges.svelte";
-	_API_STORE_ACCOUNT_.subscribe((value) => {
-		account = value || {};
-	});
-	_API_STORE_WEBSITE_.subscribe((value) => {
-		website = value || {};
-	});
-	_API_STORE_PRODUCTS_.subscribe((value) => {
-		products = value || [];
-	});
-	_API_STORE_GOOGLE_.subscribe((value) => {
-		google = value || {};
-	});
 
 	//
 	function handleBannerClosed(event) {
@@ -165,6 +148,18 @@
 
 	//
 	onMount(async () => {
+		_API_STORE_ACCOUNT_.subscribe((value) => {
+			account = value || {};
+		});
+		_API_STORE_WEBSITE_.subscribe((value) => {
+			website = value || {};
+		});
+		_API_STORE_PRODUCTS_.subscribe((value) => {
+			products = value || [];
+		});
+		_API_STORE_GOOGLE_.subscribe((value) => {
+			google = value || {};
+		});
 		getAccountDataFromLocalStorage();
 		getPanelInfo();
 		fetchAdmin();
@@ -328,11 +323,7 @@
 		>
 		<!-- <Button raised on:click={onAddProduct}>View All</Button> -->
 	</Header>
-	<Content
-		bind:this={productContainer}
-		style="display:flex;overflow:auto;"
-		on:wheel={handleWheel}
-	>
+	<Content bind:this={productContainer} on:wheel={handleWheel}>
 		<!-- <Card on:click={onAddProduct}>
             <span style='content: "\003F";opacity:0.1;left:32%;top:40%;font-size:166px;position:absolute;'>+</span>
             <Content>{""}</Content>
@@ -419,3 +410,6 @@
 		{/each}
 	</Content>
 </Panel>
+
+<style>
+</style>

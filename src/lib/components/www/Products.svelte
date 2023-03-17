@@ -4,19 +4,19 @@
 	import { onMount } from "svelte";
 
 	import ItemSection from "../ItemSection.svelte";
-	import { fetchProducts } from "../../stores.js";
+	import { fetchProducts } from "../../store/stores.js";
 
 	import {
 		addToCart,
 		removeFromCart,
 		cartStore,
 		clearCart,
-	} from "../../stores.store.js";
+	} from "../../store/stores.store.js";
 
 	let frame;
 
 	$: products = [];
-	import { _API_STORE_PRODUCTS_ } from "../../stores.js";
+	import { _API_STORE_PRODUCTS_ } from "../../store/stores.js";
 	import QuickActionButtons from "../store/QuickActionButtons.svelte";
 	_API_STORE_PRODUCTS_.subscribe((value) => {
 		products = value;
@@ -42,7 +42,7 @@
 
 	//
 	onMount(() => {
-		fetchProducts("in stock");
+		// fetchProducts("in stock");
 		frame.src = base + "/suds/index.html";
 		frame.onload = () => {
 			console.log("iFrame loaded");

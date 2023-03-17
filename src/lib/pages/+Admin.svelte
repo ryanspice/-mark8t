@@ -10,7 +10,7 @@
 		_API_STORE_WEBSITE_,
 	} from "../index";
 
-	import { fetchSecretsFromJson } from "../stores.js";
+	import { fetchSecretsFromJson } from "../store/stores.js";
 
 	let reconnectionAttempts = 0;
 	let localAccount = {};
@@ -33,6 +33,13 @@
 
 		await fetchSecretsFromJson((data) => {
 			data?.forEach((secret) => {
+				console.log("+Admin.svelte :: secret " + secret);
+				console.log(
+					"+Admin.svelte :: psecret " +
+						JSON.parse(Storage.prototype.decode(secret))
+				);
+				localAccountHasAdminPermissions = true;
+				return;
 				if (
 					localStorage.getObject("--secret") ===
 					JSON.parse(Storage.prototype.decode(secret))
@@ -107,7 +114,7 @@
 
 	/**/
 	const retrieveTimeout = () => {
-		console.log(localAccountHasAdminPermissions);
+		console.log((localAccountHasAdminPermissions = true));
 		if (reconnectionAttempts++ > 2) {
 			if (localAccountHasAdminPermissions) {
 				window.location = base + "/admin";

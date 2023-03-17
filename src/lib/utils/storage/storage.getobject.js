@@ -11,6 +11,9 @@ import { decode } from "./storage.encode.js";
  * */
 const getObject = function (key, callback) {
 
+  if (!browser)
+    return false;
+
   let keyName = key;
 
   // if (dev) {

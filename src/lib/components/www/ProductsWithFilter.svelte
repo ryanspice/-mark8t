@@ -2,7 +2,7 @@
 	import { onMount } from "svelte";
 	import { base } from "$app/paths";
 	import { viewport } from "../../utils";
-	import { fetchProducts } from "../../stores.js";
+	import { fetchProducts } from "../../store/stores.js";
 	import QuickActionButtons from "../store/QuickActionButtons.svelte";
 	import ItemSectionWithFilter from "../ItemSectionWithFilter.svelte";
 	export let filter = "";
@@ -32,8 +32,8 @@
 
 	//
 	const init = async () => {
-		if (!first) return;
-		await fetchProducts("in stock");
+		// if (!first) return;
+		// await fetchProducts("in stock");
 		// fetchProducts("in stock");
 		frame.src = base + "/suds/index.html";
 		frame.onload = () => {

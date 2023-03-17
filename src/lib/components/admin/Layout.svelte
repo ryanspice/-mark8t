@@ -7,9 +7,19 @@
 	import List, { Item, Separator, Text } from "@smui/list";
 	import Button, { Label } from "@smui/button";
 
-	let clicked = "nothing yet";
+	import {
+		_API_STORE_ACCOUNT_,
+		_API_STORE_WEBSITE_,
+		_API_STORE_PRODUCTS_,
+		_API_STORE_GOOGLE_,
+	} from "../../store/stores.js";
+	import TopNavbar from "./TopNavbar.svelte";
 
 	export let account;
+	export let override = false;
+
+	let clicked = "nothing yet";
+
 	const username = account.name || "Admin";
 	const usernameInititals =
 		username
@@ -19,19 +29,6 @@
 
 	$: account = {};
 	$: website = {};
-	import {
-		_API_STORE_ACCOUNT_,
-		_API_STORE_WEBSITE_,
-		_API_STORE_PRODUCTS_,
-		_API_STORE_GOOGLE_,
-	} from "../../stores.js";
-	import TopNavbar from "./TopNavbar.svelte";
-	_API_STORE_ACCOUNT_.subscribe((value) => {
-		account = value || [];
-	});
-	_API_STORE_WEBSITE_.subscribe((value) => {
-		website = value || {};
-	});
 
 	let people = [
 		{ first: "Hans", last: "Emil" },
@@ -81,9 +78,14 @@
 		last = person ? person.last : "";
 	}
 
-	onMount(() => {});
-
-	export let override = false;
+	onMount(() => {
+		_API_STORE_ACCOUNT_.subscribe((value) => {
+			account = value || [];
+		});
+		_API_STORE_WEBSITE_.subscribe((value) => {
+			website = value || {};
+		});
+	});
 </script>
 
 <TopNavbar {account} {website} />

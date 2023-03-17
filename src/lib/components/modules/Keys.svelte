@@ -7,7 +7,7 @@
 	let panelFacebook = localStorage.getObject("--panel--panelFacebook");
 	let panelSecrets = localStorage.getObject("--panel--panelSecrets");
 	$: google = {};
-	import { _API_STORE_GOOGLE_ } from "../../stores.js";
+	import { _API_STORE_GOOGLE_ } from "../../store/stores.js";
 	_API_STORE_GOOGLE_.subscribe((value) => {
 		google = value || {};
 	});

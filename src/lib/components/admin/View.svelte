@@ -39,7 +39,19 @@
 
   import { _NEW_PRODUCT_ } from "../../schema.js";
 
-  import { postJsonToTenant } from "../../stores";
+  import { postJsonToTenant } from "../../store/stores";
+
+  import {
+    fetchAdmin,
+    getAccountDataFromLocalStorage,
+    _API_STORE_ACCOUNT_,
+    _API_STORE_WEBSITE_,
+    _API_STORE_PRODUCTS_,
+    _API_STORE_GOOGLE_,
+  } from "../../store/stores.js";
+  import Overview from "./Overview.svelte";
+  import OverviewModules from "./OverviewModules.svelte";
+  import SavedChanges from "./SavedChanges.svelte";
 
   let productContainer;
   let layoutContainer;
@@ -92,17 +104,6 @@
     },
   ];
 
-  import {
-    fetchAdmin,
-    getAccountDataFromLocalStorage,
-    _API_STORE_ACCOUNT_,
-    _API_STORE_WEBSITE_,
-    _API_STORE_PRODUCTS_,
-    _API_STORE_GOOGLE_,
-  } from "../../stores.js";
-  import Overview from "./Overview.svelte";
-  import OverviewModules from "./OverviewModules.svelte";
-  import SavedChanges from "./SavedChanges.svelte";
   _API_STORE_ACCOUNT_.subscribe((value) => {
     account = value || {};
   });
@@ -324,13 +325,13 @@
   <!-- <Breadcrumbs /> -->
   <!-- <Analytics /> -->
   {#if override}
-    <section class="container">
-      <Paper elevation={0}>
-        <Accordion>
-          <slot {unsavedChanges} />
-        </Accordion>
-      </Paper>
-    </section>
+    <!-- <section class="containers"> -->
+    <Paper elevation={0}>
+    <Accordion>
+      <slot {unsavedChanges} />
+    </Accordion>
+    </Paper>
+    <!-- </section> -->
   {/if}
   {#if override === false}
     <Quote />

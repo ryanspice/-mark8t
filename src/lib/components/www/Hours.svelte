@@ -1,5 +1,5 @@
 <script>
-	import { opening_hours } from "../../stores.js";
+	import { opening_hours } from "../../store/stores.js";
 	let storedHours = [];
 	let hours = [];
 
